@@ -11,6 +11,8 @@ partial class UI : UI<MyViewModel>
 
     public override void MapPages()
     {
+        base.MapPages();
+
         MapPage("some-page", SomePage);
         MapPage("other-page", OtherPage);
         MapPage("last-page", LastPage);

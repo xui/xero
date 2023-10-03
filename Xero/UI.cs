@@ -84,6 +84,8 @@ public abstract partial class UI<T> where T : IViewModel
     {
         // This is optionally implemented in dev's concrete UI class.
         // Dev will call MapGet() from here.
+
+        MapPage("/", ctx => { });
     }
 
     // This mess will eventually be replaced with a source generator
