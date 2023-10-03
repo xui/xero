@@ -22,7 +22,6 @@ public abstract partial class UI<T> where T : IViewModel
         {
             ViewBuffer = new();
             CompareBuffer = new();
-
             ViewModel = (T)T.New();
         }
 
