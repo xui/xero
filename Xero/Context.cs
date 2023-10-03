@@ -10,7 +10,7 @@ public abstract partial class UI<T> where T : IViewModel
     public class Context
     {
         public T ViewModel { get; init; }
-        public ClaimsPrincipal User { get; set; }
+        public ClaimsPrincipal? User { get; set; }
 
         internal WebSocket? webSocket;
         internal UI<T>.View.Buffer ViewBuffer;
