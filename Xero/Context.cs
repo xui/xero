@@ -1,8 +1,7 @@
 using System.Net.WebSockets;
-using System.Numerics;
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
 
 namespace Xero;
 
@@ -11,6 +10,8 @@ public abstract partial class UI<T> where T : IViewModel
     public class Context
     {
         public T ViewModel { get; init; }
+        public ClaimsPrincipal User { get; set; }
+
         internal WebSocket? webSocket;
         internal UI<T>.View.Buffer ViewBuffer;
         internal UI<T>.View.Buffer CompareBuffer;
