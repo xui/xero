@@ -53,4 +53,31 @@ public static class XeroExtensions
 
         return app;
     }
+
+    public static void MapPage<T>(
+        this RouteGroupBuilder group,
+        UI<T> ui,
+        [StringSyntax("Route")] string pattern,
+        Action<UI<T>.Context> action) where T : IViewModel
+    {
+        group.MapGet(pattern, async httpContext =>
+        {
+            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext);
+
+            if (xeroContext.webSocket == null)
+            {
+                // TODO: Optimize.  No need to convert to a single string when we 
+                // have streams and pipes.
+                await httpContext.Response.WriteAsync(ui.Compose(xeroContext).ToStringWithExtras());
+            }
+            else
+            {
+                // httpContext.Response.StatusCode = 214; // Transformation Applied
+                httpContext.Response.StatusCode = 204; // No Content
+                await httpContext.Response.CompleteAsync();
+                await xeroContext.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
+                action(xeroContext);
+            }
+        });
+    }
 }

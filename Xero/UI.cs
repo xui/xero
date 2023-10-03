@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Xero;
 
@@ -87,34 +88,16 @@ public abstract partial class UI<T> where T : IViewModel
 
     // This mess will eventually be replaced with a source generator
     // so devs can just decorate their methods with routes.  Pretty!
-    private RouteGroupBuilder? routeGroupBuilder;
+    private RouteGroupBuilder? group;
     internal void MapPages(RouteGroupBuilder group)
     {
-        routeGroupBuilder = group;
+        this.group = group;
         MapPages();
-        routeGroupBuilder = null;
+        this.group = null;
     }
 
-    protected void MapPage(string pattern, Action<Context> action)
+    protected void MapPage([StringSyntax("Route")] string pattern, Action<Context> action)
     {
-        routeGroupBuilder?.MapGet(pattern, async httpContext =>
-        {
-            var xeroContext = XeroMemoryCache.Get(httpContext);
-
-            if (xeroContext.webSocket == null)
-            {
-                // TODO: Optimize.  No need to convert to a single string when we 
-                // have streams and pipes.
-                await httpContext.Response.WriteAsync(Compose(xeroContext).ToStringWithExtras());
-            }
-            else
-            {
-                // httpContext.Response.StatusCode = 214; // Transformation Applied
-                httpContext.Response.StatusCode = 204; // No Content
-                await httpContext.Response.CompleteAsync();
-                await xeroContext.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
-                action(xeroContext);
-            }
-        });
+        group?.MapPage(this, pattern, action);
     }
 }
