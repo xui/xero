@@ -49,7 +49,7 @@ public static class XeroExtensions
             }
         });
 
-        ui.MapPages();
+        ui.MapPages(group);
 
         return app;
     }

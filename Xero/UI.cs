@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace Xero;
 
@@ -84,25 +85,36 @@ public abstract partial class UI<T> where T : IViewModel
         // Dev will call MapGet() from here.
     }
 
-    protected void MapPage(string pattern, Action<Context> action)
+    // This mess will eventually be replaced with a source generator
+    // so devs can just decorate their methods with routes.  Pretty!
+    private RouteGroupBuilder? routeGroupBuilder;
+    internal void MapPages(RouteGroupBuilder group)
     {
-        // routeGroupBuilder?.MapGet(pattern, async httpContext =>
-        // {
-        //     if (Context.webSocket == null)
-        //     {
-        //         // TODO: Optimize.  No need to convert to a single string when we 
-        //         // have streams and pipes.
-        //         await httpContext.Response.WriteAsync(Compose(Context.ViewModel).ToStringWithExtras());
-        //     }
-        //     else
-        //     {
-        //         httpContext.Response.StatusCode = 204; // 214
-        //         await httpContext.Response.CompleteAsync();
-        //         await Context.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
-        //         action(Context);
-        //     }
-        // });
+        routeGroupBuilder = group;
+        MapPages();
+        routeGroupBuilder = null;
     }
 
+    protected void MapPage(string pattern, Action<Context> action)
+    {
+        routeGroupBuilder?.MapGet(pattern, async httpContext =>
+        {
+            var xeroContext = XeroMemoryCache.Get(httpContext);
 
+            if (xeroContext.webSocket == null)
+            {
+                // TODO: Optimize.  No need to convert to a single string when we 
+                // have streams and pipes.
+                await httpContext.Response.WriteAsync(Compose(xeroContext).ToStringWithExtras());
+            }
+            else
+            {
+                // httpContext.Response.StatusCode = 214; // Transformation Applied
+                httpContext.Response.StatusCode = 204; // No Content
+                await httpContext.Response.CompleteAsync();
+                await xeroContext.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
+                action(xeroContext);
+            }
+        });
+    }
 }
