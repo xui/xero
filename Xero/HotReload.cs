@@ -7,7 +7,9 @@ public static class HotReload
 
 #else
 
-[assembly: System.Reflection.Metadata.MetadataUpdateHandlerAttribute(typeof(Xero.HotReload))]
+using System.Reflection.Metadata;
+
+[assembly: MetadataUpdateHandler(typeof(Xero.HotReload))]
 
 namespace Xero;
 
