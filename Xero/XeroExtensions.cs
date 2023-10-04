@@ -22,6 +22,7 @@ public static class XeroExtensions
         [StringSyntax("Route")] string pattern,
         UI<T> ui) where T : IViewModel
     {
+        app.UseStaticFiles();
         app.UseWebSockets();
 
         var group = app.MapGroup(pattern);
