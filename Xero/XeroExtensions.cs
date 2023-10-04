@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.AspNetCore.Routing;
+using System.Net.WebSockets;
 
 namespace Xero;
 
@@ -51,7 +52,7 @@ public static class XeroExtensions
 
                 await xeroContext.AssignWebSocket(httpContext.WebSockets);
             }
-            else if (xeroContext.webSocket == null)
+            else if (xeroContext.webSocket == null || xeroContext.webSocket.State != WebSocketState.Open)
             {
                 using (xeroContext.ViewModel.Batch())
                 {

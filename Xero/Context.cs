@@ -45,7 +45,13 @@ public abstract partial class UI<T> where T : IViewModel
             foreach (var delta in deltas)
             {
                 if (delta.Type == FormatType.StringLiteral)
-                    continue;
+                {
+                    Task.Run(async () =>
+                    {
+                        await Push("ws.close();location.reload();");
+                    });
+                    return;
+                }
 
                 output ??= new();
                 output.Append("slot");
