@@ -12,6 +12,7 @@ partial class UI
                 What would web development look like if it were reconsidered from first
                 principles by mobile developers?
                 </h2>
+                {Connect()}
             </body>
         </html>
         """;
