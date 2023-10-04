@@ -1,10 +1,11 @@
 #if !DEBUG
+
 public static class HotReload
 {
     public static int ReloadCount { get; private set; } = 0;
 }
+
 #else
-using System.Text.Json;
 
 [assembly: System.Reflection.Metadata.MetadataUpdateHandlerAttribute(typeof(Xero.HotReload))]
 
@@ -27,7 +28,7 @@ public static class HotReload
     {
         ReloadCount++;
 
-        types?.ToList().ForEach(type => Console.WriteLine($"Hot Reload (UpdateApplication): {types[0].Name}"));
+        types?.ToList().ForEach(type => Console.WriteLine($"Hot Reload (UpdateApplication): {type.FullName}"));
 
         UpdateApplicationEvent?.Invoke(types);
     }
