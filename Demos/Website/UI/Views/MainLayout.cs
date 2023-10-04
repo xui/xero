@@ -2,18 +2,32 @@ partial class UI
 {
     protected override View MainLayout(ViewModel vm) => $"""
         <html>
-            <head>
-                <!-- Zero script refs.  Such fast. -->
-                {Register()}
-            </head>
-            <body>
-                <h1>Build realtime web apps with <em>zero</em> JavaScript</h1>
-                <h2>
-                What would web development look like if it were reconsidered from first
-                principles by mobile developers?
-                </h2>
-                {Connect()}
-            </body>
+        <head>
+            <!-- Zero script refs.  Such fast. -->
+            {Register()}
+        </head>
+        <body>
+            {Header()}
+            {VSCode()}
+            {JavaScript(vm)}
+            {Syntax(vm)}
+            {Hooks(vm)}
+            {Api(vm)}
+            {Blocking(vm)}
+            {Seo(vm)}
+            {Thrashing(vm)}
+            {VirtualDom(vm)}
+            {Latency(vm)}
+            {Allocations(vm)}
+            {HotReloads(vm)}
+            {Repl(vm)}
+            {Pages(vm)}
+            {Benchmarks(vm)}
+            {Stupid(vm)}
+            {Roadmap(vm)}
+
+            {Connect()}
+        </body>
         </html>
         """;
 }
