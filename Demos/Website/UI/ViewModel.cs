@@ -1,6 +1,6 @@
 using Xero;
 
-partial class MyViewModel : IViewModel
+partial class ViewModel : IViewModel
 {
     [Live] string? name;
     [Live] int? count;
@@ -161,7 +161,7 @@ partial class MyViewModel : IViewModel
     bool isBatchChanged = false;
     public Action? OnChanged { get; set; }
 
-    public MyViewModel()
+    public ViewModel()
     {
     }
 
@@ -206,9 +206,9 @@ partial class MyViewModel : IViewModel
 
     class Batchable : IDisposable
     {
-        readonly MyViewModel viewModel;
+        readonly ViewModel viewModel;
 
-        public Batchable(MyViewModel viewModel)
+        public Batchable(ViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.viewModel.isBatching = true;

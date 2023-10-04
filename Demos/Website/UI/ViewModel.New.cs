@@ -1,8 +1,8 @@
 using Xero;
 
-partial class MyViewModel
+partial class ViewModel
 {
-    public static IViewModel New() => new MyViewModel()
+    public static IViewModel New() => new ViewModel()
     {
         Name = "Rylan Barnes",
         Count = 0,

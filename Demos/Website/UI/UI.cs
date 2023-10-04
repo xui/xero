@@ -1,6 +1,6 @@
 using Xero;
 
-partial class UI : UI<MyViewModel>
+partial class UI : UI<ViewModel>
 {
     public UI() : base()
     {

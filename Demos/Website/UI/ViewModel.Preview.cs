@@ -1,6 +1,6 @@
-partial class MyViewModel
+partial class ViewModel
 {
-    public static readonly MyViewModel Preview = new()
+    public static readonly ViewModel Preview = new()
     {
         Name = "Rylan Barnes",
         Count = 0,
