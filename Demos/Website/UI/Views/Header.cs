@@ -1,6 +1,7 @@
 partial class UI
 {
     View Header() => $"""
+        <img src="xero_logo.svg" />
         <h1>Build realtime web apps with <em>zero</em> JavaScript</h1>
         <h2>
             What would web development look like if it were reconsidered from first
