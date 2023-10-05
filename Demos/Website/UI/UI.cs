@@ -9,5 +9,21 @@ partial class UI : UI<ViewModel>
     public override void MapPages()
     {
         base.MapPages();
+
+        MapPage("/zero-pages", ZeroPages);
+        MapPage("/zero-javascript", ZeroPages);
     }
+
+    void ZeroPages(Context context)
+    {
+        context.ViewModel.Name = "Twas clicked";
+        context.ViewModel.ShowAdditional = true;
+    }
+
+    void ZeroJavaScript(Context context)
+    {
+        context.ViewModel.Name = "OK, back to normal: Rylan Barnes";
+        context.ViewModel.ShowAdditional = false;
+    }
+
 }
