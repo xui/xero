@@ -34,6 +34,10 @@ button {
   width: 200px;
   background-color: #ec7e2e;
   border: 0;
+  border-radius: 1000px;
+  box-shadow: 0px 0px 24px #ec7e2e;
+  color: white;
+  font-weight: 900;
 }
 
 #cards {
@@ -50,22 +54,43 @@ button {
 }
 
 #cards p {
-  overflow: scroll;
 }
 
 #cards section {
   width: 500px;
   height: 400px;
-  background-color: pink;
   display: inline-block;
   box-shadow: 0px 0px 48px #00000088;
+  overflow: hidden;
+  border-radius: 30px;
+  /* border: 2px solid blue; */
+}
+
+.card-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  /* background-color: orange; */
+}
+
+.card-content {
+  height: 100%;
+  padding: 30px;;
+  color: #aaa;
+  /* background-color: grey; */
+}
+
+.card-content p {
+  text-overflow: ellipsis;
+}
+
+.tag {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #aaa;
 }
 
 /* #cards section-1 {
   flex-grow: 1;
 } */
-
-#cards section div {
-  height: 200px;
-  background-color: red;
-}
