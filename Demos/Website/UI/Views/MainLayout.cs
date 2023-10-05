@@ -4,6 +4,7 @@ partial class UI
         <html>
         <head>
             <!-- Zero script refs.  Such fast. -->
+            <link rel="stylesheet" href="/css/site.css" />
             {Register()}
         </head>
         <body>
@@ -27,6 +28,7 @@ partial class UI
             {Roadmap(vm)}
 
             {Connect()}
+            {Watch()}
         </body>
         </html>
         """;

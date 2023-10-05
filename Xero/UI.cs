@@ -35,37 +35,56 @@ public abstract partial class UI<T> where T : IViewModel
     {
         return $$"""
             <script>
-                var verbose = false;
-                var l = location;
-                const ws = new WebSocket(`ws://${l.host}${l.pathname}`);
-
-                ws.onopen = (event) => {
-                    if (verbose)
-                        console.log("onopen: ", event);
-                };
-
-                ws.onmessage = (event) => {
-                    if (verbose)
-                        console.log("onmessage: ", event);
-                    eval(event.data);
-                };
-
-                ws.onclose = (event) => {
-                    if (verbose)
-                        console.log("onclose", event);
-                };
-
-                ws.onerror = (event) => {
-                    if (verbose)
-                        console.error("onerror: ", event);
-                };
-
                 function e(id) {
-                    if (verbose)
-                        console.log("executing slot " + id);
+                    console.debug("executing slot " + id);
                     ws.send(id);
                 }
 
+                function debugSocket(name, ws) {
+                    ws.onopen = (event) => { console.debug(`${name} onopen`, event); };
+                    ws.onclose = (event) => { console.debug(`${name} onclose`, event); };
+                    ws.onerror = (event) => { console.error(`${name} onerror`, event); };
+                }
+
+                var l = location;
+                const ws = new WebSocket(`ws://${l.host}${l.pathname}`);
+                debugSocket("xero", ws);
+                ws.onmessage = (event) => {
+                    console.debug("onmessage: ", event);
+                    eval(event.data);
+                };
+            </script>
+    """;
+    }
+
+    protected string Watch()
+    {
+        var endpoints = Environment.GetEnvironmentVariable("ASPNETCORE_AUTO_RELOAD_WS_ENDPOINT")!;
+
+        if (string.IsNullOrWhiteSpace(endpoints))
+            return string.Empty;
+
+        return $$"""
+            <script>
+                let dnw; // static file change
+                for (const url of '{{endpoints}}'.split(',')) {
+                    try {
+                        dnw = new WebSocket(url);
+                        break;
+                    } catch (ex) {
+                        console.debug(ex);
+                    }
+                }
+                if (dnw) {
+                    debugSocket("dotnet-watch", dnw);
+                    dnw.onmessage = (event) => {
+                        console.debug("onmessage: ", event);
+                        ws.close();
+                        location.reload();
+                    };
+                } else {
+                    console.debug('Unable to establish a connection to the dotnet watch browser refresh server.');
+                }
             </script>
     """;
     }
