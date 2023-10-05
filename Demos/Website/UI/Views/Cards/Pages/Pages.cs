@@ -3,7 +3,7 @@ partial class UI
     View Pages(ViewModel vm) => $"""
         <section>
             <div>
-                <a href="pages">xero.wtf/zero-pages</a>
+                <a href="zero-pages">xero.wtf/zero-pages</a>
                 <img src="pages/pages.svg" />
             </div>
             <h2>
