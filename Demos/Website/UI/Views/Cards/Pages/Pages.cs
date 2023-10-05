@@ -4,7 +4,7 @@ partial class UI
         <section>
             <div>
                 <a href="zero-pages">xero.wtf/zero-pages</a>
-                <img src="pages/pages.svg" />
+                <img src="zero-pages/zero-pages.svg" />
             </div>
             <h2>
                 User Experience

@@ -11,7 +11,7 @@ partial class UI : UI<ViewModel>
         base.MapPages();
 
         MapPage("/zero-pages", ZeroPages);
-        MapPage("/zero-javascript", ZeroPages);
+        MapPage("/zero-javascript", ZeroJavaScript);
     }
 
     void ZeroPages(Context context)
