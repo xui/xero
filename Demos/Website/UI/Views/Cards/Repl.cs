@@ -2,10 +2,10 @@ partial class UI
 {
     View Repl(ViewModel vm) => $"""
         <section>
-            <div class="card-hero">
+            <div class="hero">
                 <img src="repl/repl.svg" />
             </div>
-            <div class="card-content">
+            <article>
                 <h2>
                     Developer Experience
                 </h2>
@@ -32,7 +32,7 @@ partial class UI
                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                     non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-            </div>
+            </article>
         </section>
         """;
 }

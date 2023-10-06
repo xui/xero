@@ -7,7 +7,7 @@ body {
     color: #ec7e2e;
     font-style: normal;
   }
-  
+
   & button {
     height: 48px;
     width: 200px;
@@ -35,7 +35,7 @@ body {
     font-weight: 900;
     line-height: 150%;
   }
-  
+
   & h2 {
     color: #868686;
     font-size: 16pt;
@@ -52,25 +52,6 @@ body {
   flex-wrap: wrap;
   gap: 48px;
 
-  & h1 {
-    color: #191919;
-    font-size: 29pt;
-    line-height: 100%;
-  }
-  
-  & h2 {
-    color: #8a8a8a;
-    font-size: 16pt;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-  
-  & p {
-    text-overflow: ellipsis;
-    font-size: 14pt;
-    /* background-color: lightblue; */
-  }
-  
   & section {
     width: 500px;
     display: inline-block;
@@ -80,15 +61,15 @@ body {
     background-color: white;
     /* border: 2px solid blue; */
 
-    & .card-hero {
+    & .hero {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 200px;
       background-color: lightblue;
     }
-    
-    & .card-content {
+
+    & article {
       height: 190px;
       margin: 24px;
       color: #aaa;
@@ -96,6 +77,24 @@ body {
       flex-direction: column;
       gap: 12px;
       overflow: hidden;
+
+      & h1 {
+        color: #191919;
+        font-size: 29pt;
+        line-height: 100%;
+      }
+
+      & h2 {
+        color: #8a8a8a;
+        font-size: 16pt;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      & p {
+        text-overflow: ellipsis;
+        font-size: 14pt;
+      }
     }
   }
 }

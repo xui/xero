@@ -2,11 +2,11 @@ partial class UI
 {
     View Pages(ViewModel vm) => $"""
         <section>
-            <div class="card-hero">
+            <div class="hero">
                 <a href="zero-pages">xero.wtf/zero-pages</a>
                 <img src="zero-pages/zero-pages.svg" />
             </div>
-            <div class="card-content">
+            <article>
                 <h2>
                     User Experience
                 </h2>
@@ -33,7 +33,7 @@ partial class UI
                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                     non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-            </div>
+            </article>
         </section>
         """;
 }

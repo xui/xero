@@ -2,10 +2,10 @@ partial class UI
 {
     View Syntax(ViewModel vm) => $"""
         <section>
-            <div class="card-hero">
+            <div class="hero">
                 <img src="syntax/syntax.svg" />
             </div>
-            <div class="card-content">
+            <article>
                 <h2>
                     Simplify
                 </h2>
@@ -33,7 +33,7 @@ partial class UI
                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                     non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-            </div>
+            </article>
         </section>
         """;
 }

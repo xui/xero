@@ -2,10 +2,10 @@ partial class UI
 {
     View Latency(ViewModel vm) => $"""
         <section>
-            <div class="card-hero">
+            <div class="hero">
                 <img src="latency/latency.gif" />
             </div>
-            <div class="card-content">
+            <article>
                 <h2>
                     Speed
                 </h2>
@@ -32,7 +32,7 @@ partial class UI
                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                     non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-            </div>
+            </article>
         </section>
         """;
 }

@@ -2,7 +2,7 @@ partial class UI
 {
     View Blocking(ViewModel vm) => $"""
         <section>
-            <div class="card-hero">
+            <div class="hero">
                 <pre>
                     HTTP/1.1 GET 200 - 0.9873ms
                     HTTP/1.1 GET 200 - 0.7671ms
@@ -31,7 +31,7 @@ partial class UI
                     HTTP/1.1 GET 200 - 0.7671ms
                 </pre>
             </div>
-            <div class="card-content">
+            <article>
                 <h2>
                     Speed
                 </h2>
@@ -54,7 +54,7 @@ partial class UI
                     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
                     non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-            <?div>
+            </article>
         </section>
         """;
 }
