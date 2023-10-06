@@ -14,12 +14,14 @@ partial class UI : UI<ViewModel>
         MapPage("/zero-javascript", ZeroJavaScript);
     }
 
+    [XeroPage("/xero-pages")]
     void ZeroPages(Context context)
     {
         context.ViewModel.Name = "Twas clicked";
         context.ViewModel.ShowAdditional = true;
     }
 
+    [XeroPage("/xero-javascript")]
     void ZeroJavaScript(Context context)
     {
         context.ViewModel.Name = "OK, back to normal: Rylan Barnes";
