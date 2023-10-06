@@ -10,10 +10,10 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    <em>Zero</em> JavaScript
+                    <strong>Zero</strong> JavaScript
                 </h1>
                 <p>
-                    I love JavaScript — been using it with ❤️‍🩹 since 1999. But JavaScript has a
+                    I love JavaScript.  Been using it with ❤️‍🩹 since 1999. But JavaScript has a
                     payload problem.
                 </p>
                 <p>

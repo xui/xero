@@ -4,30 +4,9 @@ body {
   background-color: #f6f6f6;
 }
 
-em {
+strong {
   color: #ec7e2e;
   font-style: normal;
-}
-
-#header {
-  width: 800px;
-  margin: 60px auto 60px auto;
-  /* border: 2px solid blue; */
-}
-
-#header img {
-  float: left;
-}
-
-h1 {
-  color: #191919;
-  font-size: 32pt;
-  font-weight: 900;
-}
-
-h2 {
-  color: #868686;
-  font-weight: 300;
 }
 
 button {
@@ -40,6 +19,34 @@ button {
   color: white;
   font-weight: 900;
 }
+
+#header {
+  width: 800px;
+  margin: 60px auto 60px auto;
+  /* border: 2px solid blue; */
+
+  & img {
+    float: left;
+  }
+
+  & h1 {
+    color: #191919;
+    font-size: 32pt;
+    font-weight: 900;
+    line-height: 150%;
+  }
+  
+  & h2 {
+    color: #868686;
+    font-size: 16pt;
+    font-weight: 300;
+    line-height: 200%;
+  }
+}
+
+
+
+
 
 #cards {
   display: flex;

@@ -10,7 +10,7 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    <em>Zero</em> APIs to build
+                    <strong>Zero</strong> APIs to build
                 </h1>
                 <p>
                     Usually building a SPA comes with double the work since running your 

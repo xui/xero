@@ -10,7 +10,7 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    This makes <em>Zero</em> sense
+                    This makes <strong>Zero</strong> sense
                 </h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

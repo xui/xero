@@ -10,7 +10,7 @@ partial class UI
                     Speed
                 </h2>
                 <h1>
-                    <em>Zero</em> layout thrashing
+                    <strong>Zero</strong> layout thrashing
                 </h1>
                 <p>
                     Other UI frameworks use a brute force approach for updating DOM by 

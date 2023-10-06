@@ -10,7 +10,7 @@ partial class UI
                     Speed
                 </h2>
                 <h1>
-                    <em>Zero</em> allocations
+                    <strong>Zero</strong> allocations
                 </h1>
                 <p>
                     Taking much inspiration from Lit's usage of tagged template literals 

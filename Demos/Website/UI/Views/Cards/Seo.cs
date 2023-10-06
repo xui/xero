@@ -10,7 +10,7 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    <em>Zero</em> SEO headaches
+                    <strong>Zero</strong> SEO headaches
                 </h1>
                 <p>
                     SEO complicates your web app.  SSR, SSG, ISG and CSF are all complexity 

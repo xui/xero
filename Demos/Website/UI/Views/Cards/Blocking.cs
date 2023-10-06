@@ -36,7 +36,7 @@ partial class UI
                     Speed
                 </h2>
                 <h1>
-                    <em>Zero</em> blocking
+                    <strong>Zero</strong> blocking
                 </h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

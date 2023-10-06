@@ -10,7 +10,7 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    <em>Zero</em> $: / use* hooks
+                    <strong>Zero</strong> $: / use* hooks
                 </h1>
                 <p>
                     Managing state is the hardest part of any UI framework.  This is true for 

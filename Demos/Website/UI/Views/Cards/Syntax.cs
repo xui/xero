@@ -10,7 +10,7 @@ partial class UI
                     Simplify
                 </h2>
                 <h1>
-                    <em>Zero</em> new syntax to learn
+                    <strong>Zero</strong> new syntax to learn
                 </h1>
                 <p>
                     It's just regular C# with regular <code>$" "</code> string interpolations.  If you

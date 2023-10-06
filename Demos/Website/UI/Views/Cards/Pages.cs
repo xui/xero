@@ -11,7 +11,7 @@ partial class UI
                     User Experience
                 </h2>
                 <h1>
-                    <em>Zero</em> "pages"
+                    <strong>Zero</strong> "pages"
                 </h1>
                 <p>
                     The concept of individual pages are like handcuffs to building a rich UI.  

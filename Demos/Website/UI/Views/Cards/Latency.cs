@@ -10,7 +10,7 @@ partial class UI
                     Speed
                 </h2>
                 <h1>
-                    Near <em>Zero</em> latency
+                    Near <strong>Zero</strong> latency
                 </h1>
                 <p>
                     Humans perceive anything under 100 milliseconds to be instant.  For 

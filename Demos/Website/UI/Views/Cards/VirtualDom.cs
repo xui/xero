@@ -10,7 +10,7 @@ partial class UI
                     Speed
                 </h2>
                 <h1>
-                    <em>Zero</em> virtual DOM
+                    <strong>Zero</strong> virtual DOM
                 </h1>
                 <p>
                     Xero takes an approach to rendering that borrows concepts from Google's 
