@@ -2,7 +2,7 @@ partial class UI
 {
     View Api(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="api/api.gif" />
             </div>
             <article>

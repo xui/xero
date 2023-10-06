@@ -2,7 +2,7 @@ partial class UI
 {
     View Latency(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="latency/latency.gif" />
             </div>
             <article>

@@ -2,7 +2,7 @@ partial class UI
 {
     View Allocations(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="allocations/allocations.svg" />
             </div>
             <article>

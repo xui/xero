@@ -2,7 +2,7 @@ partial class UI
 {
     View Hooks(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="hooks/hooks.jpg" />
             </div>
             <article>

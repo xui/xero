@@ -2,7 +2,7 @@ partial class UI
 {
     View JavaScript(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <button onclick="{Increment}">Clicks: {vm.Count}</button>
             </div>
             <article>

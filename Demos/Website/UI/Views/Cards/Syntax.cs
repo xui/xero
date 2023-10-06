@@ -2,7 +2,7 @@ partial class UI
 {
     View Syntax(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="syntax/syntax.svg" />
             </div>
             <article>

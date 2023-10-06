@@ -2,7 +2,7 @@ partial class UI
 {
     View Benchmarks(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="benchmarks/benchmarks.svg" />
             </div>
             <article>

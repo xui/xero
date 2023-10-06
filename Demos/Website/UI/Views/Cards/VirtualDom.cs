@@ -2,7 +2,7 @@ partial class UI
 {
     View VirtualDom(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="virtualdom/virtualdom.svg" />
             </div>
             <article>

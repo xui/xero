@@ -2,7 +2,7 @@ partial class UI
 {
     View Pages(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <a href="zero-pages">xero.wtf/zero-pages</a>
                 <img src="zero-pages/zero-pages.svg" />
             </div>

@@ -2,7 +2,7 @@ partial class UI
 {
     View Thrashing(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="thrashing/thrashing.svg" />
             </div>
             <article>

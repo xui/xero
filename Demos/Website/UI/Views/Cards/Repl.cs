@@ -2,7 +2,7 @@ partial class UI
 {
     View Repl(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="repl/repl.svg" />
             </div>
             <article>

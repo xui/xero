@@ -2,7 +2,7 @@ partial class UI
 {
     View Roadmap(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <img src="roadmap/roadmap.svg" />
             </div>
             <article>

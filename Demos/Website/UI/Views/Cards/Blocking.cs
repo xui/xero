@@ -2,7 +2,7 @@ partial class UI
 {
     View Blocking(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <pre>
                     HTTP/1.1 GET 200 - 0.9873ms
                     HTTP/1.1 GET 200 - 0.7671ms

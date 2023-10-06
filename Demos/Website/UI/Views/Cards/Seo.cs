@@ -2,7 +2,7 @@ partial class UI
 {
     View Seo(ViewModel vm) => $"""
         <section>
-            <div class="hero">
+            <div>
                 <button onclick="{FetchHtml}">GET https://xero.wtf</button>
             </div>
             <article>
