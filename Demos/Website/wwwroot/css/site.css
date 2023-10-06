@@ -2,22 +2,22 @@ body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   background-color: #f6f6f6;
-}
 
-strong {
-  color: #ec7e2e;
-  font-style: normal;
-}
-
-button {
-  height: 48px;
-  width: 200px;
-  background-color: #ec7e2e;
-  border: 0;
-  border-radius: 1000px;
-  box-shadow: 0px 0px 24px #ec7e2e;
-  color: white;
-  font-weight: 900;
+  & strong {
+    color: #ec7e2e;
+    font-style: normal;
+  }
+  
+  & button {
+    height: 48px;
+    width: 200px;
+    background-color: #ec7e2e;
+    border: 0;
+    border-radius: 1000px;
+    box-shadow: 0px 0px 24px #ec7e2e;
+    color: white;
+    font-weight: 900;
+  }
 }
 
 #header {
@@ -44,10 +44,6 @@ button {
   }
 }
 
-
-
-
-
 #cards {
   display: flex;
   flex-direction: row;
@@ -55,56 +51,51 @@ button {
   align-content: flex-start;
   flex-wrap: wrap;
   gap: 48px;
-}
 
-#cards h1 {
-  font-size: 29pt;
-  line-height: 100%;
-}
+  & h1 {
+    color: #191919;
+    font-size: 29pt;
+    line-height: 100%;
+  }
+  
+  & h2 {
+    color: #8a8a8a;
+    font-size: 16pt;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  & p {
+    text-overflow: ellipsis;
+    font-size: 14pt;
+    /* background-color: lightblue; */
+  }
+  
+  & section {
+    width: 500px;
+    display: inline-block;
+    box-shadow: 0px 0px 24px #00000033;
+    overflow: hidden;
+    border-radius: 30px;
+    background-color: white;
+    /* border: 2px solid blue; */
 
-#cards h2 {
-  color: #8a8a8a;
-  font-size: 16pt;
-  font-weight: 600;
-  text-transform: uppercase;
+    & .card-hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      background-color: lightblue;
+    }
+    
+    & .card-content {
+      height: 190px;
+      margin: 24px;
+      color: #aaa;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+    }
+  }
 }
-
-#cards p {
-  text-overflow: ellipsis;
-  font-size: 14pt;
-  /* background-color: lightblue; */
-}
-
-#cards section {
-  width: 500px;
-  display: inline-block;
-  box-shadow: 0px 0px 24px #00000033;
-  overflow: hidden;
-  border-radius: 30px;
-  background-color: white;
-  /* border: 2px solid blue; */
-}
-
-.card-hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  background-color: lightblue;
-}
-
-.card-content {
-  height: 190px;
-  margin: 24px;
-  color: #aaa;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: hidden;
-  /* border: 2px solid blue; */
-  /* background-color: lightblue; */
-}
-
-/* #cards section-1 {
-  flex-grow: 1;
-} */
