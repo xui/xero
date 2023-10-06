@@ -44,6 +44,52 @@ body {
   }
 }
 
+.vscode {
+  background-color: #1e1e1e;
+  box-shadow: 0px 0px 24px #00000099;
+  margin: 100px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+
+  & .sidebar {
+    font-size: 16pt;
+    /* color: #a0d6f5; */
+    color: white;
+    background-color: #333333;
+    padding: 48px;
+
+    & label {
+      display: block;
+      margin: 8px;
+    }
+
+    & details > label {
+      margin-left: 24px;
+    }
+  }
+
+  & .code {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-grow: 1;
+    color: #969696;
+
+    & img {
+      height: 200px;
+    }
+
+    & p {
+      margin: 32px;
+      font-size: 20pt;
+      text-align: center;
+    }
+  }
+}
+
 #cards {
   display: flex;
   flex-direction: row;
