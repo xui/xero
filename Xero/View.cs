@@ -202,6 +202,8 @@ public abstract partial class UI<T>
 
         public string ToStringWithExtras()
         {
+            bool probablyAnAttributeNextHack = false;
+
             var builder = new StringBuilder();
             for (int i = start; i < end; i++)
             {
@@ -213,15 +215,31 @@ public abstract partial class UI<T>
                     case FormatType.DateTime:
                     case FormatType.Integer:
                     case FormatType.String:
-                        builder.Append("<!-- -->");
-                        chunk.Append(builder);
-                        builder.Append("<script>r(\"slot");
-                        builder.Append(chunk.Id);
-                        builder.Append("\")</script>");
+                        if (probablyAnAttributeNextHack)
+                        {
+                            chunk.Append(builder);
+                        }
+                        else
+                        {
+                            builder.Append("<!-- -->");
+                            chunk.Append(builder);
+                            builder.Append("<script>r(\"slot");
+                            builder.Append(chunk.Id);
+                            builder.Append("\")</script>");
+                        }
                         break;
                     default:
                         chunk.Append(builder);
                         break;
+                }
+
+                if (chunk.Type == FormatType.StringLiteral && chunk.String?[^1] == '"')
+                {
+                    probablyAnAttributeNextHack = true;
+                }
+                else
+                {
+                    probablyAnAttributeNextHack = false;
                 }
             }
             return builder.ToString();
