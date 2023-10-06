@@ -61,6 +61,7 @@ body {
     background-color: white;
     /* border: 1px solid rgb(206, 204, 232); */
 
+    /* Card hero */
     > div {
       display: flex;
       justify-content: center;
@@ -69,6 +70,7 @@ body {
       background-color: lightblue;
     }
 
+    /* Card content */
     & article {
       height: 190px;
       margin: 24px;
