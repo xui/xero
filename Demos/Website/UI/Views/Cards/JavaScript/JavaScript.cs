@@ -6,7 +6,7 @@ partial class UI
                 <button onclick="{Increment}">Clicks: {vm.Count}</button>
             </div>
             <div class="card-content">
-                <h2 class="tag">
+                <h2>
                     Simplify
                 </h2>
                 <h1>
