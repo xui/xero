@@ -70,6 +70,7 @@ body {
 }
 
 .vscode {
+  height: 500px;
   background-color: #1e1e1e;
   box-shadow: 0px 0px 24px #00000099;
   margin: 96px;
@@ -90,8 +91,8 @@ body {
       margin: 8px;
     }
 
-    & details > label {
-      margin-left: 24px;
+    & details > details, details > label {
+      margin-left: 32px;
     }
   }
 
