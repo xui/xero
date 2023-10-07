@@ -32,7 +32,7 @@ body {
 }
 
 #header {
-  width: 800px;
+  width: 900px;
   margin: 60px auto 60px auto;
   display: flex;
   /* border: 2px solid blue; */
@@ -43,7 +43,7 @@ body {
 
   & h1 {
     color: #191919;
-    font-size: 32pt;
+    font-size: 40pt;
     font-weight: 900;
     line-height: 150%;
   }
@@ -58,7 +58,7 @@ body {
 
   & li {
     color: #868686;
-    font-size: 18pt;
+    font-size: 14pt;
     list-style: inside;
 
     & footnote {
@@ -91,7 +91,8 @@ body {
       margin: 8px;
     }
 
-    & details > details, details > label {
+    & details > details,
+    details > label {
       margin-left: 32px;
     }
   }

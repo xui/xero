@@ -10,17 +10,17 @@ partial class UI
                     Build realtime web apps with <strong>zero</strong> JavaScript
                 </h1>
                 <h2>
-                    Xero treats your web browser like a thin client.
+                    Your browser as a dumb shell with a brilliant rendering engine
                 </h2>
                 <ul>
                     <li>
-                        HTML is always rendered server-side
+                        HTML renders server-side via raw string literal interpolation
                     </li>
                     <li>
-                        DOM events piped to the server via WebSocket
+                        Server listens to DOM events through a WebSocket
                     </li>
                     <li>
-                        Xero reacts to render-deltas with DOM mutations
+                        Server reacts to render-deltas by pushing DOM mutations
                     </li>
                 </ul>
             </div>
