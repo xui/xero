@@ -5,13 +5,31 @@ partial class UI
             <div class="sidebar">
                 <details open>
                     <summary>Views</summary>
-                    {File("Child.cs")}
-                    {File("Footer.cs")}
-                    {File("Header.cs")}
-                    {File("Header.cs")}
-                    {File("Header.cs")}
-                    {File("Header.cs")}
-                    {File("Header.cs")}
+                    <details open>
+                        <summary>Cards</summary>
+                        {File("Allocations.cs")}
+                        {File("Api.cs")}
+                        {File("Benchmarks.cs")}
+                        {File("Blocking.cs")}
+                        {File("Hooks.cs")}
+                        {File("HotReloads.cs")}
+                        {File("JavaScript.cs")}
+                        {File("Latency.cs")}
+                        {File("Pages.cs")}
+                        {File("Repl.cs")}
+                        {File("Roadmap.cs")}
+                        {File("Seo.cs")}
+                        {File("Stupid.cs")}
+                        {File("Syntax.cs")}
+                        {File("Thrashing.cs")}
+                        {File("VirtualDom.cs")}
+                    </details>
+                    <details open>
+                        <summary>Header</summary>
+                        {File("Header.cs")}
+                        {File("VSCode.cs")}
+                    </details>
+                    {File("MainLayout.cs")}
                 </details>
                 {File("UI.cs")}
                 {File("ViewModel.cs")}
