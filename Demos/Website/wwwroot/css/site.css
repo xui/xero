@@ -9,8 +9,8 @@ body {
   }
 
   & button {
-    height: 48px;
-    width: 200px;
+    height: 64px;
+    width: 250px;
     background-color: #ec7e2e;
     border: 0;
     border-radius: 1000px;
