@@ -10,17 +10,17 @@ partial class UI
                     Build realtime web apps with <strong>zero</strong> JavaScript
                 </h1>
                 <h2>
-                    Your browser as a dumb shell with a brilliant rendering engine
+                    Your browser makes an excellent thin client
                 </h2>
                 <ul>
                     <li>
-                        HTML renders server-side via raw string literal interpolation
+                        Server renders HTML using raw string literal interpolations
                     </li>
                     <li>
-                        Server listens to DOM events through a WebSocket
+                        Server listens to browser events through a WebSocket
                     </li>
                     <li>
-                        Server reacts to render-deltas by pushing DOM mutations
+                        Server reactively pushes mutations to the browser
                     </li>
                 </ul>
             </div>
