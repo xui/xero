@@ -5,7 +5,7 @@ partial class UI
             <div class="sidebar">
                 <details open>
                     <summary>Views</summary>
-                    <details open>
+                    <details>
                         <summary>Cards</summary>
                         {File("Allocations.cs")}
                         {File("Api.cs")}
@@ -24,7 +24,7 @@ partial class UI
                         {File("Thrashing.cs")}
                         {File("VirtualDom.cs")}
                     </details>
-                    <details open>
+                    <details>
                         <summary>Header</summary>
                         {File("Header.cs")}
                         {File("VSCode.cs")}

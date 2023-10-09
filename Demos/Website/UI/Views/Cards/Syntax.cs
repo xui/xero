@@ -1,7 +1,7 @@
 partial class UI
 {
     View Syntax(ViewModel vm) => $"""
-        <section>
+        <section id="zero-syntax">
             <div>
                 <img src="syntax/syntax.svg" />
             </div>

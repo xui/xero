@@ -180,4 +180,11 @@ body {
       background-color: white;
     }
   }
+
+  #zero-syntax {
+    /* Card hero */
+    > div {
+      background-color: #1e1e1e;
+    }
+  }
 }
