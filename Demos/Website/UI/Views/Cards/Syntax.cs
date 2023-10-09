@@ -3,7 +3,7 @@ partial class UI
     View Syntax(ViewModel vm) => $"""
         <section id="zero-syntax">
             <div>
-                <img src="syntax/syntax.svg" />
+                <img src="img/zero_syntax.svg" />
             </div>
             <article>
                 <h2>
