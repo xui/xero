@@ -199,4 +199,11 @@ body {
       color: #970101;
     }
   }
+
+  #zero-roadmap {
+    /* Card hero */
+    > div {
+      background-color: white;
+    }
+  }
 }
