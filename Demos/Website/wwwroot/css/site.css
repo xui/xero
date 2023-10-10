@@ -187,4 +187,16 @@ body {
       background-color: #1e1e1e;
     }
   }
+
+  #zero-stupid {
+    /* Card hero */
+    > div {
+      font-size: 96pt;
+      background-color: #970101;
+    }
+
+    & strong {
+      color: #970101;
+    }
+  }
 }
