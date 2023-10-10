@@ -10,11 +10,11 @@ partial class UI
                     Build realtime web apps with <strong>zero</strong> JavaScript
                 </h1>
                 <h2>
-                    Your browser makes an excellent thin client
+                    Web browsers can be incredible thin clients
                 </h2>
                 <ul>
                     <li>
-                        Server renders HTML using raw string literal interpolations
+                        Server renders all HTML with fast raw string literal interpolations
                     </li>
                     <li>
                         Server listens to browser events through a WebSocket
