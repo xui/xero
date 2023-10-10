@@ -1,9 +1,9 @@
 partial class UI
 {
     View VirtualDom(ViewModel vm) => $"""
-        <section>
+        <section id="zero-virtual-dom">
             <div>
-                <img src="virtualdom/virtualdom.svg" />
+                <img src="img/zero_virtual_dom.svg" />
             </div>
             <article>
                 <h2>

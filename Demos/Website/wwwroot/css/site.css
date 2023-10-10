@@ -141,7 +141,7 @@ body {
       justify-content: center;
       align-items: center;
       height: 300px;
-      background-color: lightblue;
+      background-color: white;
     }
 
     /* Card content */
@@ -176,7 +176,6 @@ body {
 
   #zero-javascript {
     > div {
-      background-color: white;
     }
   }
 
@@ -186,9 +185,14 @@ body {
     }
   }
 
+  #zero-virtual-dom {
+    > div {
+      background-color: #1e1e1e;
+    }
+  }
+
   #zero-pages {
     > div {
-      background-color: white;
       flex-direction: column;
       gap: 24px;
 
@@ -216,11 +220,11 @@ body {
         font-size: 96pt;
         line-height: 100%;
       }
-  
+
       & h2 {
         color: #ffffff66;
         font-size: 24pt;
-      }  
+      }
     }
   }
 
@@ -237,7 +241,6 @@ body {
 
   #zero-roadmap {
     > div {
-      background-color: white;
     }
   }
 }
