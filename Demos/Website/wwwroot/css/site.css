@@ -186,6 +186,26 @@ body {
     }
   }
 
+  #zero-pages {
+    > div {
+      background-color: white;
+      flex-direction: column;
+      gap: 24px;
+
+      & a {
+        color: blue;
+        font-size: 16pt;
+        text-decoration: underline;
+      }
+
+      & img {
+        width: 100%;
+        padding-left: 72px;
+        padding-right: 72px;
+      }
+    }
+  }
+
   #hot-reload {
     > div {
       background-color: #970101;

@@ -1,10 +1,10 @@
 partial class UI
 {
     View Pages(ViewModel vm) => $"""
-        <section>
+        <section id="zero-pages">
             <div>
                 <a href="zero-pages">xero.wtf/zero-pages</a>
-                <img src="zero-pages/zero-pages.svg" />
+                <img src="img/zero_pages.svg" />
             </div>
             <article>
                 <h2>
