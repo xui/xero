@@ -1,7 +1,7 @@
 partial class UI
 {
     View HotReloads(ViewModel vm) => $"""
-        <section>
+        <section id="hot-reload">
             <div>
                 <h1>
                     {Xero.HotReload.ReloadCount}

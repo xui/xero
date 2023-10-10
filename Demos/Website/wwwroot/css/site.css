@@ -175,21 +175,36 @@ body {
   }
 
   #zero-javascript {
-    /* Card hero */
     > div {
       background-color: white;
     }
   }
 
   #zero-syntax {
-    /* Card hero */
     > div {
       background-color: #1e1e1e;
     }
   }
 
+  #hot-reload {
+    > div {
+      background-color: #970101;
+      flex-direction: column;
+
+      & h1 {
+        color: white;
+        font-size: 96pt;
+        line-height: 100%;
+      }
+  
+      & h2 {
+        color: #ffffff66;
+        font-size: 24pt;
+      }  
+    }
+  }
+
   #zero-stupid {
-    /* Card hero */
     > div {
       font-size: 96pt;
       background-color: #970101;
@@ -201,7 +216,6 @@ body {
   }
 
   #zero-roadmap {
-    /* Card hero */
     > div {
       background-color: white;
     }
