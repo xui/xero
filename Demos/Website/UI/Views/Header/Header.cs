@@ -3,7 +3,7 @@ partial class UI
     View Header() => $"""
         <section id="header" class="hstack">
             <div class="vstack">
-                <img src="xero_logo.svg" />
+                <img src="img/xero_logo.svg" />
             </div>
             <div class="vstack">
                 <h1>
