@@ -1,7 +1,7 @@
 partial class UI
 {
-    View Stupid(ViewModel vm) => $"""
-        <section id="zero-stupid">
+    View Sense(ViewModel vm) => $"""
+        <section id="zero-sense">
             <div>
                 &#128548
             </div>

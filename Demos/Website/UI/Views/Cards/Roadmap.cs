@@ -1,7 +1,7 @@
 partial class UI
 {
     View Roadmap(ViewModel vm) => $"""
-        <section id="zero-roadmap">
+        <section id="roadmap">
             <div>
                 <img src="img/xui_logo.svg" />
             </div>

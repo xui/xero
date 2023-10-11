@@ -30,7 +30,7 @@ partial class UI
                 {Repl(vm)}
                 {Pages(vm)}
                 {Benchmarks(vm)}
-                {Stupid(vm)}
+                {Sense(vm)}
                 {Roadmap(vm)}
             </div>
 

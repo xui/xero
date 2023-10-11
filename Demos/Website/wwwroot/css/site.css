@@ -34,8 +34,6 @@ body {
 #header {
   width: 900px;
   margin: 60px auto 60px auto;
-  display: flex;
-  /* border: 2px solid blue; */
 
   & img {
     width: 350px;
@@ -45,14 +43,12 @@ body {
     color: #191919;
     font-size: 40pt;
     font-weight: 900;
-    line-height: 150%;
   }
 
   & h2 {
     color: #868686;
     font-size: 18pt;
     font-weight: 300;
-    line-height: 150%;
     margin-top: 16px;
   }
 
@@ -126,6 +122,7 @@ body {
   margin: 0px 96px;
   gap: 48px;
 
+  /* Card */
   & section {
     width: 500px;
     display: inline-block;
@@ -233,7 +230,7 @@ body {
     }
   }
 
-  #zero-stupid {
+  #zero-sense {
     > div {
       font-size: 96pt;
       background-color: #970101;
@@ -244,7 +241,7 @@ body {
     }
   }
 
-  #zero-roadmap {
+  #roadmap {
     > div {
     }
   }
