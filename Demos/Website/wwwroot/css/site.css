@@ -185,6 +185,11 @@ body {
     }
   }
 
+  #zero-hooks {
+    > div {
+    }
+  }
+
   #zero-virtual-dom {
     > div {
       background-color: #1e1e1e;

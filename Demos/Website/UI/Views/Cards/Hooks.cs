@@ -1,16 +1,30 @@
 partial class UI
 {
-    View Hooks(ViewModel vm) => $"""
-        <section>
-            <div>
-                <img src="hooks/hooks.jpg" />
+    View Hooks(ViewModel vm) => $$"""
+        <section id="zero-hooks">
+            <div class="vstack">
+                <div class="hstack>
+                    <img src="img/drake_no.jpg" />
+                    <pre>
+                        <div>const [name, setName] = useState('');</div>
+                        <div>const [name, setName] = useState('');</div>
+                    </pre>
+                </div>
+                <h1 />
+                <div class="hstack>
+                    <img src="img/drake_yes.jpg" />
+                    <pre>
+                        <div><p>{viewModel.Name ?? "(none)"}</p></div>
+                        <div><p>{viewModel.Count * 2}</p></div>
+                    </pre>
+                </div>
             </div>
             <article>
                 <h2>
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> $: / use* hooks
+                    <strong>Zero</strong> $: or use-effects
                 </h1>
                 <p>
                     Managing state is the hardest part of any UI framework.  This is true for 
