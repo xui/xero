@@ -2,10 +2,10 @@ partial class UI
 {
     View Header() => $"""
         <section id="header" class="hstack">
-            <div class="vstack">
-                <img src="img/xero_logo.svg" />
-            </div>
-            <div class="vstack">
+
+            <img src="img/xero_logo.svg" />
+            
+            <div>
                 <h1>
                     Build realtime web apps with <strong>zero</strong> JavaScript
                 </h1>

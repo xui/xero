@@ -3,19 +3,19 @@ partial class UI
     View Hooks(ViewModel vm) => $$"""
         <section id="zero-hooks">
             <div class="vstack">
-                <div class="hstack>
+                <div class="hstack">
                     <img src="img/drake_no.jpg" />
                     <pre>
                         <div>const [name, setName] = useState('');</div>
-                        <div>const [name, setName] = useState('');</div>
+                        <div>$: doubled = count * 2;</div>
                     </pre>
                 </div>
-                <h1 />
-                <div class="hstack>
+                <hr />
+                <div class="hstack">
                     <img src="img/drake_yes.jpg" />
                     <pre>
-                        <div><p>{viewModel.Name ?? "(none)"}</p></div>
-                        <div><p>{viewModel.Count * 2}</p></div>
+                        <div>&lt;p&gt;{ viewModel.Name ?? "(none)" }&lt;/p&gt;</div>
+                        <div>&lt;p&gt;{ viewModel.Count * 2 }&lt;/p&gt;</div>
                     </pre>
                 </div>
             </div>

@@ -23,12 +23,14 @@ body {
 .vstack {
   display: flex;
   flex-direction: column;
+  /* border: 2px solid green; */
 }
 
 .hstack {
   display: flex;
   flex-direction: row;
   align-items: center;
+  /* border: 2px solid blue; */
 }
 
 #header {
@@ -56,12 +58,6 @@ body {
     color: #868686;
     font-size: 14pt;
     list-style: inside;
-
-    & footnote {
-      display: block;
-      font-size: 12pt;
-      padding-left: 24px;
-    }
   }
 }
 
@@ -184,6 +180,33 @@ body {
 
   #zero-hooks {
     > div {
+      align-items: stretch;
+
+      & hr {
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+      }
+
+      & div {
+        flex-grow: 1;
+        flex-basis: 0;
+
+        & pre {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          font-size: 10pt;
+          margin-top: auto;
+          margin-bottom: auto;
+          padding: 16px;
+          flex-grow: 1;
+          line-height: 100%;
+        }
+
+        & img {
+          height: 160px;
+        }
+      }
     }
   }
 
