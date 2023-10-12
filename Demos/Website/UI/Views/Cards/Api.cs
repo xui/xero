@@ -1,9 +1,9 @@
 partial class UI
 {
     View Api(ViewModel vm) => $"""
-        <section>
+        <section id="zero-api">
             <div>
-                <img src="api/api.gif" />
+                <img src="img/3d_rotate.png" />
             </div>
             <article>
                 <h2>
