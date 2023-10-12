@@ -263,6 +263,10 @@ body {
         font-size: 24pt;
       }
     }
+
+    & strong {
+      color: #0b86bb;
+    }
   }
 
   #hot-reload {
