@@ -22,7 +22,6 @@ partial class UI
                 {Api(vm)}
                 {Blocking(vm)}
                 {Seo(vm)}
-                {Thrashing(vm)}
                 {VirtualDom(vm)}
                 {Latency(vm)}
                 {Allocations(vm)}
