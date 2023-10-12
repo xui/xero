@@ -247,6 +247,24 @@ body {
     }
   }
 
+  #zero-latency {
+    > div {
+      background-color: #0b86bb;
+      flex-direction: column;
+
+      & h1 {
+        color: white;
+        font-size: 96pt;
+        line-height: 100%;
+      }
+
+      & h2 {
+        color: #ffffff66;
+        font-size: 24pt;
+      }
+    }
+  }
+
   #hot-reload {
     > div {
       background-color: #970101;

@@ -1,9 +1,14 @@
 partial class UI
 {
     View Latency(ViewModel vm) => $"""
-        <section>
+        <section id="zero-latency">
             <div>
-                <img src="latency/latency.gif" />
+                <h1>
+                    8.02
+                </h1>
+                <h2>
+                    milliseconds
+                </h2>
             </div>
             <article>
                 <h2>
