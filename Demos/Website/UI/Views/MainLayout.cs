@@ -3,7 +3,8 @@ partial class UI
     protected override View MainLayout(ViewModel vm) => $"""
         <html>
         <head>
-            <!-- Zero script refs.  Such fast. -->
+            <!-- Zero script-refs.  Such fast. -->
+
             <link rel="stylesheet" href="/css/preflight.css" />
             <link rel="stylesheet" href="/css/site.css" />
             {Register()}
