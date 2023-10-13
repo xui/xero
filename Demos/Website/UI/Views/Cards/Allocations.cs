@@ -1,7 +1,7 @@
 partial class UI
 {
     View Allocations(ViewModel vm) => $"""
-        <section>
+        <section id="zero-allocations">
             <div>
                 <img src="allocations/allocations.svg" />
             </div>
