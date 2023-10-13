@@ -13,6 +13,7 @@ public abstract partial class UI<T>
         public int? Integer;
         public bool? Boolean;
         public DateTime? DateTime;
+        public IView? View;
         public string? Format;
         public Action<Context> Action;
         public Func<Context, Task> ActionAsync;
@@ -34,6 +35,8 @@ public abstract partial class UI<T>
                     return c1.DateTime == c2.DateTime && c1.Format == c2.Format;
                 case FormatType.Boolean:
                     return c1.Boolean == c2.Boolean && c1.Format == c2.Format;
+                case FormatType.View:
+                    return c1.View == c2.View;
                 case FormatType.HtmlString:
                     // TODO: Implement this.
                     return true;
@@ -88,6 +91,7 @@ public abstract partial class UI<T>
                     else
                         builder.AppendFormat($"{{0:{this.Format}}}", this.DateTime);
                     break;
+                case FormatType.View:
                 case FormatType.HtmlString:
                     // no-op
                     break;

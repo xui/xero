@@ -27,7 +27,7 @@ public class UI : UI<ViewModel>
         return $"""
             123{c}456{DateTime.Now}789{c}0123
 
-            {GetComponent1(s)}
+            {new Component2(s)}
             
             {DateTime.Now:O} {c} {c:x} {c} {c} {c} {c}
         """;
@@ -35,18 +35,18 @@ public class UI : UI<ViewModel>
 
     UI<ViewModel>.View GetComponent1(string name)
     {
-        return $"<p>I am {s} a component</p>";
+        return $"<p>I am {name} a component</p>";
     }
 
     [Benchmark]
     [IterationCount(10)]
-    public Placebo Placebo(Context ctx)
+    public Placebo Placebo()
     {
         return $"""
             123{c}456{DateTime.Now}789{c}0123
 
             {GetPlaceboComponent(s)}
-            
+
             {DateTime.Now:O} {c} {c:x} {c} {c} {c} {c}
         """;
     }
@@ -54,5 +54,24 @@ public class UI : UI<ViewModel>
     Placebo GetPlaceboComponent(string name)
     {
         return $"<p>I am {s} a component</p>";
+    }
+}
+
+record struct Component2(string Name) : UI.IView
+{
+    public UI.View Render() => $"<p>I am {Name} a component</p>";
+}
+
+class Wat
+{
+    void DoIt()
+    {
+        Component2 c = new();
+        DoIt2(ref c);
+    }
+
+    void DoIt2(ref Component2 component2)
+    {
+
     }
 }

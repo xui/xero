@@ -7,6 +7,7 @@ enum FormatType
     Integer,
     Boolean,
     DateTime,
+    View,
     HtmlString,
     Action,
     ActionAsync,

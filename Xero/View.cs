@@ -139,9 +139,14 @@ public abstract partial class UI<T>
             MoveNext();
         }
 
-        public void AppendFormatted(View s)
+        public void AppendFormatted<TView>(TView v) where TView : IView
         {
-            end = s.end;
+            AppendFormatted(v.Render());
+        }
+
+        public void AppendFormatted(View h)
+        {
+            end = h.end;
 
             ref var chunk = ref buffer.chunks[end];
             chunk.Id = end;

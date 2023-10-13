@@ -44,7 +44,7 @@ void Threads(int threadCount, bool placebo = false)
 
                 while (true)
                 {
-                    test.Placebo(ctx);
+                    test.Placebo();
                     counters[index]++;
                 }
             }).Start();
