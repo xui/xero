@@ -1,6 +1,6 @@
 partial class UI
 {
-    View HotReloads(ViewModel vm) => $"""
+    HtmlString HotReloads(ViewModel vm) => $"""
         <section id="hot-reload">
             <div>
                 <h1>

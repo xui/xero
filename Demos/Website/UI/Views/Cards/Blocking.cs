@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Blocking(ViewModel vm) => $"""
+    HtmlString Blocking(ViewModel vm) => $"""
         <section>
             <div>
                 <pre>

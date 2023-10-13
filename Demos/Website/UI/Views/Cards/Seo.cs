@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Seo(ViewModel vm) => $"""
+    HtmlString Seo(ViewModel vm) => $"""
         <section>
             <div>
                 <button onclick="{FetchHtml}">GET https://xero.wtf</button>

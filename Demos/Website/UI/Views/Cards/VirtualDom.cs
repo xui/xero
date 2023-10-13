@@ -1,6 +1,6 @@
 partial class UI
 {
-    View VirtualDom(ViewModel vm) => $"""
+    HtmlString VirtualDom(ViewModel vm) => $"""
         <section id="zero-virtual-dom">
             <div>
                 <img src="img/zero_virtual_dom.svg" />

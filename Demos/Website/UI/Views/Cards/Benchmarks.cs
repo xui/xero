@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Benchmarks(ViewModel vm) => $"""
+    HtmlString Benchmarks(ViewModel vm) => $"""
         <section>
             <div>
                 <img src="benchmarks/benchmarks.svg" />

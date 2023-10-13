@@ -1,6 +1,6 @@
 partial class UI
 {
-    View JavaScript(ViewModel vm) => $"""
+    HtmlString JavaScript(ViewModel vm) => $"""
         <section id="zero-javascript">
             <div>
                 <button onclick="{Increment}">Clicks: {vm.Count}</button>

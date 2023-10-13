@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Footer() => $"""
+    HtmlString Footer() => $"""
         <ol>
             <li>footer 1</li>
             <li>footer 2</li>

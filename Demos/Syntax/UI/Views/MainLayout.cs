@@ -2,7 +2,7 @@ using Xero;
 
 partial class UI
 {
-    protected override View MainLayout(MyViewModel vm) => $"""
+    protected override HtmlString MainLayout(MyViewModel vm) => $"""
         <html>
             <head>
                 <!-- Zero script refs.  Such fast. -->
@@ -76,7 +76,7 @@ partial class UI
                 <p>
                     {_ =>
                     {
-                        View message;
+                        HtmlString message;
                         if (vm.Name != null)
                             message = $"Welcome {vm.Name}";
                         else

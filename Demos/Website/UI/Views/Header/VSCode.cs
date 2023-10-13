@@ -1,6 +1,6 @@
 partial class UI
 {
-    View VSCode() => $"""
+    HtmlString VSCode() => $"""
         <section class="vscode">
             <div class="sidebar">
                 <details open>
@@ -43,7 +43,7 @@ partial class UI
         </section>
         """;
 
-    View File(string name) => $"""
+    HtmlString File(string name) => $"""
         <label for="{name}">
             <input type="radio" name="file" id="{name}">{name}</input>
         </label>

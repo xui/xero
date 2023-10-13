@@ -1,6 +1,6 @@
 partial class UI
 {
-    protected override View MainLayout(ViewModel vm) => $"""
+    protected override HtmlString MainLayout(ViewModel vm) => $"""
         <html>
         <head>
             <!-- Zero script-refs.  Such fast. -->

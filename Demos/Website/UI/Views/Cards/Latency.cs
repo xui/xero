@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Latency(ViewModel vm) => $"""
+    HtmlString Latency(ViewModel vm) => $"""
         <section id="zero-latency">
             <div>
                 <h1>

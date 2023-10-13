@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Hooks(ViewModel vm) => $$"""
+    HtmlString Hooks(ViewModel vm) => $$"""
         <section id="zero-hooks">
             <div class="vstack">
                 <div class="hstack">

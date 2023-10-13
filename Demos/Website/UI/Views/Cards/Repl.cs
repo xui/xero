@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Repl(ViewModel vm) => $"""
+    HtmlString Repl(ViewModel vm) => $"""
         <section>
             <div>
                 <img src="repl/repl.svg" />

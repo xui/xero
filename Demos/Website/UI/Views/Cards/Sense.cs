@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Sense(ViewModel vm) => $"""
+    HtmlString Sense(ViewModel vm) => $"""
         <section id="zero-sense">
             <div>
                 &#128548

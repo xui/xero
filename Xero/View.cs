@@ -6,7 +6,7 @@ namespace Xero;
 public abstract partial class UI<T>
 {
     [InterpolatedStringHandler]
-    public struct View
+    public struct HtmlString
     {
         [ThreadStatic] static Buffer? rootBuffer;
 
@@ -27,12 +27,12 @@ public abstract partial class UI<T>
         int progressLiteral;
         int progressFormatted;
 
-        internal static View Create(Buffer buffer, [InterpolatedStringHandlerArgument("buffer")] View view)
+        internal static HtmlString Create(Buffer buffer, [InterpolatedStringHandlerArgument("buffer")] HtmlString view)
         {
             return view;
         }
 
-        public View(int literalLength, int formattedCount)
+        public HtmlString(int literalLength, int formattedCount)
         {
             if (rootBuffer is null)
                 throw new ArgumentException("Root chunk not allowed without supplied buffer.");
@@ -47,7 +47,7 @@ public abstract partial class UI<T>
             goalFormatted = formattedCount;
         }
 
-        internal View(int literalLength, int formattedCount, Buffer buffer)
+        internal HtmlString(int literalLength, int formattedCount, Buffer buffer)
         {
             rootBuffer = buffer;
             this.buffer = buffer;
@@ -144,7 +144,7 @@ public abstract partial class UI<T>
             AppendFormatted(v.Render());
         }
 
-        public void AppendFormatted(View h)
+        public void AppendFormatted(HtmlString h)
         {
             end = h.end;
 
@@ -156,13 +156,13 @@ public abstract partial class UI<T>
             MoveNext();
         }
 
-        public void AppendFormatted(Func<View> f)
+        public void AppendFormatted(Func<HtmlString> f)
         {
             progressFormatted++;
             MoveNext();
         }
 
-        public void AppendFormatted(Func<string, View> f)
+        public void AppendFormatted(Func<string, HtmlString> f)
         {
             progressFormatted++;
             MoveNext();
@@ -250,7 +250,7 @@ public abstract partial class UI<T>
             return builder.ToString();
         }
 
-        internal IEnumerable<Chunk> GetDeltas(View.Buffer buffer, View.Buffer compare)
+        internal IEnumerable<Chunk> GetDeltas(HtmlString.Buffer buffer, HtmlString.Buffer compare)
         {
             for (int i = 0; i < end; i++)
             {

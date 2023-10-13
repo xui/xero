@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Header() => $"""
+    HtmlString Header() => $"""
         <section id="header" class="hstack">
 
             <img src="img/xero_logo.svg" />

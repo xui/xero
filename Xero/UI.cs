@@ -15,16 +15,16 @@ public abstract partial class UI<T> where T : IViewModel
     {
     }
 
-    protected abstract View MainLayout(T viewModel);
+    protected abstract HtmlString MainLayout(T viewModel);
 
-    public View Compose(Context context)
+    public HtmlString Compose(Context context)
     {
-        return View.Create(context.ViewBuffer, $"{MainLayout(context.ViewModel)}");
+        return HtmlString.Create(context.ViewBuffer, $"{MainLayout(context.ViewModel)}");
     }
 
     public void Recompose(Context context)
     {
-        var compare = View.Create(context.CompareBuffer, $"{MainLayout(context.ViewModel)}");
+        var compare = HtmlString.Create(context.CompareBuffer, $"{MainLayout(context.ViewModel)}");
         context.PushMutations(ref compare);
     }
 

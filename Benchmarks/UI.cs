@@ -17,12 +17,12 @@ public class UI : UI<ViewModel>
 
     [Benchmark]
     [IterationCount(10)]
-    public View Test1()
+    public HtmlString Test1()
     {
         return Compose(ctx);
     }
 
-    protected override View MainLayout(ViewModel vm)
+    protected override HtmlString MainLayout(ViewModel vm)
     {
         return $"""
             123{c}456{DateTime.Now}789{c}0123
@@ -33,7 +33,7 @@ public class UI : UI<ViewModel>
         """;
     }
 
-    UI<ViewModel>.View GetComponent1(string name)
+    UI<ViewModel>.HtmlString GetComponent1(string name)
     {
         return $"<p>I am {name} a component</p>";
     }
@@ -59,7 +59,7 @@ public class UI : UI<ViewModel>
 
 record struct Component2(string Name) : UI.IView
 {
-    public UI.View Render() => $"<p>I am {Name} a component</p>";
+    public UI.HtmlString Render() => $"<p>I am {Name} a component</p>";
 }
 
 class Wat

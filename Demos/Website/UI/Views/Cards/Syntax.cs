@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Syntax(ViewModel vm) => $"""
+    HtmlString Syntax(ViewModel vm) => $"""
         <section id="zero-syntax">
             <div>
                 <img src="img/zero_syntax.svg" />

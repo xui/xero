@@ -1,6 +1,6 @@
 partial class UI
 {
-    View Pages(ViewModel vm) => $"""
+    HtmlString Pages(ViewModel vm) => $"""
         <section id="zero-pages">
             <div>
                 <a href="zero-pages">xero.wtf/zero-pages</a>
