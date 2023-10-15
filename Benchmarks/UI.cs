@@ -56,7 +56,7 @@ public class UI : UI<ViewModel>
     }
 }
 
-record struct Component2(string Name) : IView
+readonly record struct Component2(string Name) : IView
 {
     public HtmlString Render() => $"<p>I am {Name} a component</p>";
 }
