@@ -13,8 +13,8 @@ partial class UI
             <nav>
             </nav>
 
-            {Header()}
-            {VSCode()}
+            {new Header()}
+            {new VSCode()}
 
             <div id="cards">
                 {new JavaScript(vm)}

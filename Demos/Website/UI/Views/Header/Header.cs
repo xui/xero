@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Header() : IView
 {
-    HtmlString Header() => $"""
+    public HtmlString Render() => $"""
         <section id="header" class="hstack">
 
             <img src="img/xero_logo.svg" />

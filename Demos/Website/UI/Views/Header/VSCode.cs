@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct VSCode() : IView
 {
-    HtmlString VSCode() => $"""
+    public HtmlString Render() => $"""
         <section class="vscode">
             <div class="sidebar">
                 <details open>
