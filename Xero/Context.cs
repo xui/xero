@@ -13,8 +13,8 @@ public abstract partial class UI<T> where T : IViewModel
         public ClaimsPrincipal? User { get; set; }
 
         internal WebSocket? webSocket;
-        internal UI<T>.HtmlString.Buffer ViewBuffer;
-        internal UI<T>.HtmlString.Buffer CompareBuffer;
+        internal HtmlString.Buffer ViewBuffer;
+        internal HtmlString.Buffer CompareBuffer;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
 
@@ -34,7 +34,7 @@ public abstract partial class UI<T> where T : IViewModel
             }
         }
 
-        internal void PushMutations(ref UI<T>.HtmlString compare)
+        internal void PushMutations(ref HtmlString compare)
         {
             if (webSocket == null)
                 return;

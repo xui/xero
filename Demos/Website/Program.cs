@@ -1,4 +1,4 @@
-using Xero;
+global using Xero;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddXero();

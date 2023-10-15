@@ -33,7 +33,7 @@ public class UI : UI<ViewModel>
         """;
     }
 
-    UI<ViewModel>.HtmlString GetComponent1(string name)
+    HtmlString GetComponent1(string name)
     {
         return $"<p>I am {name} a component</p>";
     }
@@ -57,9 +57,9 @@ public class UI : UI<ViewModel>
     }
 }
 
-record struct Component2(string Name) : UI.IView
+record struct Component2(string Name) : IView
 {
-    public UI.HtmlString Render() => $"<p>I am {Name} a component</p>";
+    public HtmlString Render() => $"<p>I am {Name} a component</p>";
 }
 
 class Wat
