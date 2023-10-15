@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Latency() : IView
 {
-    HtmlString Latency(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-latency">
             <div>
                 <h1>

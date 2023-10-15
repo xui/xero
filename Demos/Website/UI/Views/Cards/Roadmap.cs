@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Roadmap() : IView
 {
-    HtmlString Roadmap(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="roadmap">
             <div>
                 <img src="img/xui_logo.svg" />

@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Hooks() : IView
 {
-    HtmlString Hooks(ViewModel vm) => $$"""
+    public HtmlString Render() => $$"""
         <section id="zero-hooks">
             <div class="vstack">
                 <div class="hstack">

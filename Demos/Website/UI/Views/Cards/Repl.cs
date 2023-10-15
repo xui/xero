@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Repl() : IView
 {
-    HtmlString Repl(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section>
             <div>
                 <img src="repl/repl.svg" />

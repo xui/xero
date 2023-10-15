@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct HotReloads() : IView
 {
-    HtmlString HotReloads(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="hot-reload">
             <div>
                 <h1>

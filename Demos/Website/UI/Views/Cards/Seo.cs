@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Seo() : IView
 {
-    HtmlString Seo(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section>
             <div>
                 <button onclick="{FetchHtml}">GET https://xero.wtf</button>

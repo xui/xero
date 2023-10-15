@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Allocations() : IView
 {
-    HtmlString Allocations(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-allocations">
             <div>
                 <img src="allocations/allocations.svg" />

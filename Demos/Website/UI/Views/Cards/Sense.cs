@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Sense() : IView
 {
-    HtmlString Sense(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-sense">
             <div>
                 &#128548

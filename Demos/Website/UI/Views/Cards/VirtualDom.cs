@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct VirtualDom() : IView
 {
-    HtmlString VirtualDom(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-virtual-dom">
             <div>
                 <img src="img/zero_virtual_dom.svg" />

@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Syntax() : IView
 {
-    HtmlString Syntax(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-syntax">
             <div>
                 <img src="img/zero_syntax.svg" />

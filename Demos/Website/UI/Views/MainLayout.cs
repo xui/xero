@@ -18,20 +18,20 @@ partial class UI
 
             <div id="cards">
                 {new JavaScript(vm)}
-                {Syntax(vm)}
-                {Hooks(vm)}
-                {Api(vm)}
-                {Blocking(vm)}
-                {Seo(vm)}
-                {VirtualDom(vm)}
-                {Latency(vm)}
-                {Allocations(vm)}
-                {HotReloads(vm)}
-                {Repl(vm)}
-                {Pages(vm)}
-                {Benchmarks(vm)}
-                {Sense(vm)}
-                {Roadmap(vm)}
+                {new Syntax()}
+                {new Hooks()}
+                {new Api()}
+                {new Blocking()}
+                {new Seo()}
+                {new VirtualDom()}
+                {new Latency()}
+                {new Allocations()}
+                {new HotReloads()}
+                {new Repl()}
+                {new Pages()}
+                {new Benchmarks()}
+                {new Sense()}
+                {new Roadmap()}
             </div>
 
             {Connect()}

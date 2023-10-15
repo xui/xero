@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Blocking() : IView
 {
-    HtmlString Blocking(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section>
             <div>
                 <pre>

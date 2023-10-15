@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Pages() : IView
 {
-    HtmlString Pages(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-pages">
             <div>
                 <a href="zero-pages">xero.wtf/zero-pages</a>

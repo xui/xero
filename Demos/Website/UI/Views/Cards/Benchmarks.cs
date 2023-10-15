@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Benchmarks() : IView
 {
-    HtmlString Benchmarks(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section>
             <div>
                 <img src="benchmarks/benchmarks.svg" />

@@ -1,6 +1,6 @@
-partial class UI
+readonly record struct Api() : IView
 {
-    HtmlString Api(ViewModel vm) => $"""
+    public HtmlString Render() => $"""
         <section id="zero-api">
             <div>
                 <img src="img/3d_rotate.png" />
