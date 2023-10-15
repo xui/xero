@@ -109,9 +109,18 @@ public abstract partial class UI<T> where T : IViewModel
                 // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
                 var chunk = ViewBuffer.chunks.First(c => c.Id == slot);
                 if (chunk.Type == FormatType.Action)
-                    chunk.Action();
+                {
+                    using (this.ViewModel.Batch())
+                    {
+                        chunk.Action();
+                    }
+                }
                 else if (chunk.Type == FormatType.ActionAsync)
-                    _ = chunk.ActionAsync(); // Do not await. That'd block this event loop.
+                {
+                    // Do not batch.  Mutations should go immediately.
+                    // Do not await. That'd block this event loop.
+                    _ = chunk.ActionAsync();
+                }
             }
             while (!receiveResult.CloseStatus.HasValue);
 
