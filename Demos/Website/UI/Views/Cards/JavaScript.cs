@@ -1,12 +1,11 @@
 readonly record struct JavaScript(
-    ViewModel viewModel,
-    string Name = "Rylan"
+    ViewModel ViewModel
 ) : IView
 {
     public HtmlString Render() => $"""
         <section id="zero-javascript">
             <div>
-                <button onclick="{Increment}">Clicks: {viewModel.Count}</button>
+                <button onclick="{Increment}">Clicks: {ViewModel.Count}</button>
             </div>
             <article>
                 <h2>
@@ -41,6 +40,6 @@ readonly record struct JavaScript(
 
     void Increment()
     {
-        viewModel.Count++;
+        ViewModel.Count++;
     }
 }
