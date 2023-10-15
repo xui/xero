@@ -1,9 +1,12 @@
-partial class UI
+readonly record struct JavaScript(
+    ViewModel viewModel,
+    string Name = "Rylan"
+) : UI.IView
 {
-    HtmlString JavaScript(ViewModel vm) => $"""
+    public UI.HtmlString Render() => $"""
         <section id="zero-javascript">
             <div>
-                <button onclick="{Increment}">Clicks: {vm.Count}</button>
+                <button onclick="{Increment}">Clicks: {viewModel.Count}</button>
             </div>
             <article>
                 <h2>
@@ -36,8 +39,8 @@ partial class UI
         </section>
         """;
 
-    void Increment(Context context)
+    void Increment()
     {
-        context.ViewModel.Count++;
+        viewModel.Count++;
     }
 }

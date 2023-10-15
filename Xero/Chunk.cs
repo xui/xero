@@ -15,8 +15,8 @@ public abstract partial class UI<T>
         public DateTime? DateTime;
         public IView? View;
         public string? Format;
-        public Action<Context> Action;
-        public Func<Context, Task> ActionAsync;
+        public Action Action;
+        public Func<Task> ActionAsync;
 
         public static bool operator ==(Chunk c1, Chunk c2)
         {

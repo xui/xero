@@ -17,7 +17,7 @@ partial class UI
             {VSCode()}
 
             <div id="cards">
-                {JavaScript(vm)}
+                {new JavaScript(vm, Name: "Dude")}
                 {Syntax(vm)}
                 {Hooks(vm)}
                 {Api(vm)}

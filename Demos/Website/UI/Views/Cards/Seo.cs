@@ -36,7 +36,7 @@ partial class UI
         </section>
         """;
 
-    void FetchHtml(Context context)
+    void FetchHtml()
     {
     }
 }

@@ -172,7 +172,7 @@ public abstract partial class UI<T>
         // {
         // }
 
-        public void AppendFormatted(Action<Context> a)
+        public void AppendFormatted(Action a)
         {
             ref var chunk = ref buffer.chunks[end];
             chunk.Id = end;
@@ -183,7 +183,7 @@ public abstract partial class UI<T>
             MoveNext();
         }
 
-        public void AppendFormatted(Func<Context, Task> f)
+        public void AppendFormatted(Func<Task> f)
         {
             ref var chunk = ref buffer.chunks[end];
             chunk.Id = end;
