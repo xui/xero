@@ -1,5 +1,3 @@
-using Xero;
-
 class BusinessLogic
 {
     public void SimpleThingNoState()

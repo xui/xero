@@ -1,5 +1,3 @@
-using Xero;
-
 partial class ViewModel : IViewModel
 {
     [Live] string? name;

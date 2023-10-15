@@ -1,5 +1,3 @@
-using Xero;
-
 public class ViewModel : IViewModel
 {
     public static IViewModel New() => new ViewModel();

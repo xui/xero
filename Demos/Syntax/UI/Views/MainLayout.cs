@@ -1,5 +1,3 @@
-using Xero;
-
 partial class UI
 {
     protected override HtmlString MainLayout(MyViewModel vm) => $"""
@@ -44,7 +42,7 @@ partial class UI
 
                 <h3 onmouseover="{this.UpdateTheRecordThings}">Event listener expressions</h3>
                 <button onClick="{this.UpdateTheRecordThings}">Click: {vm.Count}</button>
-                <button onClick="{ctx => ctx.ViewModel.Count -= 10}">Click: {vm.Count}</button>
+                <button onClick="{() => vm.Count -= 10}">Click: {vm.Count}</button>
                 <button onClick="{this.UpdateTheRecordsAsync}">Async</button>
                 <button onClick="{this.StartTimer}">Tick</button>
 

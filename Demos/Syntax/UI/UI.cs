@@ -1,5 +1,3 @@
-using Xero;
-
 partial class UI : UI<MyViewModel>
 {
     BusinessLogic logic;
@@ -33,31 +31,31 @@ partial class UI : UI<MyViewModel>
         context.ViewModel.Count = 333;
     }
 
-    public void StartTimer(Context context)
+    public void StartTimer()
     {
         Task.Run(async () =>
         {
             while (true)
             {
-                using (context.ViewModel.Batch())
-                {
-                    context.ViewModel.Count++;
-                    context.ViewModel.Name = $"Not Rylan Barnes {context.ViewModel.Count}";
-                }
+                // using (context.ViewModel.Batch())
+                // {
+                //     context.ViewModel.Count++;
+                //     context.ViewModel.Name = $"Not Rylan Barnes {context.ViewModel.Count}";
+                // }
                 await Task.Delay(1000);
             }
         });
     }
 
-    public void UpdateTheRecordThings(Context context)
+    public void UpdateTheRecordThings()
     {
-        context.ViewModel.Name = null;
-        context.ViewModel.Count++;
+        // context.ViewModel.Name = null;
+        // context.ViewModel.Count++;
 
         logic.UpdateTheRecordThings();
     }
 
-    public async Task UpdateTheRecordsAsync(Context context)
+    public async Task UpdateTheRecordsAsync()
     {
         Console.WriteLine("Yup, this is executing now...");
         await Task.Delay(3000);
