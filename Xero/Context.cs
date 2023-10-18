@@ -102,24 +102,37 @@ public abstract partial class UI<T> where T : IViewModel
                 if (receiveResult.Count == 0)
                     continue;
 
-                // TODO: Optimize.  Skip the string.  Go straight from buffer to int.
-                var message = Encoding.UTF8.GetString(receiveBuffer, 0, receiveResult.Count);
-                int slot = int.Parse(message);
+                var (slot, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
+                Console.WriteLine($"slot: {slot}");
 
                 // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
                 var chunk = ViewBuffer.chunks.First(c => c.Id == slot);
-                if (chunk.Type == FormatType.Action)
+                switch (chunk.Type)
                 {
-                    using (this.ViewModel.Batch())
-                    {
-                        chunk.Action();
-                    }
-                }
-                else if (chunk.Type == FormatType.ActionAsync)
-                {
-                    // Do not batch.  Mutations should go immediately.
-                    // Do not await. That'd block this event loop.
-                    _ = chunk.ActionAsync();
+                    case FormatType.Action:
+                        using (this.ViewModel.Batch())
+                        {
+                            chunk.Action();
+                        }
+                        break;
+                    case FormatType.ActionEvent:
+                        using (this.ViewModel.Batch())
+                        {
+                            var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
+                            chunk.ActionEvent(domEvent);
+                        }
+                        break;
+                    case FormatType.ActionAsync:
+                        // Do not batch.  Mutations should go immediately.
+                        // Do not await. That'd block this event loop.
+                        _ = chunk.ActionAsync();
+                        break;
+                    case FormatType.ActionEventAsync:
+                        // Do not batch.  Mutations should go immediately.
+                        // Do not await. That'd block this event loop.
+                        var domEventAsync = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
+                        _ = chunk.ActionEventAsync(domEventAsync);
+                        break;
                 }
             }
             while (!receiveResult.CloseStatus.HasValue);
@@ -133,6 +146,31 @@ public abstract partial class UI<T> where T : IViewModel
             );
 
             Console.WriteLine("Connection closed.");
+        }
+
+        private (int, int) ParseSlotId(byte[] buffer, int length)
+        {
+            int i = 0, slot = 0;
+            while (true)
+            {
+                int d = buffer[i] - 48;
+                if (d >= 0 && d <= 9)
+                    slot = slot * 10 + d;
+                else
+                    return (slot, i);
+
+                if (++i >= length)
+                    return (slot, i);
+            }
+        }
+
+        private Event ParseEvent(byte[] buffer, int index, int length)
+        {
+            var message = Encoding.UTF8.GetString(buffer, index, length);
+
+            Console.WriteLine($"message: {message}");
+
+            return new Event();
         }
     }
 }

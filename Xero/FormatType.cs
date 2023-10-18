@@ -10,5 +10,7 @@ enum FormatType
     View,
     HtmlString,
     Action,
+    ActionEvent,
     ActionAsync,
+    ActionEventAsync,
 }

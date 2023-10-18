@@ -14,7 +14,9 @@ internal struct Chunk
     public IView? View;
     public string? Format;
     public Action Action;
+    public Action<Event> ActionEvent;
     public Func<Task> ActionAsync;
+    public Func<Event, Task> ActionEventAsync;
 
     public static bool operator ==(Chunk c1, Chunk c2)
     {
@@ -98,6 +100,12 @@ internal struct Chunk
                 builder.Append("e(");
                 builder.Append(this.Id);
                 builder.Append(")");
+                break;
+            case FormatType.ActionEvent:
+            case FormatType.ActionEventAsync:
+                builder.Append("e(");
+                builder.Append(this.Id);
+                builder.Append(",event)");
                 break;
             default:
                 throw new Exception($"Unsupported type: {this.Type}");

@@ -35,9 +35,13 @@ public abstract partial class UI<T> where T : IViewModel
     {
         return $$"""
             <script>
-                function e(id) {
+                function e(id,ev) {
                     console.debug("executing slot " + id);
-                    ws.send(id);
+                    if (ev) {
+                        ws.send(`${id}${encodeEvent(ev)}`);
+                    } else {
+                        ws.send(id);
+                    }
                 }
 
                 function debugSocket(name, ws) {
@@ -53,6 +57,17 @@ public abstract partial class UI<T> where T : IViewModel
                     console.debug("onmessage: ", event);
                     eval(event.data);
                 };
+
+                function encodeEvent(e) {
+                    const obj = {};
+                    for (let k in e) { obj[k] = e[k]; }
+                    return JSON.stringify(obj, (k, v) => {
+                        // TODO: There are a few more properties that can be shaved off.
+                        if (v instanceof Node) return {id: v.id,name: v.name,type: v.type,value: v.value};
+                        if (v instanceof Window) return null;
+                        return v;
+                    }, ' ');
+                }
             </script>
     """;
     }
