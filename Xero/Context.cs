@@ -104,7 +104,6 @@ public abstract partial class UI<T> where T : IViewModel
                     continue;
 
                 var (slot, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
-                Console.WriteLine($"slot: {slot}");
 
                 // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
                 var chunk = ViewBuffer.chunks.First(c => c.Id == slot);
