@@ -203,6 +203,17 @@ public struct HtmlString
         MoveNext();
     }
 
+    public void AppendFormatted(Func<Event, Task> f)
+    {
+        ref var chunk = ref buffer.chunks[end];
+        chunk.Id = end;
+        chunk.ActionEventAsync = f;
+        chunk.Type = FormatType.ActionEventAsync;
+
+        progressFormatted++;
+        MoveNext();
+    }
+
     public override string ToString()
     {
         var builder = new StringBuilder();
