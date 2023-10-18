@@ -38,8 +38,10 @@ readonly record struct JavaScript(
         </section>
         """;
 
-    void Increment()
+    void Increment(Event e)
     {
         ViewModel.Count++;
+
+        Console.WriteLine($"x: {e.x}");
     }
 }
