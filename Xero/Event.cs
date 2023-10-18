@@ -46,34 +46,34 @@ public class Event
 
 public class HtmlElement
 {
-    public string? id;
-    public string? name;
-    public string? type;
-    public string? value;
+    public string? id { get; set; }
+    public string? name { get; set; }
+    public string? type { get; set; }
+    public string? value { get; set; }
 }
 
 public class DataTransfer
 {
-    public string? dropEffect;
-    public string? effectAllowed;
-    public string[]? files;
-    public DataTransferItem[]? items;
-    public string[]? types;
+    public string? dropEffect { get; set; }
+    public string? effectAllowed { get; set; }
+    public string[]? files { get; set; }
+    public DataTransferItem[]? items { get; set; }
+    public string[]? types { get; set; }
 }
 
 public class DataTransferItem
 {
-    public string? kind;
-    public string? type;
+    public string? kind { get; set; }
+    public string? type { get; set; }
 }
 
 public class TouchPoint
 {
-    public long? identifier;
-    public double? screenX;
-    public double? screenY;
-    public double? clientX;
-    public double? clientY;
-    public double? pageX;
-    public double? pageY;
+    public long? identifier { get; set; }
+    public double? screenX { get; set; }
+    public double? screenY { get; set; }
+    public double? clientX { get; set; }
+    public double? clientY { get; set; }
+    public double? pageX { get; set; }
+    public double? pageY { get; set; }
 }
