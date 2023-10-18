@@ -1,6 +1,7 @@
 using System.Net.WebSockets;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
 namespace Xero;
@@ -167,10 +168,8 @@ public abstract partial class UI<T> where T : IViewModel
         private Event ParseEvent(byte[] buffer, int index, int length)
         {
             var message = Encoding.UTF8.GetString(buffer, index, length);
-
-            Console.WriteLine($"message: {message}");
-
-            return new Event();
+            var ev = JsonSerializer.Deserialize<Event>(message);
+            return ev ?? new Event();
         }
     }
 }

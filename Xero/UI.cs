@@ -66,7 +66,7 @@ public abstract partial class UI<T> where T : IViewModel
                         if (v instanceof Node) return {id: v.id,name: v.name,type: v.type,value: v.value};
                         if (v instanceof Window) return null;
                         return v;
-                    }, ' ');
+                    }, '');
                 }
             </script>
     """;

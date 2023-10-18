@@ -181,6 +181,17 @@ public struct HtmlString
         MoveNext();
     }
 
+    public void AppendFormatted(Action<Event> a)
+    {
+        ref var chunk = ref buffer.chunks[end];
+        chunk.Id = end;
+        chunk.ActionEvent = a;
+        chunk.Type = FormatType.ActionEvent;
+
+        progressFormatted++;
+        MoveNext();
+    }
+
     public void AppendFormatted(Func<Task> f)
     {
         ref var chunk = ref buffer.chunks[end];

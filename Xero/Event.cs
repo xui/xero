@@ -1,96 +1,47 @@
 public class Event
 {
-    public HtmlElement? currentTarget;
-    public bool? isTrusted;
-    public HtmlElement? target;
-    public string? type;
-}
-
-public class UIEvent : Event
-{
-    public long? detail;
-}
-
-public class MouseEvent : UIEvent
-{
-    public bool? altKey;
-    public int? button;
-    public int? buttons;
-    public double? clientX;
-    public double? clientY;
-    public bool? ctrlKey;
-    public double? layerX;
-    public double? layerY;
-    public bool? metaKey;
-    public double? movementX;
-    public double? movementY;
-    public double? offsetX;
-    public double? offsetY;
-    public double? pageX;
-    public double? pageY;
-    public HtmlElement? relatedTarget;
-    public double? screenX;
-    public double? screenY;
-    public bool? shiftKey;
-    public double? x;
-    public double? y;
-}
-
-public class DragEvent : MouseEvent
-{
-    public DataTransfer? dataTransfer;
-}
-
-public class WheelEvent : MouseEvent
-{
-    public double? deltaX;
-    public double? deltaY;
-    public double? deltaZ;
-    public long? deltaMode;
-}
-
-public class TouchEvent : UIEvent
-{
-    public bool? altKey;
-    public TouchPoint[]? changedTouches;
-    public bool? ctrlKey;
-    public bool? metaKey;
-    public bool? shiftKey;
-    public TouchPoint[]? targetTouches;
-    public TouchPoint[]? touches;
-}
-
-public class FocusEvent : UIEvent
-{
-    public HtmlElement? relatedTarget;
-}
-
-public class KeyboardEvent : UIEvent
-{
-    public bool? altKey;
-    public string? code;
-    public bool? ctrlKey;
-    public bool? isComposing;
-    public string? key;
-    public string? locale;
-    public int? location;
-    public bool? metaKey;
-    public bool? repeat;
-    public bool? shiftKey;
-}
-
-public class InputEvent : UIEvent
-{
-    public string? data;
-    public DataTransfer? dataTransfer;
-    public string? inputType;
-    public bool? isComposing;
-}
-
-public class CompositionEvent : UIEvent
-{
-    public string? data;
-    public string? locale;
+    public bool? altKey { get; set; }
+    public int? button { get; set; }
+    public int? buttons { get; set; }
+    public TouchPoint[]? changedTouches { get; set; }
+    public double? clientX { get; set; }
+    public double? clientY { get; set; }
+    public string? code { get; set; }
+    public bool? ctrlKey { get; set; }
+    public HtmlElement? currentTarget { get; set; }
+    public string? data { get; set; }
+    public DataTransfer? dataTransfer { get; set; }
+    public long? deltaMode { get; set; }
+    public double? deltaX { get; set; }
+    public double? deltaY { get; set; }
+    public double? deltaZ { get; set; }
+    public long? detail { get; set; }
+    public string? inputType { get; set; }
+    public bool? isComposing { get; set; }
+    public bool? isTrusted { get; set; }
+    public string? key { get; set; }
+    public double? layerX { get; set; }
+    public double? layerY { get; set; }
+    public string? locale { get; set; }
+    public int? location { get; set; }
+    public bool? metaKey { get; set; }
+    public double? movementX { get; set; }
+    public double? movementY { get; set; }
+    public double? offsetX { get; set; }
+    public double? offsetY { get; set; }
+    public double? pageX { get; set; }
+    public double? pageY { get; set; }
+    public HtmlElement? relatedTarget { get; set; }
+    public bool? repeat { get; set; }
+    public double? screenX { get; set; }
+    public double? screenY { get; set; }
+    public bool? shiftKey { get; set; }
+    public HtmlElement? target { get; set; }
+    public TouchPoint[]? targetTouches { get; set; }
+    public TouchPoint[]? touches { get; set; }
+    public string? type { get; set; }
+    public double? x { get; set; }
+    public double? y { get; set; }
 }
 
 public class HtmlElement
