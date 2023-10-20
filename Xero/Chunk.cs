@@ -38,7 +38,7 @@ internal struct Chunk
             case FormatType.View:
                 return c1.View == c2.View;
             case FormatType.HtmlString:
-                // TODO: Implement this.
+                // no-op
                 return true;
         }
 
