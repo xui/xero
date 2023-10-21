@@ -12,10 +12,10 @@ readonly record struct JavaScript(
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> JavaScript
+                    Write <strong>zero</strong> JavaScript
                 </h1>
                 <p>
-                    I love JavaScript.  Been using it with ❤️‍🩹 since 1999. But JavaScript has a
+                    I love JavaScript.  Been using it with &#x1F494; since 1999. But JavaScript has a
                     payload problem.
                 </p>
                 <p>

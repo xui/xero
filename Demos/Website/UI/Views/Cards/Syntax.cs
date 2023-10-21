@@ -10,12 +10,13 @@ readonly record struct Syntax() : IView
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> new syntax to learn
+                    Learn <strong>zero</strong> new syntax
                 </h1>
                 <p>
-                    It's just regular C# with regular <code>$" "</code> string interpolations.  If you
-                    already know C# then you already know Xero.  If you know TypeScript 
-                    then you're already 90% there.
+                    It's just regular HTML with regular C# expressions sprinkled inside 
+                    regular <code>$" "</code> string interpolations.  
+                    If you already know C# then you already know Xero.  
+                    If you know TypeScript then you're already 90% there.
                 </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
