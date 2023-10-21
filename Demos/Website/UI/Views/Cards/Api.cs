@@ -11,7 +11,7 @@ readonly record struct Api() : IView
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> APIs to build
+                    <strong>Zero</strong> REST API necessary
                 </h1>
                 <p>
                     Usually building a SPA comes with double the work since running your 
