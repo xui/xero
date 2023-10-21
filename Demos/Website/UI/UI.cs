@@ -6,24 +6,30 @@ partial class UI : UI<ViewModel>
 
     public override void MapPages()
     {
-        base.MapPages();
-
+        MapPage("/", Index);
         MapPage("/zero-pages", ZeroPages);
         MapPage("/zero-javascript", ZeroJavaScript);
     }
 
-    [XeroPage("/xero-pages")]
+    [XeroPage("/")]
+    void Index(Context context)
+    {
+        context.ViewModel.Name = "Twas clicked";
+        context.ViewModel.ShowAdditional = false;
+    }
+
+    [XeroPage("/zero-pages")]
     void ZeroPages(Context context)
     {
         context.ViewModel.Name = "Twas clicked";
         context.ViewModel.ShowAdditional = true;
     }
 
-    [XeroPage("/xero-javascript")]
+    [XeroPage("/zero-javascript")]
     void ZeroJavaScript(Context context)
     {
         context.ViewModel.Name = "OK, back to normal: Rylan Barnes";
-        context.ViewModel.ShowAdditional = false;
+        context.ViewModel.ShowAdditional = true;
     }
 
 }
