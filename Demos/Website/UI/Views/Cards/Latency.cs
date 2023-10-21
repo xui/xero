@@ -15,7 +15,7 @@ readonly record struct Latency() : IView
                     Speed
                 </h2>
                 <h1>
-                    Near <strong>Zero</strong> latency
+                    Near-<strong>zero</strong> latency
                 </h1>
                 <p>
                     Humans perceive anything under 100 milliseconds to be instant.  For 
