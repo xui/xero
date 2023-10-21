@@ -19,8 +19,8 @@ partial class UI
             <div id="cards">
                 {new JavaScript(vm)}
                 {new Syntax()}
-                {new Hooks()}
                 {new Api()}
+                {new Hooks()}
                 {new Blocking()}
                 {new Seo()}
                 {new VirtualDom()}
