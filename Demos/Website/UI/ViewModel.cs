@@ -3,7 +3,7 @@ partial class ViewModel : IViewModel
     [Live] string? name;
     [Live] int? count;
     [Live] string? color;
-    [Live] bool? showAdditional;
+    [Live] bool showAdditional;
     [Live] SubViewModel? sub;
     public partial struct SubViewModel
     {
@@ -111,7 +111,7 @@ partial class ViewModel : IViewModel
         }
     }
 
-    public bool? ShowAdditional
+    public bool ShowAdditional
     {
         get
         {
