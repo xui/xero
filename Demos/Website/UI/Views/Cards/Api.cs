@@ -2,8 +2,9 @@ readonly record struct Api() : IView
 {
     public HtmlString Render() => $"""
         <section id="zero-api">
-            <div>
+            <div class="vstack">
                 <img src="img/3d_rotate.png" />
+                <p>Scan to rotate this QR code with your phone's gyroscope!</p>
             </div>
             <article>
                 <h2>
