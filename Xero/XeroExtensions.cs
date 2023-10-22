@@ -45,7 +45,7 @@ public static class XeroExtensions
             {
                 // TODO: This is almost correct.  Work across multiple browsers but multiple tabs gets its Action stolen.
                 // Rework this once you figure out the various ViewModel state levels.
-                xeroContext.ViewModel.OnChanged = () => ui.Recompose(xeroContext);
+                xeroContext.ViewModel.OnChanged = async () => await ui.Recompose(xeroContext);
 
                 using (new HotReloadContext<T>(ui, xeroContext))
                 {

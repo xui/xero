@@ -22,10 +22,11 @@ public abstract partial class UI<T> where T : IViewModel
         return HtmlString.Create(context.ViewBuffer, $"{MainLayout(context.ViewModel)}");
     }
 
-    public void Recompose(Context context)
+    public async Task Recompose(Context context)
     {
         var compare = HtmlString.Create(context.CompareBuffer, $"{MainLayout(context.ViewModel)}");
-        context.PushMutations(ref compare);
+        var deltas = compare.GetDeltas(context.ViewBuffer, context.CompareBuffer);
+        await context.PushMutations(deltas);
     }
 
     // TODO: Connect() should be injected automatically 

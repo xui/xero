@@ -35,22 +35,17 @@ public abstract partial class UI<T> where T : IViewModel
             }
         }
 
-        internal void PushMutations(ref HtmlString compare)
+        internal async Task PushMutations(IEnumerable<Chunk>? deltas)
         {
             if (webSocket == null)
                 return;
-
-            var deltas = compare.GetDeltas(ViewBuffer, CompareBuffer);
 
             StringBuilder? output = null;
             foreach (var delta in deltas)
             {
                 if (delta.Type == FormatType.StringLiteral)
                 {
-                    Task.Run(async () =>
-                    {
-                        await Push("ws.close();location.reload();");
-                    });
+                    await Push("ws.close();location.reload();");
                     return;
                 }
 
@@ -67,11 +62,8 @@ public abstract partial class UI<T> where T : IViewModel
 
             if (output is not null)
             {
-                Task.Run(async () =>
-                {
-                    // TODO:  Never call ToString()! Change Push() to take in some kind of buffer.
-                    await Push(output.ToString());
-                });
+                // TODO:  Never call ToString()! Change Push() to take in some kind of buffer.
+                await Push(output.ToString());
             }
         }
 

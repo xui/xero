@@ -51,7 +51,10 @@ internal class HotReloadContext<T> : IDisposable where T : IViewModel
 
     public void OnHotReload(Type[]? obj)
     {
-        ui.Recompose(context);
+        Task.Run(async () =>
+        {
+            await ui.Recompose(context);
+        });
     }
 
     public void Dispose()
