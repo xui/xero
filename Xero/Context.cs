@@ -1,5 +1,4 @@
 using System.Net.WebSockets;
-using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
@@ -11,8 +10,6 @@ public abstract partial class UI<T> where T : IViewModel
     public class Context
     {
         public T ViewModel { get; init; }
-        public ClaimsPrincipal? User { get; set; }
-
         internal WebSocket? webSocket;
         internal HtmlString.Buffer ViewBuffer;
         internal HtmlString.Buffer CompareBuffer;
