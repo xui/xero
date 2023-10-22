@@ -9,7 +9,7 @@ public abstract partial class UI<T> where T : IViewModel
 {
     public class Context
     {
-        private UI<T> ui;
+        private readonly UI<T> ui;
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
         private HtmlString.Buffer ViewBuffer;
@@ -54,14 +54,13 @@ public abstract partial class UI<T> where T : IViewModel
 
         internal async Task AssignWebSocket(WebSocketManager webSocketManager)
         {
+            // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
+            // Rework this once you figure out the various ViewModel state levels.
+            ViewModel.OnChanged = async () => await Recompose();
+
 #if DEBUG
             using (new HotReloadContext<T>(this))
 #endif
-
-                // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
-                // Rework this once you figure out the various ViewModel state levels.
-                ViewModel.OnChanged = async () => await Recompose();
-
             using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
             {
                 this.webSocket = webSocket;
