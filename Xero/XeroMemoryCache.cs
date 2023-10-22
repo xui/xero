@@ -12,14 +12,13 @@ public abstract partial class UI<T>
         private static MemoryCacheEntryOptions entryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromDays(1));
 
-        public static Context Get(HttpContext httpContext)
+        public static Context Get(HttpContext httpContext, UI<T> ui)
         {
             var sessionId = GetSessionId(httpContext);
             var xeroContext = cache.Get(sessionId) as Context;
             if (xeroContext == null)
             {
-                // TODO: Need to be more clever about how a new ViewModel is created.
-                xeroContext = new Context();
+                xeroContext = new Context(ui);
                 Set(sessionId, xeroContext);
             }
             return xeroContext;

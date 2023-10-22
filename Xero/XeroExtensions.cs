@@ -39,13 +39,13 @@ public static class XeroExtensions
     {
         group.MapGet(pattern, async httpContext =>
         {
-            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext);
+            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext, ui);
 
             // Here is the request for a websocket connection.  
             // Switch protocols and await the event loop inside which reads from the stream.
             if (httpContext.WebSockets.IsWebSocketRequest)
             {
-                await xeroContext.AssignWebSocket(httpContext.WebSockets, ui);
+                await xeroContext.AssignWebSocket(httpContext.WebSockets);
             }
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
@@ -57,7 +57,7 @@ public static class XeroExtensions
                     mutateState(xeroContext);
                 }
 
-                await xeroContext.WriteResponseAsync(httpContext, ui);
+                await xeroContext.WriteResponseAsync(httpContext);
             }
 
             // Looks like the browser already has the page AND a websocket.

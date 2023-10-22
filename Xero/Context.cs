@@ -9,6 +9,7 @@ public abstract partial class UI<T> where T : IViewModel
 {
     public class Context
     {
+        private UI<T> ui;
         public T ViewModel { get; init; }
         internal WebSocket? webSocket;
         internal HtmlString.Buffer ViewBuffer;
@@ -16,47 +17,51 @@ public abstract partial class UI<T> where T : IViewModel
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
 
-        public Context()
+        public Context(UI<T> ui)
         {
+            this.ui = ui;
+
             ViewBuffer = new();
             CompareBuffer = new();
+
+            // TODO: Need to be more clever about how a new ViewModel is created.
             ViewModel = (T)T.New();
         }
 
-        public HtmlString Compose(UI<T> ui)
+        public HtmlString Compose()
         {
             return HtmlString.Create(ViewBuffer, $"{ui.MainLayout(ViewModel)}");
         }
 
-        public async Task Recompose(UI<T> ui)
+        public async Task Recompose()
         {
             var compare = HtmlString.Create(CompareBuffer, $"{ui.MainLayout(ViewModel)}");
             var deltas = compare.GetDeltas(ViewBuffer, CompareBuffer);
             await PushMutations(deltas);
         }
 
-        internal async Task AssignWebSocket(WebSocketManager webSocketManager, UI<T> ui)
+        internal async Task WriteResponseAsync(HttpContext httpContext)
+        {
+            // TODO: Optimize.  No need to convert to a single string when we 
+            // have streams and pipes.
+            await httpContext.Response.WriteAsync(Compose().ToStringWithExtras());
+        }
+
+        internal async Task AssignWebSocket(WebSocketManager webSocketManager)
         {
 #if DEBUG
-            using (new HotReloadContext<T>(ui, this))
+            using (new HotReloadContext<T>(this))
 #endif
 
                 // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
                 // Rework this once you figure out the various ViewModel state levels.
-                ViewModel.OnChanged = async () => await Recompose(ui);
+                ViewModel.OnChanged = async () => await Recompose();
 
             using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
             {
                 this.webSocket = webSocket;
                 await Receive(webSocket);
             }
-        }
-
-        internal async Task WriteResponseAsync(HttpContext httpContext, UI<T> ui)
-        {
-            // TODO: Optimize.  No need to convert to a single string when we 
-            // have streams and pipes.
-            await httpContext.Response.WriteAsync(Compose(ui).ToStringWithExtras());
         }
 
         internal async Task PushMutations(IEnumerable<Chunk>? deltas)

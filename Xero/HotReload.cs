@@ -40,11 +40,9 @@ public static class HotReload
 
 internal class HotReloadContext<T> : IDisposable where T : IViewModel
 {
-    private UI<T> ui;
     private UI<T>.Context context;
-    public HotReloadContext(UI<T> ui, UI<T>.Context context)
+    public HotReloadContext(UI<T>.Context context)
     {
-        this.ui = ui;
         this.context = context;
         HotReload.UpdateApplicationEvent += OnHotReload;
     }
@@ -53,7 +51,7 @@ internal class HotReloadContext<T> : IDisposable where T : IViewModel
     {
         Task.Run(async () =>
         {
-            await context.Recompose(ui);
+            await context.Recompose();
         });
     }
 
