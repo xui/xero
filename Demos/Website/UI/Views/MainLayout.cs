@@ -23,6 +23,7 @@ partial class UI
                 {new Hooks()}
                 {new Blocking()}
                 {new Seo()}
+                {new Hydration()}
                 {new VirtualDom()}
                 {new Latency()}
                 {new Allocations()}
