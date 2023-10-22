@@ -26,8 +26,12 @@ public abstract partial class UI<T> where T : IViewModel
             ViewModel = (T)T.New();
         }
 
-        internal async Task AssignWebSocket(WebSocketManager webSocketManager)
+        internal async Task AssignWebSocket(WebSocketManager webSocketManager, UI<T> ui)
         {
+#if DEBUG
+            using (new HotReloadContext<T>(ui, this))
+#endif
+
             using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
             {
                 this.webSocket = webSocket;

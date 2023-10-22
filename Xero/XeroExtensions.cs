@@ -47,10 +47,7 @@ public static class XeroExtensions
                 // Rework this once you figure out the various ViewModel state levels.
                 xeroContext.ViewModel.OnChanged = async () => await ui.Recompose(xeroContext);
 
-                using (new HotReloadContext<T>(ui, xeroContext))
-                {
-                    await xeroContext.AssignWebSocket(httpContext.WebSockets);
-                }
+                await xeroContext.AssignWebSocket(httpContext.WebSockets, ui);
             }
             else if (xeroContext.webSocket == null || xeroContext.webSocket.State != WebSocketState.Open)
             {
