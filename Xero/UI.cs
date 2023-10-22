@@ -17,18 +17,6 @@ public abstract partial class UI<T> where T : IViewModel
 
     protected abstract HtmlString MainLayout(T viewModel);
 
-    public HtmlString Compose(Context context)
-    {
-        return HtmlString.Create(context.ViewBuffer, $"{MainLayout(context.ViewModel)}");
-    }
-
-    public async Task Recompose(Context context)
-    {
-        var compare = HtmlString.Create(context.CompareBuffer, $"{MainLayout(context.ViewModel)}");
-        var deltas = compare.GetDeltas(context.ViewBuffer, context.CompareBuffer);
-        await context.PushMutations(deltas);
-    }
-
     // TODO: Connect() should be injected automatically 
     // once you have string literal parsing in place.  Then make this private.
     // TODO: Minimize this by sending the extra bits down the websocket after it's opened.

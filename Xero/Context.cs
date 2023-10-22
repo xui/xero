@@ -23,17 +23,40 @@ public abstract partial class UI<T> where T : IViewModel
             ViewModel = (T)T.New();
         }
 
+        public HtmlString Compose(UI<T> ui)
+        {
+            return HtmlString.Create(ViewBuffer, $"{ui.MainLayout(ViewModel)}");
+        }
+
+        public async Task Recompose(UI<T> ui)
+        {
+            var compare = HtmlString.Create(CompareBuffer, $"{ui.MainLayout(ViewModel)}");
+            var deltas = compare.GetDeltas(ViewBuffer, CompareBuffer);
+            await PushMutations(deltas);
+        }
+
         internal async Task AssignWebSocket(WebSocketManager webSocketManager, UI<T> ui)
         {
 #if DEBUG
             using (new HotReloadContext<T>(ui, this))
 #endif
 
+                // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
+                // Rework this once you figure out the various ViewModel state levels.
+                ViewModel.OnChanged = async () => await Recompose(ui);
+
             using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
             {
                 this.webSocket = webSocket;
                 await Receive(webSocket);
             }
+        }
+
+        internal async Task WriteResponseAsync(HttpContext httpContext, UI<T> ui)
+        {
+            // TODO: Optimize.  No need to convert to a single string when we 
+            // have streams and pipes.
+            await httpContext.Response.WriteAsync(Compose(ui).ToStringWithExtras());
         }
 
         internal async Task PushMutations(IEnumerable<Chunk>? deltas)

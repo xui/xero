@@ -41,14 +41,15 @@ public static class XeroExtensions
         {
             var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext);
 
+            // Here is the request for a websocket connection.  
+            // Switch protocols and await the event loop inside which reads from the stream.
             if (httpContext.WebSockets.IsWebSocketRequest)
             {
-                // TODO: This is almost correct.  Work across multiple browsers but multiple tabs gets its Action stolen.
-                // Rework this once you figure out the various ViewModel state levels.
-                xeroContext.ViewModel.OnChanged = async () => await ui.Recompose(xeroContext);
-
                 await xeroContext.AssignWebSocket(httpContext.WebSockets, ui);
             }
+
+            // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
+            // Just respond with an old fashioned 200 response.
             else if (xeroContext.webSocket == null || xeroContext.webSocket.State != WebSocketState.Open)
             {
                 using (xeroContext.ViewModel.Batch())
@@ -56,20 +57,20 @@ public static class XeroExtensions
                     mutateState(xeroContext);
                 }
 
-                // TODO: Optimize.  No need to convert to a single string when we 
-                // have streams and pipes.
-                await httpContext.Response.WriteAsync(ui.Compose(xeroContext).ToStringWithExtras());
+                await xeroContext.WriteResponseAsync(httpContext, ui);
             }
+
+            // Looks like the browser already has the page AND a websocket.
+            // Respond with a 204 - No Content which will not alter the page.
+            // Then push down the new route requested.  After that run the lambda which
+            // may or may not cause trigger mutations to be pushed to the browser.
             else
             {
-                // Looks like the browser already has the page AND a websocket.
-                // Respond with a 204 - No Content which will not alter the page
-                // and push down the new route.  After that run the lambda which
-                // may or may not cause trigger mutations to be pushed to the browser.
                 httpContext.Response.StatusCode = 204; // No Content
-                // httpContext.Response.StatusCode = 214; // Transformation Applied (deprecated)
                 await httpContext.Response.CompleteAsync();
+
                 await xeroContext.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
+
                 using (xeroContext.ViewModel.Batch())
                 {
                     mutateState(xeroContext);

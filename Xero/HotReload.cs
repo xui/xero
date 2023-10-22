@@ -53,7 +53,7 @@ internal class HotReloadContext<T> : IDisposable where T : IViewModel
     {
         Task.Run(async () =>
         {
-            await ui.Recompose(context);
+            await context.Recompose(ui);
         });
     }
 
