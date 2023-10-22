@@ -6,19 +6,20 @@ using BenchmarkDotNet.Running;
 [MemoryDiagnoser]
 public class UI : UI<ViewModel>
 {
-    static Context ctx = new();
+    Context ctx;
     int c = 15;
     string s = "name";
 
     public UI() : base()
     {
+        ctx = new(this);
     }
 
     [Benchmark]
     [IterationCount(10)]
     public HtmlString Test1()
     {
-        return Compose(ctx);
+        return ctx.Compose();
     }
 
     protected override HtmlString MainLayout(ViewModel vm)

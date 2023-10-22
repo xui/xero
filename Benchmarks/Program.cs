@@ -40,7 +40,7 @@ void Threads(int threadCount, bool placebo = false)
             new Thread(() =>
             {
                 var test = new UI();
-                var ctx = new UI<ViewModel>.Context();
+                var ctx = new UI<ViewModel>.Context(test);
 
                 while (true)
                 {
@@ -54,14 +54,14 @@ void Threads(int threadCount, bool placebo = false)
             new Thread(() =>
             {
                 var ui = new UI();
-                var ctx = new UI<ViewModel>.Context();
-                var warmup = ui.Compose(ctx);
+                var ctx = new UI<ViewModel>.Context(ui);
+                var warmup = ctx.Compose();
                 Console.WriteLine("Warmup:");
                 Console.WriteLine(warmup.ToString());
 
                 while (true)
                 {
-                    ui.Compose(ctx);
+                    ctx.Compose();
                     counters[index]++;
                 }
             }).Start();

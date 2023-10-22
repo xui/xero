@@ -1,9 +1,10 @@
 #if !DEBUG
 
+namespace Xero;
+
 public static class HotReload
 {
     public static int ReloadCount { get; private set; } = 0;
-    public static event Action<Type[]?>? UpdateApplicationEvent;
 }
 
 #else
@@ -36,7 +37,6 @@ public static class HotReload
         UpdateApplicationEvent?.Invoke(types);
     }
 }
-#endif
 
 internal class HotReloadContext<T> : IDisposable where T : IViewModel
 {
@@ -60,3 +60,4 @@ internal class HotReloadContext<T> : IDisposable where T : IViewModel
         HotReload.UpdateApplicationEvent -= OnHotReload;
     }
 }
+#endif
