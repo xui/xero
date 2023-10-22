@@ -4,7 +4,7 @@ readonly record struct HotReloads() : IView
         <section id="hot-reload">
             <div>
                 <h1>
-                    {Xero.HotReload.ReloadCount}
+                    {HotReload.ReloadCount}
                 </h1>
                 <h2>
                     Hot Reloads

@@ -46,12 +46,11 @@ public static class XeroExtensions
                 // TODO: This is almost correct.  Work across multiple browsers but multiple tabs gets its Action stolen.
                 // Rework this once you figure out the various ViewModel state levels.
                 xeroContext.ViewModel.OnChanged = () => ui.Recompose(xeroContext);
-#if DEBUG
-                // TODO: Move this to Receive so that when the websocket closes it can -= itself?
-                HotReload.UpdateApplicationEvent += types => ui.Recompose(xeroContext);
-#endif
 
-                await xeroContext.AssignWebSocket(httpContext.WebSockets);
+                using (new HotReloadContext<T>(ui, xeroContext))
+                {
+                    await xeroContext.AssignWebSocket(httpContext.WebSockets);
+                }
             }
             else if (xeroContext.webSocket == null || xeroContext.webSocket.State != WebSocketState.Open)
             {

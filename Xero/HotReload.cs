@@ -3,6 +3,7 @@
 public static class HotReload
 {
     public static int ReloadCount { get; private set; } = 0;
+    public static event Action<Type[]?>? UpdateApplicationEvent;
 }
 
 #else
@@ -36,3 +37,25 @@ public static class HotReload
     }
 }
 #endif
+
+internal class HotReloadContext<T> : IDisposable where T : IViewModel
+{
+    private UI<T> ui;
+    private UI<T>.Context context;
+    public HotReloadContext(UI<T> ui, UI<T>.Context context)
+    {
+        this.ui = ui;
+        this.context = context;
+        HotReload.UpdateApplicationEvent += OnHotReload;
+    }
+
+    public void OnHotReload(Type[]? obj)
+    {
+        ui.Recompose(context);
+    }
+
+    public void Dispose()
+    {
+        HotReload.UpdateApplicationEvent -= OnHotReload;
+    }
+}
