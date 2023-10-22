@@ -11,11 +11,16 @@ public abstract partial class UI<T> where T : IViewModel
     {
         private UI<T> ui;
         public T ViewModel { get; init; }
-        internal WebSocket? webSocket;
-        internal HtmlString.Buffer ViewBuffer;
-        internal HtmlString.Buffer CompareBuffer;
+        private WebSocket? webSocket;
+        private HtmlString.Buffer ViewBuffer;
+        private HtmlString.Buffer CompareBuffer;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
+
+        public bool IsWebSocketOpen
+        {
+            get => webSocket != null && webSocket.State == WebSocketState.Open;
+        }
 
         public Context(UI<T> ui)
         {

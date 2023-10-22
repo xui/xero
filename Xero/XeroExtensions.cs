@@ -50,7 +50,7 @@ public static class XeroExtensions
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
             // Just respond with an old fashioned 200 response.
-            else if (xeroContext.webSocket == null || xeroContext.webSocket.State != WebSocketState.Open)
+            else if (!xeroContext.IsWebSocketOpen)
             {
                 using (xeroContext.ViewModel.Batch())
                 {
