@@ -35,7 +35,7 @@ public static class XeroExtensions
         this RouteGroupBuilder group,
         UI<T> ui,
         [StringSyntax("Route")] string pattern,
-        Action<UI<T>.Context> action) where T : IViewModel
+        Action<UI<T>.Context> mutateState) where T : IViewModel
     {
         group.MapGet(pattern, async httpContext =>
         {
@@ -53,7 +53,7 @@ public static class XeroExtensions
             {
                 using (xeroContext.ViewModel.Batch())
                 {
-                    action(xeroContext);
+                    mutateState(xeroContext);
                 }
 
                 // TODO: Optimize.  No need to convert to a single string when we 
@@ -72,7 +72,7 @@ public static class XeroExtensions
                 await xeroContext.Push($"window.history.pushState({{}},'', '{httpContext.Request.Path}')");
                 using (xeroContext.ViewModel.Batch())
                 {
-                    action(xeroContext);
+                    mutateState(xeroContext);
                 }
             }
         });
