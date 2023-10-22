@@ -37,7 +37,7 @@ public abstract partial class UI<T> where T : IViewModel
 
         internal async Task PushMutations(IEnumerable<Chunk>? deltas)
         {
-            if (webSocket == null)
+            if (webSocket == null || deltas == null)
                 return;
 
             StringBuilder? output = null;
