@@ -38,7 +38,7 @@ public abstract partial class UI<T> where T : IViewModel
             return HtmlString.Create(ViewBuffer, $"{ui.MainLayout(ViewModel)}");
         }
 
-        public async Task Recompose()
+        internal async Task Recompose()
         {
             var compare = HtmlString.Create(CompareBuffer, $"{ui.MainLayout(ViewModel)}");
             var deltas = compare.GetDeltas(ViewBuffer, CompareBuffer);
@@ -100,7 +100,12 @@ public abstract partial class UI<T> where T : IViewModel
             }
         }
 
-        internal async Task Push(string eval)
+        internal async Task PushHistoryState(string path)
+        {
+            await Push($"window.history.pushState({{}},'', '{path}')");
+        }
+
+        private async Task Push(string eval)
         {
             if (webSocket == null || webSocket.State != WebSocketState.Open)
                 return;
