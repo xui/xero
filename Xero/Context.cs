@@ -12,8 +12,8 @@ public abstract partial class UI<T> where T : IViewModel
         private readonly UI<T> ui;
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
-        private HtmlString.Buffer ViewBuffer;
-        private HtmlString.Buffer CompareBuffer;
+        private Composition ViewBuffer;
+        private Composition CompareBuffer;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
 

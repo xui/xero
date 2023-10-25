@@ -6,16 +6,9 @@ namespace Xero;
 [InterpolatedStringHandler]
 public struct HtmlString
 {
-    [ThreadStatic] static Buffer? rootBuffer;
+    [ThreadStatic] static Composition? root;
 
-    internal class Buffer
-    {
-        internal int cursor = 0;
-        internal Chunk[] chunks = new Chunk[1000];
-        internal int depth = 0;
-    }
-
-    readonly Buffer buffer;
+    readonly Composition composition;
 
     readonly int start;
     int end;
@@ -25,33 +18,33 @@ public struct HtmlString
     int progressLiteral;
     int progressFormatted;
 
-    internal static HtmlString Create(Buffer buffer, [InterpolatedStringHandlerArgument("buffer")] HtmlString view)
+    internal static HtmlString Create(Composition composition, [InterpolatedStringHandlerArgument("composition")] HtmlString htmlString)
     {
-        return view;
+        return htmlString;
     }
 
     public HtmlString(int literalLength, int formattedCount)
     {
-        if (rootBuffer is null)
-            throw new ArgumentException("Root chunk not allowed without supplied buffer.");
-        // rootBuffer ??= new();
-        buffer = rootBuffer;
+        if (root is null)
+            throw new ArgumentException("Root chunk not allowed without supplied composition.");
+        // root ??= new();
+        composition = root;
 
-        buffer.depth++;
-        start = buffer.cursor;
+        composition.depth++;
+        start = composition.cursor;
         end = start;
 
         goalLiteral = literalLength;
         goalFormatted = formattedCount;
     }
 
-    internal HtmlString(int literalLength, int formattedCount, Buffer buffer)
+    internal HtmlString(int literalLength, int formattedCount, Composition composition)
     {
-        rootBuffer = buffer;
-        this.buffer = buffer;
+        root = composition;
+        this.composition = composition;
 
-        buffer.depth++;
-        start = buffer.cursor;
+        composition.depth++;
+        start = composition.cursor;
         end = start;
 
         goalLiteral = literalLength;
@@ -61,7 +54,7 @@ public struct HtmlString
     private void MoveNext()
     {
         end++;
-        buffer.cursor = end;
+        composition.cursor = end;
 
         if (progressLiteral == goalLiteral && progressFormatted == goalFormatted)
         {
@@ -71,16 +64,16 @@ public struct HtmlString
 
     private void Clear()
     {
-        if (--buffer.depth == 0)
+        if (--composition.depth == 0)
         {
-            buffer.cursor = 0;
-            rootBuffer = null;
+            composition.cursor = 0;
+            root = null;
         }
     }
 
     public void AppendLiteral(string s)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.String = s;
         chunk.Type = FormatType.StringLiteral;
@@ -91,7 +84,7 @@ public struct HtmlString
 
     public void AppendFormatted(string s, string? format = null)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.String = s;
         chunk.Type = FormatType.String;
@@ -103,7 +96,7 @@ public struct HtmlString
 
     public void AppendFormatted(int? i, string? format = null)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.Integer = i;
         chunk.Type = FormatType.Integer;
@@ -115,7 +108,7 @@ public struct HtmlString
 
     public void AppendFormatted(bool? b, string? format = null)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.Boolean = b;
         chunk.Type = FormatType.Boolean;
@@ -127,7 +120,7 @@ public struct HtmlString
 
     public void AppendFormatted(DateTime? d, string? format = null)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.DateTime = d;
         chunk.Type = FormatType.DateTime;
@@ -146,7 +139,7 @@ public struct HtmlString
     {
         end = h.end;
 
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.Type = FormatType.HtmlString;
 
@@ -172,7 +165,7 @@ public struct HtmlString
 
     public void AppendFormatted(Action a)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.Action = a;
         chunk.Type = FormatType.Action;
@@ -183,7 +176,7 @@ public struct HtmlString
 
     public void AppendFormatted(Action<Event> a)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.ActionEvent = a;
         chunk.Type = FormatType.ActionEvent;
@@ -194,7 +187,7 @@ public struct HtmlString
 
     public void AppendFormatted(Func<Task> f)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.ActionAsync = f;
         chunk.Type = FormatType.ActionAsync;
@@ -205,7 +198,7 @@ public struct HtmlString
 
     public void AppendFormatted(Func<Event, Task> f)
     {
-        ref var chunk = ref buffer.chunks[end];
+        ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.ActionEventAsync = f;
         chunk.Type = FormatType.ActionEventAsync;
@@ -219,7 +212,7 @@ public struct HtmlString
         var builder = new StringBuilder();
         for (int i = start; i < end; i++)
         {
-            var chunk = buffer.chunks[i];
+            var chunk = composition.chunks[i];
             chunk.Append(builder);
         }
         return builder.ToString();
@@ -232,7 +225,7 @@ public struct HtmlString
         var builder = new StringBuilder();
         for (int i = start; i < end; i++)
         {
-            var chunk = buffer.chunks[i];
+            var chunk = composition.chunks[i];
 
             switch (chunk.Type)
             {
@@ -270,11 +263,11 @@ public struct HtmlString
         return builder.ToString();
     }
 
-    internal IEnumerable<Chunk> GetDeltas(HtmlString.Buffer buffer, HtmlString.Buffer compare)
+    internal IEnumerable<Chunk> GetDeltas(Composition composition, Composition compare)
     {
         for (int i = 0; i < end; i++)
         {
-            if (buffer.chunks[i] != compare.chunks[i])
+            if (composition.chunks[i] != compare.chunks[i])
             {
                 yield return compare.chunks[i];
             }
