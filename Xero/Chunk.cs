@@ -97,13 +97,13 @@ internal struct Chunk
                 break;
             case FormatType.Action:
             case FormatType.ActionAsync:
-                builder.Append("e(");
+                builder.Append("h(");
                 builder.Append(this.Id);
                 builder.Append(")");
                 break;
             case FormatType.ActionEvent:
             case FormatType.ActionEventAsync:
-                builder.Append("e(");
+                builder.Append("h(");
                 builder.Append(this.Id);
                 builder.Append(",event)");
                 break;

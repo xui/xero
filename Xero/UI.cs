@@ -24,7 +24,7 @@ public abstract partial class UI<T> where T : IViewModel
     {
         return $$"""
             <script>
-                function e(id,ev) {
+                function h(id,ev) {
                     console.debug("executing slot " + id);
                     if (ev) {
                         ws.send(`${id}${encodeEvent(ev)}`);
