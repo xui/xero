@@ -220,7 +220,7 @@ public struct HtmlString
 
     public string ToStringWithExtras()
     {
-        bool probablyAnAttributeNextHack = false;
+        bool hackProbablyAnAttributeNext = false;
 
         var builder = new StringBuilder();
         for (int i = start; i < end; i++)
@@ -233,7 +233,7 @@ public struct HtmlString
                 case FormatType.DateTime:
                 case FormatType.Integer:
                 case FormatType.String:
-                    if (probablyAnAttributeNextHack)
+                    if (hackProbablyAnAttributeNext)
                     {
                         chunk.Append(builder);
                     }
@@ -253,11 +253,11 @@ public struct HtmlString
 
             if (chunk.Type == FormatType.StringLiteral && chunk.String?[^1] == '"')
             {
-                probablyAnAttributeNextHack = true;
+                hackProbablyAnAttributeNext = true;
             }
             else
             {
-                probablyAnAttributeNextHack = false;
+                hackProbablyAnAttributeNext = false;
             }
         }
         return builder.ToString();
