@@ -146,9 +146,9 @@ public abstract partial class UI<T> where T : IViewModel
                         }
                         break;
                     case FormatType.ActionEvent:
+                        var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
                         using (this.ViewModel.Batch())
                         {
-                            var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
                             chunk.ActionEvent(domEvent);
                         }
                         break;
