@@ -27,10 +27,10 @@ partial class UI
                 {new VirtualDom()}
                 {new Latency()}
                 {new Allocations()}
+                {new Benchmarks()}
                 {new HotReloads()}
                 {new Repl()}
                 {new Pages()}
-                {new Benchmarks()}
                 {new Sense()}
                 {new Roadmap()}
             </div>

@@ -269,6 +269,28 @@ body {
     }
   }
 
+  #zero-allocations {
+    > div {
+      background-color: #ec7e2e;
+      flex-direction: column;
+
+      & h1 {
+        color: white;
+        font-size: 96pt;
+        line-height: 100%;
+      }
+
+      & h2 {
+        color: #ffffff66;
+        font-size: 24pt;
+      }
+    }
+
+    & strong {
+      color: #ec7e2e;
+    }
+  }
+
   #hot-reload {
     > div {
       background-color: #970101;

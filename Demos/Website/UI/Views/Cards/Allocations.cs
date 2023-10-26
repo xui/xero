@@ -3,7 +3,15 @@ readonly record struct Allocations() : IView
     public HtmlString Render() => $"""
         <section id="zero-allocations">
             <div>
-                <img src="allocations/allocations.svg" />
+                <h2>
+                    max/current
+                </h2>
+                <h1>
+                    250
+                </h1>
+                <h2>
+                    req/sec
+                </h2>
             </div>
             <article>
                 <h2>
