@@ -10,7 +10,7 @@ readonly record struct Hydration() : IView
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> hydration
+                    <strong>Zero</strong> hydration => interactive streaming
                 </h1>
                 <p>
                     Xero is a return to good old-fashioned server-side rendering.  
