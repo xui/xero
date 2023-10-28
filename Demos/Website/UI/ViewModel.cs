@@ -30,6 +30,50 @@ partial class ViewModel : IViewModel
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public string? Email { get => email; set => email = value; }
         public string? First { get => first; set => first = value; }
         public string? Last { get => last; set => last = value; }
