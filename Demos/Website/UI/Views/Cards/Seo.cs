@@ -3,7 +3,9 @@ readonly record struct Seo() : IView
     public HtmlString Render() => $"""
         <section>
             <div>
-                <button onclick="{FetchHtml}">GET https://xero.wtf</button>
+                <button onclick="{FetchHtml}">
+                    curl https://xero.wtf/seo
+                </button>
             </div>
             <article>
                 <h2>
