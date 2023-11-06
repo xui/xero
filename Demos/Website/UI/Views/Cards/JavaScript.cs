@@ -41,7 +41,5 @@ readonly record struct JavaScript(
     void Increment(Event e)
     {
         ViewModel.Count++;
-
-        Console.WriteLine($"x: {e.x}");
     }
 }
