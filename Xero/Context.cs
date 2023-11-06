@@ -40,8 +40,8 @@ public abstract partial class UI<T> where T : IViewModel
 
         internal async Task Recompose()
         {
-            var compare = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
-            var deltas = compare.GetDeltas(composition, this.compositionCompare);
+            var htmlString = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
+            var deltas = htmlString.GetDeltas(composition, this.compositionCompare);
             await PushMutations(deltas);
         }
 
