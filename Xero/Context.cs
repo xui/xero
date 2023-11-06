@@ -12,8 +12,8 @@ public abstract partial class UI<T> where T : IViewModel
         private readonly UI<T> ui;
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
-        private Composition ViewBuffer;
-        private Composition CompareBuffer;
+        private Composition composition;
+        private Composition compositionCompare;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
 
@@ -26,8 +26,8 @@ public abstract partial class UI<T> where T : IViewModel
         {
             this.ui = ui;
 
-            ViewBuffer = new();
-            CompareBuffer = new();
+            composition = new();
+            compositionCompare = new();
 
             // TODO: Need to be more clever about how a new ViewModel is created.
             ViewModel = (T)T.New();
@@ -35,13 +35,13 @@ public abstract partial class UI<T> where T : IViewModel
 
         public HtmlString Compose()
         {
-            return HtmlString.Create(ViewBuffer, $"{ui.MainLayout(ViewModel)}");
+            return HtmlString.Create(composition, $"{ui.MainLayout(ViewModel)}");
         }
 
         internal async Task Recompose()
         {
-            var compare = HtmlString.Create(CompareBuffer, $"{ui.MainLayout(ViewModel)}");
-            var deltas = compare.GetDeltas(ViewBuffer, CompareBuffer);
+            var compare = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
+            var deltas = compare.GetDeltas(composition, this.compositionCompare);
             await PushMutations(deltas);
         }
 
@@ -91,7 +91,7 @@ public abstract partial class UI<T> where T : IViewModel
             }
 
             // Swap buffers.
-            (CompareBuffer, ViewBuffer) = (ViewBuffer, CompareBuffer);
+            (compositionCompare, composition) = (composition, compositionCompare);
 
             if (output is not null)
             {
@@ -136,7 +136,7 @@ public abstract partial class UI<T> where T : IViewModel
                 var (slot, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
 
                 // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
-                var chunk = ViewBuffer.chunks.First(c => c.Id == slot);
+                var chunk = composition.chunks.First(c => c.Id == slot);
                 switch (chunk.Type)
                 {
                     case FormatType.Action:
