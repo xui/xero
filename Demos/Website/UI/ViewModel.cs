@@ -4,6 +4,7 @@ partial class ViewModel : IViewModel
     [Live] int? count;
     [Live] string? color;
     [Live] bool showAdditional;
+    [Live] List<int> colors = new List<int> { 1, 2, 3 };
     [Live] SubViewModel? sub;
     public partial struct SubViewModel
     {
@@ -153,6 +154,11 @@ partial class ViewModel : IViewModel
                 OnPropertyChanged();
             }
         }
+    }
+
+    public List<int> Colors
+    {
+        get => colors;
     }
 
     public bool ShowAdditional
