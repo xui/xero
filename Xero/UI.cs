@@ -102,8 +102,12 @@ public abstract partial class UI<T> where T : IViewModel
                     debugSocket("dotnet-watch", dnw);
                     dnw.onmessage = (event) => {
                         console.debug("onmessage: ", event);
-                        ws.close();
-                        location.reload();
+                        const data = JSON.parse(event.data);
+                        if (data?.type == "UpdateStaticFile") {
+                            console.log("refreshing...");
+                            ws.close();
+                            location.reload();
+                        }
                     };
                 } else {
                     console.debug('Unable to establish a connection to the dotnet watch browser refresh server.');
