@@ -123,7 +123,7 @@ public abstract partial class UI<T> where T : IViewModel
             function r(id) {
                 const s = document.currentScript;
                 let n = s.previousSibling;
-                if (n.nodeType==8) {
+                if (n.nodeType == 8) {
                     n = document.createTextNode("");
                     s.parentNode.insertBefore(n, s);
                 }
