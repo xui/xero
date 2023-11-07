@@ -38,13 +38,6 @@ public abstract partial class UI<T> where T : IViewModel
             return HtmlString.Create(composition, $"{ui.MainLayout(ViewModel)}");
         }
 
-        internal async Task Recompose()
-        {
-            var htmlString = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
-            var deltas = htmlString.GetDeltas(composition, this.compositionCompare);
-            await PushMutations(deltas);
-        }
-
         internal async Task WriteResponseAsync(HttpContext httpContext)
         {
             // TODO: Optimize.  No need to convert to a single string when we 
@@ -68,26 +61,96 @@ public abstract partial class UI<T> where T : IViewModel
             }
         }
 
-        internal async Task PushMutations(IEnumerable<Chunk>? deltas)
+        internal async Task Recompose()
         {
-            if (webSocket == null || deltas == null)
+            var htmlString = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
+            var deltas = GetDeltas(composition, this.compositionCompare, htmlString.end);
+            var ranges = CalculateSlotRanges(deltas);
+            if (ranges.Count == 0)
+                return;
+
+            await PushMutations(ranges);
+        }
+
+        internal IEnumerable<Chunk> GetDeltas(Composition composition, Composition compare, int end)
+        {
+            for (int i = 0; i < end; i++)
+            {
+                if (composition.chunks[i] != compare.chunks[i])
+                {
+                    yield return compare.chunks[i];
+                }
+            }
+        }
+
+        private List<Range> CalculateSlotRanges(IEnumerable<Chunk> deltas)
+        {
+            List<Range>? ranges = null;
+            foreach (var chunk in deltas)
+            {
+                ranges ??= new();
+
+                if (chunk.Type != FormatType.StringLiteral)
+                {
+                    ranges.Add(new Range(chunk.Id, chunk.Id));
+                }
+                else
+                {
+                    var htmlStringStart = compositionCompare.chunks[chunk.Integer!.Value];
+                    ranges.Add(new Range(chunk.Integer.Value, htmlStringStart.Integer!.Value));
+                }
+            }
+
+            if (ranges == null)
+                return Enumerable.Empty<Range>().ToList();
+
+            ranges.Sort((a, b) => a.Start.Value - b.Start.Value);
+            int i = 0, max = -1;
+            while (i < ranges.Count)
+            {
+                var range = ranges[i];
+                if (max >= range.Start.Value)
+                    ranges.RemoveAt(i);
+                else
+                    i++;
+                max = range.End.Value;
+            }
+
+            return ranges;
+        }
+
+        internal async Task PushMutations(List<Range>? ranges)
+        {
+            if (webSocket == null || ranges == null || ranges.Count == 0)
                 return;
 
             StringBuilder? output = null;
-            foreach (var delta in deltas)
+            foreach (var range in ranges)
             {
-                if (delta.Type == FormatType.StringLiteral)
+                var delta = compositionCompare.chunks[range.End.Value];
+                if (range.Start.Value != range.End.Value)
                 {
-                    await Push("ws.close();location.reload();");
-                    return;
-                }
+                    // TODO: Optimize.  Any way to cleaning and efficiently trim and escape without calling ToString first?
+                    var sb = new StringBuilder();
+                    HtmlString.OutputRangeWithExtras(compositionCompare, range.Start.Value, range.End.Value - 1, sb);
+                    var content = sb.ToString().Trim().Replace("\"", "\\\"");
 
-                output ??= new();
-                output.Append("slot");
-                output.Append(delta.Id);
-                output.Append(".nodeValue='");
-                delta.Append(output);
-                output.Append("';");
+                    output ??= new();
+                    output.Append("replaceNode(slot");
+                    output.Append(delta.Id);
+                    output.Append(",\"");
+                    output.Append(content);
+                    output.Append("\");");
+                }
+                else
+                {
+                    output ??= new();
+                    output.Append("slot");
+                    output.Append(delta.Id);
+                    output.Append(".nodeValue='");
+                    delta.Append(output);
+                    output.Append("';");
+                }
             }
 
             // Swap buffers.

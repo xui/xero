@@ -57,6 +57,25 @@ public abstract partial class UI<T> where T : IViewModel
                         return v;
                     }, '');
                 }
+
+                function replaceNode(node, content) {
+                    const regScript = node.nextSibling;
+                    node.outerHTML = content;
+                    node = regScript.previousSibling;
+                    reRegister(regScript);
+                    for (let s of node.getElementsByTagName("script")) {
+                        reRegister(s);
+                    }
+                }
+
+                function reRegister(node) {
+                    if (node.tagName == "SCRIPT") {
+                        const s = document.createElement("script");
+                        s.textContent = node.textContent;
+                        node.replaceWith(s);
+                    }
+                }
+
             </script>
     """;
     }

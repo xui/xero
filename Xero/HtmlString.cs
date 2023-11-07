@@ -11,7 +11,7 @@ public struct HtmlString
     readonly Composition composition;
 
     readonly int start;
-    int end;
+    internal int end;
 
     readonly int goalLiteral;
     readonly int goalFormatted;
@@ -36,6 +36,12 @@ public struct HtmlString
 
         goalLiteral = literalLength;
         goalFormatted = formattedCount;
+
+        ref var chunk = ref composition.chunks[end];
+        chunk.Id = end;
+        chunk.Integer = start;
+        chunk.Type = FormatType.HtmlString;
+        end++;
     }
 
     internal HtmlString(int literalLength, int formattedCount, Composition composition)
@@ -76,6 +82,7 @@ public struct HtmlString
         ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
         chunk.String = s;
+        chunk.Integer = start;
         chunk.Type = FormatType.StringLiteral;
 
         progressLiteral += s.Length;
@@ -141,7 +148,11 @@ public struct HtmlString
 
         ref var chunk = ref composition.chunks[end];
         chunk.Id = end;
+        chunk.Integer = h.start;
         chunk.Type = FormatType.HtmlString;
+
+        ref var start = ref composition.chunks[h.start];
+        start.Integer = end;
 
         progressFormatted++;
         MoveNext();
@@ -210,7 +221,8 @@ public struct HtmlString
     public override string ToString()
     {
         var builder = new StringBuilder();
-        for (int i = start; i < end; i++)
+        // -2 since we can ignore that final HtmlString chunk.
+        for (int i = start; i < end - 2; i++)
         {
             var chunk = composition.chunks[i];
             chunk.Append(builder);
@@ -220,10 +232,17 @@ public struct HtmlString
 
     public string ToStringWithExtras()
     {
+        // -2 since we can ignore that final HtmlString chunk.
+        var builder = new StringBuilder();
+        OutputRangeWithExtras(composition, start, end - 2, builder);
+        return builder.ToString();
+    }
+
+    internal static void OutputRangeWithExtras(Composition composition, int start, int end, StringBuilder builder)
+    {
         bool hackProbablyAnAttributeNext = false;
 
-        var builder = new StringBuilder();
-        for (int i = start; i < end; i++)
+        for (int i = start; i <= end; i++)
         {
             var chunk = composition.chunks[i];
 
@@ -239,12 +258,24 @@ public struct HtmlString
                     }
                     else
                     {
+                        // TODO: After "attribute support" is baked in, this block needs to move back to... Context.cs?
                         builder.Append("<!-- -->");
                         chunk.Append(builder);
                         builder.Append("<script>r(\"slot");
                         builder.Append(chunk.Id);
                         builder.Append("\")</script>");
                     }
+                    break;
+                case FormatType.View:
+                case FormatType.HtmlString:
+                    // Only render extras for HtmlString's trailing sentinel, ignore for the leading sentinel.
+                    if (chunk.Id > chunk.Integer)
+                    {
+                        builder.Append("<script>r(\"slot");
+                        builder.Append(chunk.Id);
+                        builder.Append("\")</script>");
+                    }
+
                     break;
                 default:
                     chunk.Append(builder);
@@ -258,18 +289,6 @@ public struct HtmlString
             else
             {
                 hackProbablyAnAttributeNext = false;
-            }
-        }
-        return builder.ToString();
-    }
-
-    internal IEnumerable<Chunk> GetDeltas(Composition composition, Composition compare)
-    {
-        for (int i = 0; i < end; i++)
-        {
-            if (composition.chunks[i] != compare.chunks[i])
-            {
-                yield return compare.chunks[i];
             }
         }
     }

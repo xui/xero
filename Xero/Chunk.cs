@@ -93,7 +93,8 @@ internal struct Chunk
                 break;
             case FormatType.View:
             case FormatType.HtmlString:
-                // no-op
+                // When Composing, HtmlString is a no-op since all their children are already unrolled.
+                // When Recomposing, HtmlString must "compose" a range of slots instead.
                 break;
             case FormatType.Action:
             case FormatType.ActionAsync:
