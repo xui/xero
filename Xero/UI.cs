@@ -121,7 +121,13 @@ public abstract partial class UI<T> where T : IViewModel
     protected static string Register() => """
         <script>
             function r(id) {
-                this[id] = document.currentScript.previousSibling;
+                const s = document.currentScript;
+                let n = s.previousSibling;
+                if (n.nodeType==8) {
+                    n = document.createTextNode("");
+                    s.parentNode.insertBefore(n, s);
+                }
+                this[id] = n;
             }
         </script>
         """;
