@@ -73,4 +73,43 @@ public static class XeroExtensions
             }
         });
     }
+
+    public static void MapPage<T>(
+        this RouteGroupBuilder group,
+        UI<T> ui,
+        [StringSyntax("Route")] string pattern,
+        Func<UI<T>.Context, Task> mutateStateAsync) where T : IViewModel
+    {
+        group.MapGet(pattern, async httpContext =>
+        {
+            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext, ui);
+
+            // Here is the request for a websocket connection.  
+            // Switch protocols and await the event loop inside which reads from the stream.
+            if (httpContext.WebSockets.IsWebSocketRequest)
+            {
+                await xeroContext.AssignWebSocket(httpContext.WebSockets);
+            }
+
+            // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
+            // Just respond with an old fashioned 200 response.
+            else if (!xeroContext.IsWebSocketOpen)
+            {
+                _ = mutateStateAsync(xeroContext);
+                await xeroContext.WriteResponseAsync(httpContext);
+            }
+
+            // Looks like the browser already has the page AND a websocket.
+            // Respond with a 204 - No Content which will not alter the page.
+            // Then push down the new route requested.  After that run the lambda which
+            // may or may not cause trigger mutations to be pushed to the browser.
+            else
+            {
+                httpContext.Response.StatusCode = 204; // No Content
+                await httpContext.Response.CompleteAsync();
+                await xeroContext.PushHistoryState(httpContext.Request.Path);
+                _ = mutateStateAsync(xeroContext);
+            }
+        });
+    }
 }
