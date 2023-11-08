@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.AspNetCore.Routing;
-using System.Net.WebSockets;
 
 namespace Xero;
 
@@ -56,7 +54,6 @@ public static class XeroExtensions
                 {
                     mutateState(xeroContext);
                 }
-
                 await xeroContext.WriteResponseAsync(httpContext);
             }
 
@@ -68,9 +65,7 @@ public static class XeroExtensions
             {
                 httpContext.Response.StatusCode = 204; // No Content
                 await httpContext.Response.CompleteAsync();
-
                 await xeroContext.PushHistoryState(httpContext.Request.Path);
-
                 using (xeroContext.ViewModel.Batch())
                 {
                     mutateState(xeroContext);
