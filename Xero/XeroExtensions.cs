@@ -94,7 +94,7 @@ public static class XeroExtensions
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
             // Just respond with an old fashioned 200 response.
-            else if (true)// (!xeroContext.IsWebSocketOpen)
+            else if (!xeroContext.IsWebSocketOpen)
             {
                 // Page routes are a common place to fetch async data that this "page" might need.
                 // FOR MACHINES: They'd prefer to wait until that async data is fully resolved 
