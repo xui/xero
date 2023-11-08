@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http;
 
 namespace Xero;
 
@@ -93,9 +94,18 @@ public static class XeroExtensions
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
             // Just respond with an old fashioned 200 response.
-            else if (!xeroContext.IsWebSocketOpen)
+            else if (true)// (!xeroContext.IsWebSocketOpen)
             {
-                _ = mutateStateAsync(xeroContext);
+                // Page routes are a common place to fetch async data that this "page" might need.
+                // FOR MACHINES: They'd prefer to wait until that async data is fully resolved 
+                // so they can receive the final state as a single 200 GET response.
+                // FOR HUMANS: The best UX is to start by immediately sending a 200 GET with 
+                // zero blocking and then push DOM mutations caused by any subsequent state changes.
+                if (httpContext.IsHuman())
+                    _ = mutateStateAsync(xeroContext);
+                else
+                    await mutateStateAsync(xeroContext);
+
                 await xeroContext.WriteResponseAsync(httpContext);
             }
 
@@ -111,5 +121,18 @@ public static class XeroExtensions
                 _ = mutateStateAsync(xeroContext);
             }
         });
+    }
+
+    static bool IsHuman(this HttpContext httpContext)
+    {
+        string? userAgent = httpContext.Request.Headers.UserAgent;
+
+        if (userAgent is null || string.IsNullOrWhiteSpace(userAgent)) return false;
+        if (userAgent.Contains("bot", StringComparison.CurrentCultureIgnoreCase)) return false;
+        if (userAgent.Contains("crawl", StringComparison.CurrentCultureIgnoreCase)) return false;
+        if (userAgent.Contains("spider", StringComparison.CurrentCultureIgnoreCase)) return false;
+        if (userAgent.Contains("curl", StringComparison.CurrentCultureIgnoreCase)) return false;
+
+        return true;
     }
 }
