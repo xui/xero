@@ -133,11 +133,7 @@ public abstract partial class UI<T> where T : IViewModel
                     // TODO: Optimize.  Any way to cleaning and efficiently trim and escape without calling ToString first?
                     var sb = new StringBuilder();
                     HtmlString.OutputRangeWithExtras(compositionCompare, range.Start.Value, range.End.Value - 1, sb);
-                    var content = sb
-                        .ToString()
-                        .Trim()
-                        .Replace("\"", "\\\"")
-                        .Replace("\n", "");
+                    var content = sb.ToString().Trim();
 
                     output ??= new();
                     output.Append("replaceNode(slot");
@@ -176,6 +172,10 @@ public abstract partial class UI<T> where T : IViewModel
         {
             if (webSocket == null || webSocket.State != WebSocketState.Open)
                 return;
+
+            eval = eval
+                .Replace("\"", "\\\"")
+                .Replace("\n", "");
 
             // TODO: Optimize.  Skip the string?
             Encoding.Default.GetBytes(eval, 0, eval.Length, sendBuffer, 0);
