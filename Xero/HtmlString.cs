@@ -275,6 +275,10 @@ public struct HtmlString
                         builder.Append(chunk.Id);
                         builder.Append("\")</script>");
                     }
+                    else
+                    {
+                        builder.AppendLine();
+                    }
 
                     break;
                 default:
