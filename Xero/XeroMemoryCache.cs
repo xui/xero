@@ -14,8 +14,7 @@ public abstract partial class UI<T>
         public static Context Get(HttpContext httpContext, UI<T> ui)
         {
             var sessionId = httpContext.GetXeroSessionId();
-            var xeroContext = cache.Get(sessionId) as Context;
-            if (xeroContext == null)
+            if (cache.Get(sessionId) is not Context xeroContext)
             {
                 xeroContext = new Context(ui);
                 Set(sessionId, xeroContext);
