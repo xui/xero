@@ -1,18 +1,18 @@
 partial class ViewModel : IViewModel
 {
-    [Live] string? name;
-    [Live] int? count;
-    [Live] string? color;
-    [Live] bool showAdditional;
-    [Live] List<int> colors = new List<int> { 1, 2, 3 };
-    [Live] SubViewModel? sub;
+    string? name;
+    int? count;
+    string? color;
+    bool showAdditional;
+    List<int> colors = new List<int> { 1, 2, 3 };
+    SubViewModel? sub;
     public partial struct SubViewModel
     {
-        [Live] string? email;
-        [Live] string? first;
-        [Live] string? last;
-        [Live] string? password;
-        [Live] int? quantity;
+        string? email;
+        string? first;
+        string? last;
+        string? password;
+        int? quantity;
 
 
 
