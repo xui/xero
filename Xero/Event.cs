@@ -1,3 +1,5 @@
+namespace Xero;
+
 public class Event
 {
     public bool? altKey { get; set; }

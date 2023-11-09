@@ -4,7 +4,6 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 
-
 namespace Xero;
 
 public abstract partial class UI<T> where T : IViewModel
