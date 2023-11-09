@@ -38,7 +38,7 @@ public static class XeroExtensions
     {
         group.MapGet(pattern, async httpContext =>
         {
-            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext, ui);
+            var xeroContext = UI<T>.Context.Get(httpContext, ui);
 
             // Here is the request for a websocket connection.  
             // Switch protocols and await the event loop inside which reads from the stream.
@@ -83,7 +83,7 @@ public static class XeroExtensions
     {
         group.MapGet(pattern, async httpContext =>
         {
-            var xeroContext = UI<T>.XeroMemoryCache.Get(httpContext, ui);
+            var xeroContext = UI<T>.Context.Get(httpContext, ui);
 
             // Here is the request for a websocket connection.  
             // Switch protocols and await the event loop inside which reads from the stream.

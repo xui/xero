@@ -2,6 +2,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace Xero;
 
@@ -16,6 +18,26 @@ public abstract partial class UI<T> where T : IViewModel
         private Composition compositionCompare;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
+
+        private static readonly MemoryCache cache = new(new MemoryCacheOptions());
+        private static readonly MemoryCacheEntryOptions entryOptions =
+            new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1));
+
+        public static Context Get(HttpContext httpContext, UI<T> ui)
+        {
+            var sessionId = httpContext.GetXeroSessionId();
+            if (cache.Get(sessionId) is not Context xeroContext)
+            {
+                xeroContext = new Context(ui);
+                Set(sessionId, xeroContext);
+            }
+            return xeroContext;
+        }
+
+        private static void Set(string id, Context context)
+        {
+            cache.Set(id, context, entryOptions);
+        }
 
         public bool IsWebSocketOpen
         {
