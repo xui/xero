@@ -14,8 +14,8 @@ readonly record struct Hooks() : IView
                 <div class="hstack">
                     <img src="img/drake_yes.jpg" />
                     <pre>
-                        <div>&lt;p&gt;{ viewModel.Name ?? "(none)" }&lt;/p&gt;</div>
-                        <div>&lt;p&gt;{ viewModel.Count * 2 }&lt;/p&gt;</div>
+                        <div>&lt;p&gt;{State.Name ?? "(none)"}&lt;/p&gt;</div>
+                        <div>&lt;p&gt;{State.Count * 2}&lt;/p&gt;</div>
                     </pre>
                 </div>
             </div>
