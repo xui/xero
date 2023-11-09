@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Xero;
 
-public static class XeroExtensions
+public static class Extensions
 {
     public static void AddXero(this IServiceCollection services)
     {
