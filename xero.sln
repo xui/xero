@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syntax", "Demos\Syntax\Synt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Demos\Website\Website.csproj", "{6049CED7-E2EE-413F-A84F-5D2E520DE533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XeroSourceGenerators", "XeroSourceGenerators\XeroSourceGenerators.csproj", "{CA981E3D-309A-4567-977B-B9D541EEB789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{6049CED7-E2EE-413F-A84F-5D2E520DE533}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6049CED7-E2EE-413F-A84F-5D2E520DE533}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6049CED7-E2EE-413F-A84F-5D2E520DE533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA981E3D-309A-4567-977B-B9D541EEB789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA981E3D-309A-4567-977B-B9D541EEB789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA981E3D-309A-4567-977B-B9D541EEB789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA981E3D-309A-4567-977B-B9D541EEB789}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
