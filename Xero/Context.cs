@@ -159,9 +159,9 @@ public abstract partial class UI<T> where T : IViewModel
                     output ??= new();
                     output.Append("replaceNode(slot");
                     output.Append(delta.Id);
-                    output.Append(",\"");
+                    output.Append(",`");
                     output.Append(content);
-                    output.Append("\");");
+                    output.Append("`);");
                 }
                 else
                 {
@@ -194,9 +194,9 @@ public abstract partial class UI<T> where T : IViewModel
             if (webSocket == null || webSocket.State != WebSocketState.Open)
                 return;
 
-            eval = eval
-                .Replace("\"", "\\\"")
-                .Replace("\n", "");
+            // eval = eval
+            //     .Replace("\"", "\\\"")
+            //     .Replace("\n", "");
 
             // TODO: Optimize.  Skip the string?
             Encoding.Default.GetBytes(eval, 0, eval.Length, sendBuffer, 0);
