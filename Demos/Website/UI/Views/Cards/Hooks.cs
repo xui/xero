@@ -24,7 +24,7 @@ readonly record struct Hooks() : IView
                     Simplify
                 </h2>
                 <h1>
-                    <strong>Zero</strong> "$:" or "use*" effects
+                    <strong>Zero</strong> "$:" or "use*" hooks
                 </h1>
                 <p>
                     Managing state is the hardest part of any UI framework.  This is true for 
