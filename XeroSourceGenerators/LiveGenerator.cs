@@ -50,12 +50,24 @@ namespace Xero
                 string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
 
                 // begin building the generated source
-                StringBuilder source = new StringBuilder($@"
+                StringBuilder source = new StringBuilder();
+                if (namespaceName == "<global namespace>")
+                {
+                    source.Append($@"
+    public partial class {classSymbol.Name} : {notifySymbol.ToDisplayString()}
+    {{
+");
+
+                }
+                else
+                {
+                    source.Append($@"
 namespace {namespaceName}
 {{
     public partial class {classSymbol.Name} : {notifySymbol.ToDisplayString()}
     {{
 ");
+                }
 
                 // if the class doesn't implement INotifyPropertyChanged already, add it
                 if (!classSymbol.Interfaces.Contains(notifySymbol, SymbolEqualityComparer.Default))
@@ -69,7 +81,14 @@ namespace {namespaceName}
                     ProcessField(source, fieldSymbol, attributeSymbol);
                 }
 
-                source.Append("} }");
+                if (namespaceName == "<global namespace>")
+                {
+                    source.Append("}");
+                }
+                else
+                {
+                    source.Append("} }");
+                }
                 return source.ToString();
             }
 
