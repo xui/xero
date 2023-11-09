@@ -135,4 +135,18 @@ public static class XeroExtensions
 
         return true;
     }
+
+    internal static string GetXeroSessionId(this HttpContext httpContext)
+    {
+        const string SESSION_KEY = "xero_session";
+
+        var sessionId = httpContext.Request.Cookies[SESSION_KEY];
+        if (sessionId == null)
+        {
+            sessionId = Guid.NewGuid().ToString();
+            httpContext.Response.Cookies.Append(SESSION_KEY, sessionId);
+            // TODO: Expire cookie?
+        }
+        return sessionId;
+    }
 }
