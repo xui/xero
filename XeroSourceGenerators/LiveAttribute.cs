@@ -3,17 +3,14 @@ using System.Diagnostics;
 
 namespace Xero
 {
-    namespace SourceGenerators
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    [Conditional("LiveGenerator_DEBUG")]
+    public sealed class LiveAttribute : Attribute
     {
-        [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-        [Conditional("LiveGenerator_DEBUG")]
-        public sealed class LiveAttribute : Attribute
+        public LiveAttribute()
         {
-            public LiveAttribute()
-            {
-            }
-
-            public string PropertyName { get; set; }
         }
+
+        public string PropertyName { get; set; } = "";
     }
 }
