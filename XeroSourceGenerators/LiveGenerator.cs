@@ -28,15 +28,15 @@ namespace Xero
             if (context.Compilation.GetTypeByMetadataName("Xero.LiveAttribute") is not INamedTypeSymbol attributeSymbol)
                 return;
 
-            if (context.Compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged") is not INamedTypeSymbol notifySymbol)
-                return;
+            // if (context.Compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged") is not INamedTypeSymbol notifySymbol)
+            //     return;
 
             var groups = receiver
                 .Fields
                 .GroupBy<IFieldSymbol, INamedTypeSymbol>(f => f.ContainingType, SymbolEqualityComparer.Default);
 
             foreach (var group in groups)
-                if (ProcessClass(group.Key, group.ToList(), attributeSymbol, notifySymbol, context) is string classSource)
+                if (ProcessClass(group.Key, group.ToList(), attributeSymbol, context) is string classSource)
                     context.AddSource($"{group.Key.Name}.g.cs", SourceText.From(classSource, Encoding.UTF8));
         }
 
@@ -44,7 +44,6 @@ namespace Xero
             INamedTypeSymbol classSymbol,
             List<IFieldSymbol> fields,
             ISymbol attributeSymbol,
-            ISymbol notifySymbol,
             GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
@@ -54,13 +53,50 @@ namespace Xero
             }
 
             var members = new StringBuilder();
+            members.AppendLine($$"""
+                bool isBatching = false;
+                bool isBatchChanged = false;
+                public Action? OnChanging { get; set; }
+                public Action? OnChanged { get; set; }
 
-            // If the class doesn't implement INotifyPropertyChanged already, add it
-            if (!classSymbol.Interfaces.Contains(notifySymbol, SymbolEqualityComparer.Default))
-            {
-                members.AppendLine("public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;");
-                members.AppendLine();
-            }
+                public {{classSymbol.Name}}()
+                {
+                }
+
+                public IDisposable Batch()
+                {
+                    return new Batcher(this);
+                }
+
+                private void OnPropertyChanged()
+                {
+                    if (isBatching)
+                        isBatchChanged = true;
+                    else
+                        OnChanged?.Invoke();
+
+                }
+
+                class Batcher : IDisposable
+                {
+                    readonly {{classSymbol.Name}} viewModel;
+
+                    public Batcher({{classSymbol.Name}} viewModel)
+                    {
+                        this.viewModel = viewModel;
+                        this.viewModel.isBatching = true;
+                    }
+
+                    public void Dispose()
+                    {
+                        viewModel.isBatching = false;
+                        if (viewModel.isBatchChanged)
+                            viewModel.OnPropertyChanged();
+                    }
+                }
+            """
+            );
+            members.AppendLine();
 
             foreach (var fieldSymbol in fields)
             {
@@ -81,9 +117,9 @@ namespace Xero
 
                 {{namespaceLine}}
 
-                public partial class {{classSymbol.Name}} : {{notifySymbol.ToDisplayString()}}
+                public partial class {{classSymbol.Name}}
                 {
-                    {{members.ToString()}}
+                {{members.ToString()}}
                 }
                 """;
         }
@@ -115,8 +151,11 @@ namespace Xero
 
                     set
                     {
-                        this.{{fieldName}} = value;
-                        this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof({{propertyName}})));
+                        if (!EqualityComparer<{{fieldType}}>.Default.Equals(this.{{fieldName}}, value))
+                        {
+                            this.{{fieldName}} = value;
+                            OnPropertyChanged();
+                        }
                     }
                 }
             """;
