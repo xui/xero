@@ -22,118 +22,104 @@ namespace Xero
 
         public void Execute(GeneratorExecutionContext context)
         {
-            // retrieve the populated receiver 
-            if (!(context.SyntaxContextReceiver is SyntaxReceiver receiver))
+            if (context.SyntaxContextReceiver is not SyntaxReceiver receiver)
                 return;
 
-            // get the added attribute, and INotifyPropertyChanged
-            var attributeSymbol = context.Compilation.GetTypeByMetadataName("Xero.LiveAttribute");
-            if (attributeSymbol is null)
+            if (context.Compilation.GetTypeByMetadataName("Xero.LiveAttribute") is not INamedTypeSymbol attributeSymbol)
                 return;
 
-            var notifySymbol = context.Compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged");
-            if (notifySymbol is null)
+            if (context.Compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged") is not INamedTypeSymbol notifySymbol)
                 return;
 
-            // group the fields by class, and generate the source
-            foreach (IGrouping<INamedTypeSymbol, IFieldSymbol> group in receiver.Fields.GroupBy<IFieldSymbol, INamedTypeSymbol>(f => f.ContainingType, SymbolEqualityComparer.Default))
-            {
-                var classSource = ProcessClass(group.Key, group.ToList(), attributeSymbol, notifySymbol, context);
-                if (classSource is not null)
+            var groups = receiver
+                .Fields
+                .GroupBy<IFieldSymbol, INamedTypeSymbol>(f => f.ContainingType, SymbolEqualityComparer.Default);
+
+            foreach (var group in groups)
+                if (ProcessClass(group.Key, group.ToList(), attributeSymbol, notifySymbol, context) is string classSource)
                     context.AddSource($"{group.Key.Name}_live.g.cs", SourceText.From(classSource, Encoding.UTF8));
-            }
         }
 
-        private string? ProcessClass(INamedTypeSymbol classSymbol, List<IFieldSymbol> fields, ISymbol attributeSymbol, ISymbol notifySymbol, GeneratorExecutionContext context)
+        private string? ProcessClass(
+            INamedTypeSymbol classSymbol,
+            List<IFieldSymbol> fields,
+            ISymbol attributeSymbol,
+            ISymbol notifySymbol, GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
-                return null; //TODO: issue a diagnostic that it must be top level
+                // TODO: Support classes/structs that are not top level
+                return null;
             }
 
-            string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
+            var source = new StringBuilder();
 
-            // begin building the generated source
-            StringBuilder source = new StringBuilder();
-            if (namespaceName == "<global namespace>")
-            {
-                source.Append($@"
-#nullable enable
-public partial class {classSymbol.Name} : {notifySymbol.ToDisplayString()}
-{{
-");
-
-            }
-            else
-            {
-                source.Append($@"
-#nullable enable
-namespace {namespaceName}
-{{
-public partial class {classSymbol.Name} : {notifySymbol.ToDisplayString()}
-{{
-");
-            }
-
-            // if the class doesn't implement INotifyPropertyChanged already, add it
+            // If the class doesn't implement INotifyPropertyChanged already, add it
             if (!classSymbol.Interfaces.Contains(notifySymbol, SymbolEqualityComparer.Default))
             {
-                source.Append("public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;");
+                source.AppendLine("public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;");
+                source.AppendLine();
             }
 
-            // create properties for each field 
+            // Create properties for each field 
             foreach (IFieldSymbol fieldSymbol in fields)
             {
                 ProcessField(source, fieldSymbol, attributeSymbol);
+                source.AppendLine();
             }
 
-            if (namespaceName == "<global namespace>")
-            {
-                source.Append("}");
-            }
-            else
-            {
-                source.Append("} }");
-            }
-            return source.ToString();
+            var namespaceLine = classSymbol.ContainingNamespace.ToDisplayString();
+            namespaceLine = (namespaceLine != "<global namespace>")
+                ? $"namespace {namespaceLine};"
+                : "";
+
+            return $$"""
+                #nullable enable
+
+                {{namespaceLine}}
+
+                public partial class {{classSymbol.Name}} : {{notifySymbol.ToDisplayString()}}
+                {
+                    {{source.ToString()}}
+                }
+                """;
         }
 
         private void ProcessField(StringBuilder source, IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
         {
-            // get the name and type of the field
-            string fieldName = fieldSymbol.Name;
-            ITypeSymbol fieldType = fieldSymbol.Type;
+            var fieldName = fieldSymbol.Name;
+            var fieldType = fieldSymbol.Type;
+            var overriddenNameOpt = fieldSymbol
+                .GetAttributes()
+                .Single(ad => ad?.AttributeClass?.Equals(attributeSymbol, SymbolEqualityComparer.Default) == true)
+                .NamedArguments.SingleOrDefault(kvp => kvp.Key == "PropertyName")
+                .Value;
 
-            // get the Live attribute from the field, and any associated data
-            var attributeData = fieldSymbol.GetAttributes().Single(ad => ad?.AttributeClass?.Equals(attributeSymbol, SymbolEqualityComparer.Default) ?? false);
-            var overriddenNameOpt = attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == "PropertyName").Value;
-
-            string propertyName = ChooseName(fieldName, overriddenNameOpt);
+            var propertyName = ChooseName(fieldName, overriddenNameOpt);
             if (propertyName.Length == 0 || propertyName == fieldName)
             {
-                //TODO: issue a diagnostic that we can't process this field
+                // TODO: issue a diagnostic that we can't process this field
                 return;
             }
 
-            source.Append($@"
-public {fieldType} {propertyName} 
-{{
-get 
-{{
-    return this.{fieldName};
-}}
+            source.AppendLine($$"""
+                public {{fieldType}} {{propertyName}}
+                {
+                    get 
+                    {
+                        return this.{{fieldName}};
+                    }
 
-set
-{{
-    this.{fieldName} = value;
-    this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof({propertyName})));
-}}
-}}
-
-");
+                    set
+                    {
+                        this.{{fieldName}} = value;
+                        this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof({{propertyName}})));
+                    }
+                }
+            """);
         }
 
-        private string ChooseName(string fieldName, TypedConstant overriddenNameOpt)
+        string ChooseName(string fieldName, TypedConstant overriddenNameOpt)
         {
             if (overriddenNameOpt.Value is not null)
             {
