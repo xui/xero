@@ -10,7 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\XeroSourceGenerators\XeroSourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference 
+      Include="..\XeroSourceGenerators\XeroSourceGenerators.csproj" 
+      OutputItemType="Analyzer" 
+      ReferenceOutputAssembly="true" 
+    />
   </ItemGroup>
   
   <PropertyGroup>
