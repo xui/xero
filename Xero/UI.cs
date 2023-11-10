@@ -82,7 +82,9 @@ public abstract partial class UI<T> where T : IViewModel
 
     protected string Watch()
     {
+#pragma warning disable RS1035 // The symbol 'Environment' is banned for use by analyzers: Analyzers should not read their settings directly from environment variables
         var endpoints = Environment.GetEnvironmentVariable("ASPNETCORE_AUTO_RELOAD_WS_ENDPOINT")!;
+#pragma warning restore RS1035
 
         if (string.IsNullOrWhiteSpace(endpoints))
             return string.Empty;
