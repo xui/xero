@@ -37,14 +37,15 @@ namespace Xero
 
             foreach (var group in groups)
                 if (ProcessClass(group.Key, group.ToList(), attributeSymbol, notifySymbol, context) is string classSource)
-                    context.AddSource($"{group.Key.Name}_live.g.cs", SourceText.From(classSource, Encoding.UTF8));
+                    context.AddSource($"{group.Key.Name}.g.cs", SourceText.From(classSource, Encoding.UTF8));
         }
 
         private string? ProcessClass(
             INamedTypeSymbol classSymbol,
             List<IFieldSymbol> fields,
             ISymbol attributeSymbol,
-            ISymbol notifySymbol, GeneratorExecutionContext context)
+            ISymbol notifySymbol,
+            GeneratorExecutionContext context)
         {
             if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
             {
@@ -52,20 +53,22 @@ namespace Xero
                 return null;
             }
 
-            var source = new StringBuilder();
+            var members = new StringBuilder();
 
             // If the class doesn't implement INotifyPropertyChanged already, add it
             if (!classSymbol.Interfaces.Contains(notifySymbol, SymbolEqualityComparer.Default))
             {
-                source.AppendLine("public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;");
-                source.AppendLine();
+                members.AppendLine("public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;");
+                members.AppendLine();
             }
 
-            // Create properties for each field 
-            foreach (IFieldSymbol fieldSymbol in fields)
+            foreach (var fieldSymbol in fields)
             {
-                ProcessField(source, fieldSymbol, attributeSymbol);
-                source.AppendLine();
+                if (CreateField(fieldSymbol, attributeSymbol) is string field)
+                {
+                    members.AppendLine(field);
+                    members.AppendLine();
+                }
             }
 
             var namespaceLine = classSymbol.ContainingNamespace.ToDisplayString();
@@ -80,12 +83,12 @@ namespace Xero
 
                 public partial class {{classSymbol.Name}} : {{notifySymbol.ToDisplayString()}}
                 {
-                    {{source.ToString()}}
+                    {{members.ToString()}}
                 }
                 """;
         }
 
-        private void ProcessField(StringBuilder source, IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
+        private string? CreateField(IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
         {
             var fieldName = fieldSymbol.Name;
             var fieldType = fieldSymbol.Type;
@@ -99,10 +102,10 @@ namespace Xero
             if (propertyName.Length == 0 || propertyName == fieldName)
             {
                 // TODO: issue a diagnostic that we can't process this field
-                return;
+                return null;
             }
 
-            source.AppendLine($$"""
+            return $$"""
                 public {{fieldType}} {{propertyName}}
                 {
                     get 
@@ -116,7 +119,7 @@ namespace Xero
                         this.PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof({{propertyName}})));
                     }
                 }
-            """);
+            """;
         }
 
         string ChooseName(string fieldName, TypedConstant overriddenNameOpt)
