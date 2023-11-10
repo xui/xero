@@ -150,9 +150,6 @@ set
             return fieldName.Substring(0, 1).ToUpper() + fieldName.Substring(1);
         }
 
-        /// <summary>
-        /// Created on demand before each generation pass
-        /// </summary>
         class SyntaxReceiver : ISyntaxContextReceiver
         {
             public List<IFieldSymbol> Fields { get; } = new List<IFieldSymbol>();
@@ -162,15 +159,14 @@ set
             /// </summary>
             public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
             {
-                // any field with at least one attribute is a candidate for property generation
-                if (context.Node is FieldDeclarationSyntax fieldDeclarationSyntax
-                    && fieldDeclarationSyntax.AttributeLists.Count > 0)
+                // Any field with at least one attribute is a candidate for property generation
+                if (context.Node is FieldDeclarationSyntax fieldDeclarationSyntax && fieldDeclarationSyntax.AttributeLists.Count > 0)
                 {
-                    foreach (VariableDeclaratorSyntax variable in fieldDeclarationSyntax.Declaration.Variables)
+                    foreach (var variable in fieldDeclarationSyntax.Declaration.Variables)
                     {
-                        // Get the symbol being declared by the field, and keep it if its annotated
+                        // Get the symbol being declared by the field, and keep it if it's annotated
                         var fieldSymbol = context.SemanticModel.GetDeclaredSymbol(variable) as IFieldSymbol;
-                        if (fieldSymbol is not null && fieldSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == "Xero.LiveAttribute"))
+                        if (fieldSymbol?.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == "Xero.LiveAttribute") == true)
                         {
                             Fields.Add(fieldSymbol);
                         }
