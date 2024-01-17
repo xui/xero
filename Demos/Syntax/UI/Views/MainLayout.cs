@@ -63,7 +63,17 @@ partial class UI
                     
                 </p>
 
-                <h3>Component with children</h3>
+                <h3>HasContent</h3>
+                {HasContent(() => Child(vm, "Hello, I am the content."))}
+
+                <h3>Slots</h3>
+                {Slots(
+                    title: () => $"This is an <i>emphasized</i> one.",
+                    caption: () => $"Here is a <span style='color: blue'>blue</span> one.",
+                    content: () => Child(vm, "Hello, I am the content.")
+                )}
+
+                <h3>Component with children (this one is getting cut)</h3>
                 {Parent(
                     () => Child(vm, "one"),
                     () => Child(vm),
@@ -130,6 +140,7 @@ partial class UI
 
 
                 {Connect()}
+                {Watch()}
             </body>
         </html>
         """;
