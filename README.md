@@ -432,7 +432,9 @@ Xero uses file-based routing as a language-agnostic way to define your URL routi
 <br />
 <br />
 
-## 🐵 Migration Path from Static to Dynamic
+## 🤖 BYOL (Bring-Your-Own-Language)
+
+### 🐵 Migration Path from Static to Dynamic
 
 Astute readers might notice that, at this point, we now have all the tools necessary to host or generate a static website composed of reusable components using only `.html` and `.css` files and nothing else.
 
@@ -440,7 +442,15 @@ This is a good thing. It ties the durability of your frontend to the longevity o
 
 The sections that follow describe the migration path Xero defines to progressively enhance your website with dynamic, reactive and realtime features using languages besides just JavaScript.
 
-## 🤖 BYOL (Bring-Your-Own-Language)
+### Event Handlers
+
+Xero further embraces the platform by using the DOM's natural event-handling model. Instead of specifying a JavaScript function to execute, use the escape sequence `{{ }}` to specify a function of any language to execute.
+
+```xml
+<button onClick={{handleClick}}>
+  Click me
+</button>
+```
 
 ### `<script>` Tags
 
@@ -463,23 +473,64 @@ my-button.html
 
 ```
 
-Technically this attribute's possible values were never standardized.  However this is moot since this `<script>` tag 
+Whatever value is specified in the `language` attribute is technically moot. For one, it was never officially standardized and secondly, this `<script>` tag shouldn't ever be sent to the browser. (It wouldn't know how to execute it anyway right?) Therefore, whatever is specified in the language is more for the human than the machine.
+
+### Sibling Files
+
+The [sibling file](https://todo) approach works great for introducing new languages. Any file in the same directory with the same filename but different file extension shall be treated as part of the same component. Rules regarding variable scoping and code-importing are intentionally undefined so that they can vary and cater to each language's strengths.
+
+<table>
+<tr>
+<td>
+<code>my-button.html</code>                                                                
+</td>
+<td>
+<code>my-button.any</code>                                                                
+</td>
+</tr>
+<tr>
+<td>
+
+```xml
+<button onClick={{handleClick}}>
+  Clicks: {{count}}
+</button>
+```
+
+</td>
+<td>
+
+```swift
+count = 0
+
+func handleClick() {
+  count++
+}
+```
+
+</td>
+</tr>
+</table>
 
 ### Hole Punch
 
-The "hole punch" pattern is familiar since it appears like regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply filling in the interpolated "holes" and returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either generate the HTML in full or to compare it with another composition object, input by input, for anything that might have changed and, if so, construct the necessary instructions the DOM needs to updated itself.
+The "hole punch" pattern is familiar since it appears like a regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either generate the HTML in full or to compare it with another composition object, input by input, for anything that might have changed and, if so, construct the necessary instructions the DOM needs to updated itself.
 
 This has several advantages:
 
-- Portability
-- Speed
-- Precision
-- Memory
-- Derived data
-
-### Event Handlers
+1. Simplicity - any state change can trigger a re-composition so interpolation values can be compared
+1. Derived data - composition compares expression values, not the source values
+1. Portability - must function on the server and the client without hacky workarounds
+1. Event Handling - can execute server-side or client side via WASM
+1. Precision - can modify individual node values instead of swapping large HTML fragments
+1. Speed - no virtual DOM necessary
+1. Memory - no node tree necessary
 
 ### Server vs. Client
+
+1. WASM - event listeners marshall events to WASM for execution which marshalls back DOM mutations instructions
+1. Request/Response - event listeners get serialized and POSTED to the server; server responds with DOM mutation instructions
+1. Bi-directional - the server can push DOM mutation instructions at any time; the browser serializes and sends events from any event listeners via Web Socket
 
 <br />
 <br />
