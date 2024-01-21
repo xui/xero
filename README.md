@@ -550,14 +550,42 @@ back and forth to your language of choice running remotely on the server or runn
 
 ## 📓 State Management
 
+Xero is intentionally non-prescriptive when it comes to state management beyond simply using hole-punch escape sequences `{{ }}` as the contact point into HTML. Each language should bring its unique strengths to the table whether it be signals, code generation or something else new and exciting.
+
 <br />
 <br />
 <br />
 
 ## 🪞 Branding and SEO
 
+Similar to Markdown, Xero is a specification not just one implementation. Hopefully the ideas organized here inspire the implementation in many languages. To promote consistency, there are a few suggested naming conventions.
+
+### The Spec
+
+Refer to this document as "Zero the spec".
+
+### Colloquial Reference
+
+Specific implementations will name inevitably themselves however they please however they can be colloquially referenced native file extension. For example: this doc's fictional language AnyScript could be referred to as `Zero.any`.
+
+### Flavors
+
+In the event that a language have more than one competing implementations, that's great. They can differentiate between each other using the "flavor" term as seen in [GitHub flavored Markdown](https://github.github.com/gfm/). For example: "Acme flavored Zero." Here, using the file extension would be superfluous (unless that flavor also includes multiple languages).
+
 <br />
 <br />
 <br />
 
 ## 🦠 Ecosystem
+
+Below is a running list of known implementations and the various features supported.
+
+| Features                        |   Zero.cs   |
+| ------------------------------- | :---------: |
+| Dynamic hosting                 |     ✅      |
+| SSG (static site generation)    | coming soon |
+| AoT (Ahead of time compilation) | coming soon |
+| WASM (WebAssembly)              | coming soon |
+| WebSockets                      |     ✅      |
+| SSE (server-side events)        | coming soon |
+| Event-POSTing                   | coming soon |
