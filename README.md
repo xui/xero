@@ -528,9 +528,15 @@ This has several advantages:
 
 ### Server vs. Client
 
+Xero follows a [Unidirectional data flow](https://developer.android.com/jetpack/compose/architecture#udf) design pattern.
+
+> A unidirectional data flow (UDF) is a design pattern where state flows down and events flow up. By following unidirectional data flow, you can decouple composables that display state in the UI from the parts of your app that store and change state.
+
+The pattern offers a large degree of flexibility for executing your language of choice in a multitude of environments or configurations:
+
 1. WASM - event listeners marshall events to WASM for execution which marshalls back DOM mutations instructions
-1. Request/Response - event listeners get serialized and POSTED to the server; server responds with DOM mutation instructions
-1. Bi-directional - the server can push DOM mutation instructions at any time; the browser serializes and sends events from any event listeners via Web Socket
+1. Request/Response - event listeners serialize and POST events to the server; server responds with instructions for mutating the DOM
+1. Bi-directional - the server pushes instructions for mutating the DOM at any time via Web Socket; the browser handles any listened events by serializing and sending via Web Socket
 
 <br />
 <br />
