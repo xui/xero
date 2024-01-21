@@ -114,7 +114,7 @@ index.html
 
 ### Sibling Files
 
-Any file by the same name but different extension must be conceptually treated as a part of the same component. Rules for handling may vary according to file type.
+Any file in the same directory with the same filename but different extension must be conceptually treated as a part of the same component. Rules for handling may vary according to file type.
 
 For example, including a `.css` file makes it trivial to include styles with your component. However, should that component ever repeat its HTML, its CSS would only ever be included once.
 
@@ -432,17 +432,50 @@ Xero uses file-based routing as a language-agnostic way to define your URL routi
 <br />
 <br />
 
-## 🐵 Migrating from Static to Dynamic
+## 🐵 Migration Path from Static to Dynamic
 
-If you made it this far you might notice we have all the tools necessary to generate or host a fully functional static website while being entirely language-agnostic (excluding any hole-punching, of course)!
+Astute readers might notice that, at this point, we now have all the tools necessary to host or generate a static website composed of reusable components using only `.html` and `.css` files and nothing else.
 
-This is a good thing. It ties the durability of your frontend to the longevity of the web itself. When you "embrace the platform" you are protected from bit-rot. You should expect to be able return to a 10 year old project and expect everything to still function exactly as before.
+This is a good thing. It ties the durability of your frontend to the longevity of the web itself. The more you can "embrace the platform" the less susceptible your codebase is to [software rot](https://en.wikipedia.org/wiki/Software_rot). It shouldn't be an unreasonable expectation to return to a 10 year old project and have everything function exactly as before.
 
-Now... everything below describes's how you progressively add dynamic functionality using any language or platform you choose.
+The sections that follow describe the migration path Xero defines to progressively enhance your website with dynamic, reactive and realtime features using languages besides just JavaScript.
 
-## 🤖 BYOL - Bring-Your-Own-Language
+## 🤖 BYOL (Bring-Your-Own-Language)
+
+### `<script>` Tags
+
+In the spirit of "embracing the platform" Xero allows the `<script>` tag to be repurposed for any language using the ([to-spec](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#language)) `language` attribute.
+
+```xml
+my-button.html
+
+<script language="AnyScript">
+  count = 0
+
+  func handleClick() {
+    count++
+  }
+</script>
+
+<button onClick={{handleClick}}>
+  Clicks: {{count}}
+</button>
+
+```
+
+Technically this attribute's possible values were never standardized.  However this is moot since this `<script>` tag 
 
 ### Hole Punch
+
+The "hole punch" pattern is familiar since it appears like regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply filling in the interpolated "holes" and returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either generate the HTML in full or to compare it with another composition object, input by input, for anything that might have changed and, if so, construct the necessary instructions the DOM needs to updated itself.
+
+This has several advantages:
+
+- Portability
+- Speed
+- Precision
+- Memory
+- Derived data
 
 ### Event Handlers
 
