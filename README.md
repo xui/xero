@@ -1,17 +1,19 @@
-# Zero (the syntax)
+# The Zero Spec
 
 Build for the web with zero JavaScript.
 
-In many ways, Xero is like Markdown. It's not just a single implementation but rather a small set of rules for outputting predictable results for the web regardless of platform choice. (Xero could even be implemented in JavaScript, why not? :) Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
-
 Basically, Xero is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Xero puts your logic inside your HTML.
+
+In many ways, Xero is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of platform choice. (Xero could even be implemented in JavaScript, why not? :) Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
 
 Xero's purpose is grounded in the desire for the web to remain **THE** melting pot of human ideas and progress. The best way to prevent stagnation is to open the floodgates for other languages to compete.
 
 > [!IMPORTANT]
 > The examples in this README use a fictional language called `AnyScript` in order to provide concrete examples without favoring any particular language. Conceptually, any imperative language could be substituted.
 
-<br /><br />
+<br />
+<br />
+<br />
 
 ## 📂 Components
 
@@ -185,7 +187,6 @@ Sibling files can also make use of hole punches `{{ }}`.
 <br />
 <br />
 <br />
-<br />
 
 ## 🤰 Children
 
@@ -278,7 +279,6 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <br />
 <br />
 <br />
-<br />
 
 ## 🚦 Control Flow
 
@@ -348,7 +348,6 @@ Use a `<foreach>` tag to repeat its contents in a declarative way.
 <br />
 <br />
 <br />
-<br />
 
 ## 💄 Styles
 
@@ -411,7 +410,6 @@ em {
 <br />
 <br />
 <br />
-<br />
 
 ## 🗺️ Routing
 
@@ -430,7 +428,6 @@ Xero uses file-based routing as a language-agnostic way to define your URL routi
 <br />
 <br />
 <br />
-<br />
 
 ## 🤖 BYOL (Bring-Your-Own-Language)
 
@@ -440,44 +437,54 @@ Astute readers might notice that, at this point, we now have all the tools neces
 
 This is a good thing. It ties the durability of your frontend to the longevity of the web itself. The more you can "embrace the platform" the less susceptible your codebase is to [software rot](https://en.wikipedia.org/wiki/Software_rot). It shouldn't be an unreasonable expectation to return to a 10 year old project and have everything function exactly as before.
 
-The sections that follow describe the migration path Xero defines to progressively enhance your website with dynamic, reactive and realtime features using languages besides just JavaScript.
+The sections that follow cover a common approach for progressively enhancing your website using your language of choice.
 
 ### Event Handlers
 
-Xero further embraces the platform by using the DOM's natural event-handling model. Instead of specifying a JavaScript function to execute, use the escape sequence `{{ }}` to specify a function of any language to execute.
+Use the DOM's regular events for event handling but instead of specifying JavaScript inside a string, reference your own method using a hole-punch escape sequence `{{ }}`. This method can optionally choose to take the event as an argument.
 
 ```xml
-<button onClick={{handleClick}}>
+<button onclick={{handleClick}}>
   Click me
+</button>
+```
+
+Using closures can be a valid option too, if your language supports it.
+
+```xml
+<button onclick={{e => count++}}>
+  Clicks: {{count}}
 </button>
 ```
 
 ### `<script>` Tags
 
-In the spirit of "embracing the platform" Xero allows the `<script>` tag to be repurposed for any language using the ([to-spec](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#language)) `language` attribute.
+In the spirit of "embracing the platform" you can repurpose the `<script>` tag for use by any language using the ([to-spec](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#language)) `language` attribute.
+
+When using the `<script>` tag for any language besides JavaScript, be sure to never include it as a part of any generated HTML. (The browser wouldn't know how to execute it anyway right?) Execution can be handled server-side or client-side via WebAssembly. More on that in the [Server vs. Client](https://todo) section.
 
 ```xml
 my-button.html
-
-<script language="AnyScript">
-  count = 0
-
-  func handleClick() {
-    count++
-  }
-</script>
 
 <button onClick={{handleClick}}>
   Clicks: {{count}}
 </button>
 
+<script language="AnyScript">
+  count = 0
+
+  void handleClick(event) {
+    count++
+  }
+</script>
 ```
 
-Whatever value is specified in the `language` attribute is technically moot. For one, it was never officially standardized and secondly, this `<script>` tag shouldn't ever be sent to the browser. (It wouldn't know how to execute it anyway right?) Therefore, whatever is specified in the language is more for the human than the machine.
+> [!TIP]
+> Whatever value is specified in the `language` attribute is technically moot since it's never included in the HTML. Therefore, whatever value is specified is more for human consumption than for the machine.
 
 ### Sibling Files
 
-The [sibling file](https://todo) approach works great for introducing new languages. Any file in the same directory with the same filename but different file extension shall be treated as part of the same component. Rules regarding variable scoping and code-importing are intentionally undefined so that they can vary and cater to each language's strengths.
+The [sibling file](https://todo) approach works great for other languages. Any file in the same directory with the same filename but different file extension shall be treated as part of the same component. Rules regarding variable scoping and code-importing are intentionally undefined so that they can vary by language.
 
 <table>
 <tr>
@@ -500,10 +507,10 @@ The [sibling file](https://todo) approach works great for introducing new langua
 </td>
 <td>
 
-```swift
+```c
 count = 0
 
-func handleClick() {
+void handleClick(event) {
   count++
 }
 ```
@@ -514,143 +521,43 @@ func handleClick() {
 
 ### Hole Punch
 
-The "hole punch" pattern is familiar since it appears like a regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either generate the HTML in full or to compare it with another composition object, input by input, for anything that might have changed and, if so, construct the necessary instructions the DOM needs to updated itself.
+The "hole punch" pattern `{{ }}` is familiar since it appears like a regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either lazily generate the HTML in full or to compare its input values with an older composition's input values for anything that might have changed so that it may generate instructions needed for updating the DOM.
 
-This has several advantages:
+The advantages to this approach are outside the scope of this spec but can be explored in-depth in [this article](https://todo) (coming soon). To summarize:
 
-1. Simplicity - any state change can trigger a re-composition so interpolation values can be compared
-1. Derived data - composition compares expression values, not the source values
-1. Portability - must function on the server and the client without hacky workarounds
-1. Event Handling - can execute server-side or client side via WASM
-1. Precision - can modify individual node values instead of swapping large HTML fragments
-1. Speed - no virtual DOM necessary
-1. Memory - no node tree necessary
+1. **Simplicity** - state changes don't require scope tracking
+1. **Derived data** - compositions compare the inline expression values, not the state itself
+1. **Portability** - works equally well in WASM as server-side since it does not depend on a DOM tree to re-compose
+1. **Event Handling** - DOM events are naturally fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
+1. **Precision** - can modify the values of individual DOM nodes instead of only brute-forcing large HTML fragments at a time
+1. **Speed** - no virtual DOM necessary
+1. **Memory** - no server-side node tree construction necessary
 
-### Server vs. Client
+### Server-Side or Client-Side?
+
+Why not both?
 
 Xero follows a [Unidirectional data flow](https://developer.android.com/jetpack/compose/architecture#udf) design pattern.
 
 > A unidirectional data flow (UDF) is a design pattern where state flows down and events flow up. By following unidirectional data flow, you can decouple composables that display state in the UI from the parts of your app that store and change state.
 
-The pattern offers a large degree of flexibility for executing your language of choice in a multitude of environments or configurations:
-
-1. WASM - event listeners marshall events to WASM for execution which marshalls back DOM mutations instructions
-1. Request/Response - event listeners serialize and POST events to the server; server responds with instructions for mutating the DOM
-1. Bi-directional - the server pushes instructions for mutating the DOM at any time via Web Socket; the browser handles any listened events by serializing and sending via Web Socket
+Thankfully the DOM's event-handling model encapsulates events as objects. This makes them a natural fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
+back and forth to your language of choice running remotely on the server or running locally as WebAssembly. Additionally, if your transport supports bi-directional communication (e.g. WebSockets), the server can naturally react to state changes initiated from sources other than the browser (an inherent limitation of HTTP's request-response model).
 
 <br />
 <br />
 <br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+
+## 📓 State Management
+
 <br />
 <br />
 <br />
 
-## 🤖 Dynamic Content
+## 🪞 Branding and SEO
 
-### Hole Punch
+<br />
+<br />
+<br />
 
-Dynamic content is accomplished using the "hole punch" technique. Punch a hole in your declarative code (HTML) for some dynamic content to live using a configurable escape sequence. Any escape sequence is fine so long as it doesn't conflict with typical HTML. This README will use the `{{ }}` escape sequence for its examples.
-
-```xml
-my-button.html
-
-<button>
-  Clicks: {{count}}
-</button>
-```
-
-Any expression must be valid, including "derived data."
-
-```xml
-my-button.html
-
-<button>
-  Hello {{name ?? "friend"}}.  You clicked: {{count * 2}} times.
-</button>
-```
-
-### BYOL (bring your own language)
-
-There are two ways include dynamic functionality.
-
-1. In a separate file. Use the same file name but your language's natural file extension.
-<table>
-<tr>
-<td>
-<code>my-button.html</code>                                                                
-</td>
-<td>
-<code>my-button.any</code>                                                                
-</td>
-</tr>
-<tr>
-<td>
-
-```xml
-<button onClick={{handleClick}}>
-  Clicks: {{count}}
-</button>
-```
-
-</td>
-<td>
-
-```csharp
-int count = 0
-
-func handleClick() {
-  count++
-}
-```
-
-</td>
-</tr>
-</table>
-
-2. In a script tag with the `language` attribute specified.
-
-```xml
-<button onClick={{handleClick}}>
-  Clicks: {{count}}
-</button>
-
-<script language="AnyScript">
-  int count = 0
-
-  func handleClick() {
-    count++
-  }
-</script>
-```
-
-Xero is intentionally not prescriptive about how a language should reference other code since those conventions differ by language and are already well established.
-
-<br /><br />
-
-## STOP!
-
-## Scripts?
-
-## State
+## 🦠 Ecosystem
