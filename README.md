@@ -562,11 +562,11 @@ Similar to Markdown, Xero is a specification not just one implementation. Hopefu
 
 ### The Spec
 
-Refer to this document as "Zero the spec".
+Refer to this document as "Zero (the spec)" or simply, The Zero Spec.
 
 ### Colloquial Reference
 
-Specific implementations will name inevitably themselves however they please however they can be colloquially referenced native file extension. For example: this doc's fictional language AnyScript could be referred to as `Zero.any`.
+Specific implementations will inevitably name themselves as they please however they can be colloquially referenced by their native file extension. For example: this doc's fictional language AnyScript could be referred to as `Zero.any`.
 
 ### Flavors
 
