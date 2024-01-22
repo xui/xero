@@ -1,16 +1,18 @@
 # The Zero.js Spec
 
 <br />
-
-${\Huge{\textsf{Build\ for\ the\ web\ with\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
-
 <br />
 
-Basically, Xero is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Xero puts your logic inside your HTML.
+${\Huge{\textsf{Build\ for\ the\ web\ using\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
 
-In many ways, Xero is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of language choice. Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
+<br />
+<br />
 
-Xero's purpose is grounded in the desire for the web to remain **THE** melting pot of human ideas and progress. The best way to prevent stagnation is to open the floodgates for other languages to compete.
+Basically, Zero.js is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
+
+In many ways, Zero.js is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of language choice. Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
+
+Zero.js's purpose is grounded in the desire for the web to remain **THE** melting pot of human ideas and progress. The best way to prevent stagnation is to open the floodgates for other languages to compete.
 
 > [!IMPORTANT]
 > The examples in this README use a fictional language called `AnyScript` in order to provide concrete examples without favoring any particular language. Conceptually, any imperative language could be substituted.
@@ -22,9 +24,9 @@ Xero's purpose is grounded in the desire for the web to remain **THE** melting p
 - [🚦 Control Flow](#🚦-Control-Flow)
 - [💄 Styles](#💄-Styles)
 - [🗺️ Routing](#🗺️-Routing)
-- [🤖 Bring Your Own Language (BYOL)](<#🤖-BYOL-(Bring-Your-Own-Language)>)
+- [🤖 Bring Your Own Language (BYOL)](#🤖-BYOL-\(Bring-Your-Own-Language\))
 - [📓 State Management](#📓-State-Management)
-- [🦠 Branding & Ecosystem](#🦠-branding--ecosystem)
+- [🦠 Ecosystem](#🦠-ecosystem)
 
 <br />
 <br />
@@ -196,7 +198,7 @@ Sibling files can also make use of hole punches `{{ }}`.
 </table>
 
 > [!NOTE]
-> While sibling files can technically work with `.js` files too, that's not the recommended approach. This might be useful if you are certain your website will only ever be statically generated. But it's important to note that Xero has a different language-agnostic approach for building dynamic features that offers a gradual migration path from a fully static website to a fully dynamic web app. You'll learn more about this in the [BYOL](#🤖-byol-bring-your-own-language) section below.
+> While sibling files can technically work with `.js` files too, that's not the recommended approach. This might be useful if you are certain your website will only ever be statically generated. But it's important to note that Zero.js has a different language-agnostic approach for building dynamic features that offers a gradual migration path from a fully static website to a fully dynamic web app. You'll learn more about this in the [BYOL](#🤖-byol-bring-your-own-language) section below.
 
 <br />
 <br />
@@ -294,9 +296,9 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 
 ## 🚦 Control Flow
 
-Xero uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` tag anyway right?)
+Zero.js uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` tag anyway right?)
 
-Most other frameworks choose to use their natural syntax instead of extending HTML to handle control flow. For them, this is a sensible choice since it allows for greater flexibility. Since the purpose of Xero is to be language-agnostic, it takes a more generic approach by simply extending HTML and to lean into its [hole-punching](#hole-punch) approach for extending functionality.
+Most other frameworks choose to use their natural syntax instead of extending HTML to handle control flow. For them, this is a sensible choice since it allows for greater flexibility. Since the purpose of Zero.js is to be language-agnostic, it takes a more generic approach by simply extending HTML and to lean into its [hole-punching](#hole-punch) approach for extending functionality.
 
 ### Conditions
 
@@ -425,7 +427,7 @@ em {
 
 ### File-Based
 
-Xero uses file-based routing as a language-agnostic way to define your URL routing patterns. Xero does encourage any "flavor" to embellish additional features in their own native language syntax.
+Zero.js uses file-based routing as a language-agnostic way to define your URL routing patterns. Zero.js does encourage any "flavor" to embellish additional features in their own native language syntax.
 
 ### Directories
 
@@ -546,7 +548,7 @@ The advantages to this approach are outside the scope of this spec but can be ex
 
 Why not both?
 
-Xero follows a [Unidirectional data flow](https://developer.android.com/jetpack/compose/architecture#udf) design pattern.
+Zero.js follows a [Unidirectional data flow](https://developer.android.com/jetpack/compose/architecture#udf) design pattern.
 
 > A unidirectional data flow (UDF) is a design pattern where state flows down and events flow up. By following unidirectional data flow, you can decouple composables that display state in the UI from the parts of your app that store and change state.
 
@@ -558,35 +560,20 @@ back and forth to your language of choice running remotely on the server or runn
 
 ## 📓 State Management
 
-Xero is intentionally non-prescriptive when it comes to state management beyond simply using hole-punch escape sequences `{{ }}` as the contact point into HTML. Each language should bring its unique strengths to the table whether it be signals, code generation or something else new and exciting.
+Zero.js is intentionally non-prescriptive when it comes to state management beyond simply using hole-punch escape sequences `{{ }}` as the contact point into HTML. Each language should bring its unique strengths to the table whether it be signals, code generation or something else new and exciting.
 
 <br />
 <br />
 
-## 🦠 Branding & Ecosystem
+## 🦠 Ecosystem
 
-Similar to Markdown, Xero is a specification not just one implementation. Hopefully the ideas organized here inspire the implementation in many languages. To promote consistency, there are a few suggested naming conventions.
+### XYZ-Flavored Zero
 
-### The Spec
-
-Refer to this document as "Zero (the spec)" or simply, The Zero Spec.
-
-### SEO
-
-### Colloquial Reference
-
-Specific implementations will inevitably name themselves as they please however they can be colloquially referenced by their native file extension. For example: this doc's fictional language AnyScript could be referred to as `Zero.any`.
-
-### Flavors
-
-In the event that a language have more than one competing implementations, that's great. They can differentiate between each other using the "flavor" term as seen in [GitHub flavored Markdown](https://github.github.com/gfm/). For example: "Acme flavored Zero." Here, using the file extension would be superfluous (unless that flavor also includes multiple languages).
-
-<br />
-<br />
+In the same manner as [GitHub flavored Markdown](https://github.github.com/gfm/), it is encouraged that guest languages bring their own embellishments that take advantage of their syntax's unique features. For example: "Acme flavored Zero."
 
 ### Known Implementations
 
-Below is a running list of known guest languages and the various features supported.
+Below is a running list of known guest languages and the various features they support.
 
 | Features                        |   Zero.cs   |
 | ------------------------------- | :---------: |
