@@ -19,8 +19,14 @@ Zero.js's purpose is grounded in the desire for the web to remain **THE** meltin
 
 ### Table of Contents
 
-- [Wat](#components)
-
+- [📂 Components](#components)
+- [🤰 Children](#children)
+- [🚦 Control Flow](#control-flow)
+- [💄 Styles](#styles)
+- [🗺️ Routing](#routing)
+- [🤖 Bring Your Own Language (BYOL)](#byol-bring-your-own-language)
+- [📓 State Management](#state-management)
+- [🦠 Ecosystem](#ecosystem)
 
 <br />
 <br />
@@ -197,7 +203,7 @@ Sibling files can also make use of hole punches `{{ }}`.
 <br />
 <br />
 
-## 🤰 Children
+## Children
 
 ### Content
 
@@ -288,7 +294,7 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <br />
 <br />
 
-## 🚦 Control Flow
+## Control Flow
 
 Zero.js uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` tag anyway right?)
 
@@ -356,7 +362,7 @@ Use a `<foreach>` tag to repeat its contents in a declarative way.
 <br />
 <br />
 
-## 💄 Styles
+## Styles
 
 ### Platform and File-Based
 
@@ -417,7 +423,7 @@ em {
 <br />
 <br />
 
-## 🗺️ Routing
+## Routing
 
 ### File-Based
 
@@ -434,7 +440,7 @@ Zero.js uses file-based routing as a language-agnostic way to define your URL ro
 <br />
 <br />
 
-## 🤖 BYOL (Bring-Your-Own-Language)
+## BYOL (Bring-Your-Own-Language)
 
 ### Migration Path from Static to Dynamic
 
@@ -552,14 +558,14 @@ back and forth to your language of choice running remotely on the server or runn
 <br />
 <br />
 
-## 📓 State Management
+## State Management
 
 Zero.js is intentionally non-prescriptive when it comes to state management beyond simply using hole-punch escape sequences `{{ }}` as the contact point into HTML. Each language should bring its unique strengths to the table whether it be signals, code generation or something else new and exciting.
 
 <br />
 <br />
 
-## 🦠 Ecosystem
+## Ecosystem
 
 ### XYZ-Flavored Zero
 
