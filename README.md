@@ -19,14 +19,14 @@ Zero.js's purpose is grounded in the desire for the web to remain **THE** meltin
 
 ### Table of Contents
 
-- [📂 Components](#components)
-- [🤰 Children](#children)
-- [🚦 Control Flow](#control-flow)
-- [💄 Styles](#styles)
-- [🗺️ Routing](#routing)
-- [🤖 Bring Your Own Language (BYOL)](#byol-bring-your-own-language)
-- [📓 State Management](#state-management)
-- [🦠 Ecosystem](#ecosystem)
+- [Components](#components)
+- [Children](#children)
+- [Control Flow](#control-flow)
+- [Styles](#styles)
+- [Routing](#routing)
+- [Bring Your Own Language (BYOL)](#byol-bring-your-own-language)
+- [State Management](#state-management)
+- [Ecosystem](#ecosystem)
 
 <br />
 <br />
