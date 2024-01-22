@@ -1,17 +1,28 @@
-# The Zero Spec
+# The Zero.js Spec
 
 Build for the web with zero JavaScript.
 
 Basically, Xero is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Xero puts your logic inside your HTML.
 
-In many ways, Xero is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of platform choice. (Xero could even be implemented in JavaScript, why not? :) Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
+In many ways, Xero is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of language choice. Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
 
 Xero's purpose is grounded in the desire for the web to remain **THE** melting pot of human ideas and progress. The best way to prevent stagnation is to open the floodgates for other languages to compete.
 
 > [!IMPORTANT]
 > The examples in this README use a fictional language called `AnyScript` in order to provide concrete examples without favoring any particular language. Conceptually, any imperative language could be substituted.
 
-<br />
+### Table of Contents
+
+- [📂 Components](#📂-components)
+- [🤰 Children](#🤰-Children)
+- [🚦 Control Flow](#🚦-Control-Flow)
+- [💄 Styles](#💄-Styles)
+- [🗺️ Routing](#🗺️-Routing)
+- [🤖 Bring Your Own Language (BYOL)](<#🤖-BYOL-(Bring-Your-Own-Language)>)
+- [📓 State Management](#📓-State-Management)
+- [🪞 Branding and SEO](#🪞-Branding-and-SEO)
+- [🦠 Ecosystem](#🦠-Ecosystem)
+
 <br />
 <br />
 
@@ -62,7 +73,7 @@ Every `.html` file is automatically a component. No need to register or import a
 
 HTML attributes are an easy way to pass inputs into a component thus boosting reusability.
 
-You'll notice the use of the `{{ }}` escape sequence in the component file. You'll learn more about this in the [Hole Punch](https://todo) section below.
+You'll notice the use of the `{{ }}` escape sequence in the component file. You'll learn more about this in the [Hole Punch](#hole-punch) section below.
 
 <table>
 <tr>
@@ -182,9 +193,8 @@ Sibling files can also make use of hole punches `{{ }}`.
 </table>
 
 > [!NOTE]
-> Sibling files can technically work with `.js` files too but the recommended approach. This might be useful if you are certain your website will only ever be statically generated. But it's important to note that Xero has a different language-agnostic approach for building dynamic features that offers a gradual migration path from fully static website to fully dynamic web app. You'll learn more about this in the [Dynamic Content](https://todo) section below.
+> While sibling files can technically work with `.js` files too, that's not the recommended approach. This might be useful if you are certain your website will only ever be statically generated. But it's important to note that Xero has a different language-agnostic approach for building dynamic features that offers a gradual migration path from a fully static website to a fully dynamic web app. You'll learn more about this in the [BYOL](#🤖-byol-bring-your-own-language) section below.
 
-<br />
 <br />
 <br />
 
@@ -278,13 +288,12 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 
 <br />
 <br />
-<br />
 
 ## 🚦 Control Flow
 
 Xero uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` anyway tag right?)
 
-Most other frameworks choose to use their natural syntax instead of extending HTML to handle control flow. For them, this is a sensible choice since it allows for greater flexibility. Since the purpose of Xero is to be language-agnostic, it takes a more generic approach by simply extending HTML and to lean into its [hole-punching](https://todo) approach for extending functionality.
+Most other frameworks choose to use their natural syntax instead of extending HTML to handle control flow. For them, this is a sensible choice since it allows for greater flexibility. Since the purpose of Xero is to be language-agnostic, it takes a more generic approach by simply extending HTML and to lean into its [hole-punching](#hole-punch) approach for extending functionality.
 
 ### Conditions
 
@@ -347,7 +356,6 @@ Use a `<foreach>` tag to repeat its contents in a declarative way.
 
 <br />
 <br />
-<br />
 
 ## 💄 Styles
 
@@ -355,7 +363,7 @@ Use a `<foreach>` tag to repeat its contents in a declarative way.
 
 CSS can be used normally, including embedded `<style>` tags and externally referenced `.css` files.
 
-However, any `.css` file that shares the same filename and parent directory as an `.html` file is considered a [sibling file](https://todo) and must automatically have its styles included before any HTML to prevent any dreaded [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content). Inclusion must occur only once per HTML document, since its `.html` counterpart might be repeated multiple times.
+However, any `.css` file that shares the same filename and parent directory as an `.html` file is considered a [sibling file](#sibling-files-1) and must automatically have its styles included before any HTML to prevent any dreaded [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content). Inclusion must occur only once per HTML document, since its `.html` counterpart might be repeated multiple times.
 
 ### Scoped Styles
 
@@ -409,7 +417,6 @@ em {
 
 <br />
 <br />
-<br />
 
 ## 🗺️ Routing
 
@@ -427,11 +434,10 @@ Xero uses file-based routing as a language-agnostic way to define your URL routi
 
 <br />
 <br />
-<br />
 
 ## 🤖 BYOL (Bring-Your-Own-Language)
 
-### 🐵 Migration Path from Static to Dynamic
+### Migration Path from Static to Dynamic
 
 Astute readers might notice that, at this point, we now have all the tools necessary to host or generate a static website composed of reusable components using only `.html` and `.css` files and nothing else.
 
@@ -461,7 +467,7 @@ Using closures can be a valid option too, if your language supports it.
 
 In the spirit of "embracing the platform" you can repurpose the `<script>` tag for use by any language using the ([to-spec](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#language)) `language` attribute.
 
-When using the `<script>` tag for any language besides JavaScript, be sure to never include it as a part of any generated HTML. (The browser wouldn't know how to execute it anyway right?) Execution can be handled server-side or client-side via WebAssembly. More on that in the [Server vs. Client](https://todo) section.
+When using the `<script>` tag for any language besides JavaScript, be sure to never include it as a part of any generated HTML. (The browser wouldn't know how to execute it anyway right?) Execution can be handled server-side or client-side via WebAssembly. More on that in the [Server-Side or Client-Side](#server-side-or-client-side) section.
 
 ```xml
 my-button.html
@@ -484,7 +490,7 @@ my-button.html
 
 ### Sibling Files
 
-The [sibling file](https://todo) approach works great for other languages. Any file in the same directory with the same filename but different file extension shall be treated as part of the same component. Rules regarding variable scoping and code-importing are intentionally undefined so that they can vary by language.
+The sibling file approach works great for other languages. Any file in the same directory with the same filename but different file extension shall be treated as part of the same component. Rules regarding variable scoping and code-importing are intentionally undefined so that they can vary by language.
 
 <table>
 <tr>
@@ -523,7 +529,7 @@ void handleClick(event) {
 
 The "hole punch" pattern `{{ }}` is familiar since it appears like a regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either lazily generate the HTML in full or to compare its input values with an older composition's input values for anything that might have changed so that it may generate instructions needed for updating the DOM.
 
-The advantages to this approach are outside the scope of this spec but can be explored in-depth in [this article](https://todo) (coming soon). To summarize:
+The advantages to this approach are outside the scope of this spec but can be explored in-depth in [this article](https://rylan.io/blog/zero-virtual-dom) (coming soon). To summarize:
 
 1. **Simplicity** - state changes don't require scope tracking
 1. **Derived data** - compositions compare the inline expression values, not the state itself
@@ -546,13 +552,11 @@ back and forth to your language of choice running remotely on the server or runn
 
 <br />
 <br />
-<br />
 
 ## 📓 State Management
 
 Xero is intentionally non-prescriptive when it comes to state management beyond simply using hole-punch escape sequences `{{ }}` as the contact point into HTML. Each language should bring its unique strengths to the table whether it be signals, code generation or something else new and exciting.
 
-<br />
 <br />
 <br />
 
@@ -572,7 +576,6 @@ Specific implementations will inevitably name themselves as they please however 
 
 In the event that a language have more than one competing implementations, that's great. They can differentiate between each other using the "flavor" term as seen in [GitHub flavored Markdown](https://github.github.com/gfm/). For example: "Acme flavored Zero." Here, using the file extension would be superfluous (unless that flavor also includes multiple languages).
 
-<br />
 <br />
 <br />
 
