@@ -1,6 +1,10 @@
 # The Zero.js Spec
 
-Build for the web with zero JavaScript.
+<br />
+
+${\Huge{\textsf{Build\ for\ the\ web\ with\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
+
+<br />
 
 Basically, Xero is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Xero puts your logic inside your HTML.
 
@@ -20,8 +24,7 @@ Xero's purpose is grounded in the desire for the web to remain **THE** melting p
 - [🗺️ Routing](#🗺️-Routing)
 - [🤖 Bring Your Own Language (BYOL)](<#🤖-BYOL-(Bring-Your-Own-Language)>)
 - [📓 State Management](#📓-State-Management)
-- [🪞 Branding and SEO](#🪞-Branding-and-SEO)
-- [🦠 Ecosystem](#🦠-Ecosystem)
+- [🦠 Branding & Ecosystem](#🦠-branding--ecosystem)
 
 <br />
 <br />
@@ -109,7 +112,7 @@ You'll notice the use of the `{{ }}` escape sequence in the component file. You'
 </table>
 
 > [!NOTE]
-> A component's attributes are optional by default. The ability to denote some attributes as "required" is outside the scope of this document but is a highly recommended "flavor" to be provided by the implementing language.
+> A component's attributes are optional by default. The ability to denote some attributes as "required" is outside the scope of this document but is a highly recommended "flavor" to be provided by the guest language.
 
 ### Strongly Typed
 
@@ -243,7 +246,7 @@ To simplify composability, any child-tags to a component can be accessed using `
 
 It is possible to provide outside HTML as inputs to a component. However this isn't done through its `attribute`s but using `slot`s instead. Similar to Web Components, child-tags can be used as HTML-based inputs using the `slot` keyword.
 
-Any tags without a `slot` attribute must default to the reserved slot `content`. Slot order does not matter and any missing slots are treated as `null`, `nil`, `undefined`, etc - however the implementing languages represents missing data.
+Any tags without a `slot` attribute must default to the reserved slot `content`. Slot order does not matter and any missing slots are treated as `null`.
 
 <table>
 <tr>
@@ -284,14 +287,14 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 </table>
 
 > [!NOTE]
-> Slots are optional and if not supplied, the component must still function. Similar to attributes, though, it possible and recommended for an implementing language to support "required inputs" much like a class with a non-nullable property.
+> Slots are optional and if not supplied, the component must still function. Similar to attributes, though, it possible and recommended for a guest language to support "required inputs" much like a class with a non-nullable property.
 
 <br />
 <br />
 
 ## 🚦 Control Flow
 
-Xero uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` anyway tag right?)
+Xero uses a few tags for control flow: `<if>`, `<else>`, `<else-if>` and `<foreach>`. These are reserved keywords so custom components by those names are not allowed. While the content inside these tags might be included, excluded or repeated, the enclosing tag itself is never included in the generated HTML. (The browser wouldn't know what to do with an `<if>` tag anyway right?)
 
 Most other frameworks choose to use their natural syntax instead of extending HTML to handle control flow. For them, this is a sensible choice since it allows for greater flexibility. Since the purpose of Xero is to be language-agnostic, it takes a more generic approach by simply extending HTML and to lean into its [hole-punching](#hole-punch) approach for extending functionality.
 
@@ -422,7 +425,7 @@ em {
 
 ### File-Based
 
-Xero uses file-based routing as a language-agnostic way to define your URL routing patterns. Xero does encourage any implementing "flavor" to embellish additional features in their own native language syntax.
+Xero uses file-based routing as a language-agnostic way to define your URL routing patterns. Xero does encourage any "flavor" to embellish additional features in their own native language syntax.
 
 ### Directories
 
@@ -560,13 +563,15 @@ Xero is intentionally non-prescriptive when it comes to state management beyond 
 <br />
 <br />
 
-## 🪞 Branding and SEO
+## 🦠 Branding & Ecosystem
 
 Similar to Markdown, Xero is a specification not just one implementation. Hopefully the ideas organized here inspire the implementation in many languages. To promote consistency, there are a few suggested naming conventions.
 
 ### The Spec
 
 Refer to this document as "Zero (the spec)" or simply, The Zero Spec.
+
+### SEO
 
 ### Colloquial Reference
 
@@ -579,9 +584,9 @@ In the event that a language have more than one competing implementations, that'
 <br />
 <br />
 
-## 🦠 Ecosystem
+### Known Implementations
 
-Below is a running list of known implementations and the various features supported.
+Below is a running list of known guest languages and the various features supported.
 
 | Features                        |   Zero.cs   |
 | ------------------------------- | :---------: |
