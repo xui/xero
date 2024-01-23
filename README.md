@@ -3,7 +3,7 @@
 <br />
 <br />
 
-Build for the web using zero JavaScript.
+${\Huge{\textsf{Build\ for\ the\ web\ using\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
 
 <br />
 <br />
@@ -43,7 +43,7 @@ Every `.html` file is automatically a component. No need to register or import a
 <table>
 <tr>
 <td>
-<nobr><code>my-button.html</code></nobr>                                
+<code>my-button.html</code>                                
 </td>
 <td>
 <code>index.html</code>                                                
@@ -139,10 +139,10 @@ You'll notice the use of the `{{ }}` escape sequence in the component file. You'
 <table>
 <tr>
 <td>
-<nobr><code>index.html</code></nobr>
+<code>index.html</code>
 </td>
 <td>
-<nobr><code>my-button.html</code></nobr>                                
+<code>my-button.html</code>                                
 </td>
 </tr>
 <tr>
@@ -197,13 +197,13 @@ Sibling files can also make use of hole punches `{{ }}`.
 <table>
 <tr>
 <td>
-<nobr><code>File Structure</code></nobr>
+<code>File Structure</code>
 </td>
 <td>
-<nobr><code>index.html</code></nobr>                                
+<code>index.html</code>                                
 </td>
 <td>
-<nobr><code>Output</code></nobr>                                                                
+<code>Output</code>                                                                
 </td>
 </tr>
 <tr>
@@ -268,10 +268,10 @@ To simplify composability, any child-tags to a component can be accessed using `
 <table>
 <tr>
 <td>
-<nobr><code>index.html</code></nobr>
+<code>index.html</code>
 </td>
 <td>
-<nobr><code>my-button.html</code></nobr>                                
+<code>my-button.html</code>                                
 </td>
 </tr>
 <tr>
@@ -309,10 +309,10 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <table>
 <tr>
 <td>
-<nobr><code>index.html</code></nobr>
+<code>index.html</code>
 </td>
 <td>
-<nobr><code>my-button.html</code></nobr>                                
+<code>my-button.html</code>                                
 </td>
 </tr>
 <tr>
@@ -433,10 +433,10 @@ Component-level styles must be scoped to its component. It is not required to us
 <table>
 <tr>
 <td>
-<nobr><code>my-button.css</code></nobr>
+<code>my-button.css</code>
 </td>
 <td>
-<nobr><code>Output</code></nobr>                                
+<code>Output</code>                                
 </td>
 </tr>
 <tr>
@@ -556,10 +556,10 @@ The sibling file approach works great for other languages. Any file in the same 
 <table>
 <tr>
 <td>
-<nobr><code>my-button.html</code></nobr>                                                                
+<code>my-button.html</code>                                                                
 </td>
 <td>
-<nobr><code>my-button.any</code></nobr>                                                                
+<code>my-button.any</code>                                                                
 </td>
 </tr>
 <tr>
