@@ -1,23 +1,17 @@
 # The Zero.js Spec
 
-<br />
-<br />
-
-${\Huge{\textsf{Build\ for\ the\ web\ using\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
-
-<br />
-<br />
+Build for the web using zero JavaScript.
 
 Basically, Zero.js is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete.
 
-Making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
+Making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The idea is to use an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
 
 In many ways, Zero.js is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of language choice. Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
 
 Zero.js's purpose is grounded in the desire for the web to remain **THE** melting pot of human ideas and progress. The best way to prevent stagnation is to open the floodgates for other languages to compete.
 
 > [!IMPORTANT]
-> The examples in this README use a fictional language called `AnyScript` in order to provide concrete examples without favoring any particular language. Conceptually, any imperative language could be substituted.
+> The examples in this README use a fictional language called `AnyScript` in order to provide concrete examples without any favoritism. Conceptually, any imperative language could be substituted.
 
 ### Table of Contents
 
@@ -38,22 +32,22 @@ Zero.js's purpose is grounded in the desire for the web to remain **THE** meltin
 
 ### File-Based
 
-Every `.html` file is automatically a component. No need to register or import anything. Just use its file name. (Markdown files make for great components too.)
+Every `.html` file is automatically a component. No need to register or import anything. Just use its file name. File names are limited to alpha-numerics, hyphens, underscores, and cannot begin with a number.
 
 <table>
 <tr>
 <td>
-<code>my-button.html</code>                                
+my-button.html
 </td>
 <td>
-<code>index.html</code>                                                
+index.html
 </td>
 </tr>
 <tr>
 <td>
 
 ```xml
-<button>
+<button>        
   Click me
 </button>
 ```
@@ -62,7 +56,7 @@ Every `.html` file is automatically a component. No need to register or import a
 <td>
 
 ```xml
-<html>
+<html>        
   <body>
     <my-button />
   </body>
@@ -74,8 +68,7 @@ Every `.html` file is automatically a component. No need to register or import a
 </table>
 
 > [!NOTE]
-> File names are limited to alpha-numerics, hyphens and underscores.
-> Read more about resolving [naming collisions](https://todo) below.
+> Markdown files (`.md`) make great components too.
 
 ### Naming Collisions
 
