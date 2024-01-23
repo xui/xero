@@ -254,17 +254,17 @@ To simplify composability, any child-tags to a component can be accessed using `
 <table>
 <tr>
 <td>
-<code>index.html</code>
+index.html
 </td>
 <td>
-<code>my-button.html</code>                                
+my-button.html
 </td>
 </tr>
 <tr>
 <td>
 
 ```xml
-<html>
+<html>                          
   <body>
     <my-button>
       <b>Please</b> click me
@@ -277,7 +277,7 @@ To simplify composability, any child-tags to a component can be accessed using `
 <td>
 
 ```xml
-<button>
+<button>            
   {{content}}
 </button>
 ```
@@ -295,17 +295,17 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <table>
 <tr>
 <td>
-<code>index.html</code>
+index.html
 </td>
 <td>
-<code>my-button.html</code>                                
+my-button.html
 </td>
 </tr>
 <tr>
 <td>
 
 ```xml
-<html>
+<html>                                          
   <body>
     <my-button>
       <img slot="icon" src="..." />
@@ -321,7 +321,7 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <td>
 
 ```xml
-<button>
+<button>                    
   {{icon}} • {{text}}
 </button>
 ```
@@ -419,17 +419,17 @@ Component-level styles must be scoped to its component. It is not required to us
 <table>
 <tr>
 <td>
-<code>my-button.css</code>
+my-button.css
 </td>
 <td>
-<code>Output</code>                                
+Output
 </td>
 </tr>
 <tr>
 <td>
 
 ```css
-p {
+p {                    
   font-size: 18pt;
 }
 em {
@@ -456,6 +456,7 @@ em {
     </button>
   </body>
 </html>
+                                             
 ```
 
 </td>
@@ -542,17 +543,17 @@ The sibling file approach works great for other languages. Any file in the same 
 <table>
 <tr>
 <td>
-<code>my-button.html</code>                                                                
+my-button.html
 </td>
 <td>
-<code>my-button.any</code>                                                                
+my-button.any
 </td>
 </tr>
 <tr>
 <td>
 
 ```xml
-<button onClick={{handleClick}}>
+<button onClick={{handleClick}}>         
   Clicks: {{count}}
 </button>
 ```
@@ -561,7 +562,7 @@ The sibling file approach works great for other languages. Any file in the same 
 <td>
 
 ```c
-count = 0
+count = 0                      
 
 void handleClick(event) {
   count++
@@ -595,25 +596,31 @@ Zero.js follows a [Unidirectional data flow](https://developer.android.com/jetpa
 > A unidirectional data flow (UDF) is a design pattern where state flows down and events flow up. By following unidirectional data flow, you can decouple composables that display state in the UI from the parts of your app that store and change state.
 
 Thankfully the DOM's event-handling model encapsulates events as objects. This makes them a natural fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
-back and forth to your language of choice running remotely on the server or running locally as WebAssembly. Additionally, if your transport supports bi-directional communication (e.g. WebSockets), the server can naturally react to state changes initiated from sources other than the browser (an inherent limitation of HTTP's request-response model).
+across the boundary where your language of choice is running whether that be remotely on the server or locally as WebAssembly.
+
+Additionally, if your transport supports bi-directional communication, like WebSockets or even WASM-marshalling, this opens up your web app for realtime functionality - specifically, DOM updates that aren't user-initiated.
 
 ### APIs are discouraged
 
-There's nothing negative about using an API. It's just not necessary with the Zero.js programming model. To compare, classical SPAs might handle a DOM event in the browser by fetching data from the server and updating the DOM accordingly. With Zero.js frameworks, the event itself is already handled server-side and DOM mutations are handled by your chosen transport transparently. This saves a great deal of effort.
+There's nothing negative about using an API. It's just not necessary with the Zero.js programming model. To compare, classical SPAs might respond to a DOM event in the browser by fetching data from an API and updating the DOM accordingly. With Zero.js frameworks, since the event is automatically sent to the server for handling, there's no need to call a separate API since the data can be accessed directly.
+
+> [!NOTE]
+> This only applies to server-side runtimes. WebAssembly runtimes will likely still prefer using an API.
 
 ### Transports
 
 Zero.js can function across a number of different transports, each with their own benefits and tradeoffs.
 
-| Transport        | Pros | Cons |
-| ---------------- | ---- | ---- |
-| HTTP(s)          |      |      |
-| SSE              |      |      |
-| WebSockets       |      |      |
-| Streaming??????? |      |      |
+| Transport          | Browser events                | DOM mutation instructions |
+| ------------------ | ----------------------------- | ------------------------- |
+| HTTP(s)            | Event POSTed to server        | Included in POST response |
+| Server-sent events | Event POSTed to server        | Pushed via SSE            |
+| WebSockets         | Event sent via WebSocket      | Pushed via WebSocket      |
+| WebAssembly        | Event marshalled over interop | Marshalled over interop   |
 
-> [!NOTE]
-> This only applies to server-side runtimes. WebAssembly runtimes will likely still prefer using an API.
+> [!Important]
+>
+> All transports except HTTP(s) support realtime features through bi-directional communication.
 
 <br />
 <br />
