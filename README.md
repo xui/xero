@@ -3,12 +3,14 @@
 <br />
 <br />
 
-${\Huge{\textsf{Build\ for\ the\ web\ using\ {\color{Orange}zero}}\ \textsf{JavaScript.}}}$
+Build for the web using zero JavaScript.
 
 <br />
 <br />
 
-Basically, Zero.js is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete. But making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
+Basically, Zero.js is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete.
+
+Making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The key is using an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
 
 In many ways, Zero.js is like Markdown. It's not an implementation but rather a small set of rules for outputting predictable results for the web regardless of language choice. Like Markdown, there's also room for various "flavors" to bring their own special embellishments.
 
@@ -20,6 +22,7 @@ Zero.js's purpose is grounded in the desire for the web to remain **THE** meltin
 ### Table of Contents
 
 - [Components](#components)
+- [Attributes](#attributes)
 - [Children](#children)
 - [Control Flow](#control-flow)
 - [Styles](#styles)
@@ -40,7 +43,7 @@ Every `.html` file is automatically a component. No need to register or import a
 <table>
 <tr>
 <td>
-<code>my-button.html</code>                                
+<nobr><code>my-button.html</code></nobr>                                
 </td>
 <td>
 <code>index.html</code>                                                
@@ -74,7 +77,60 @@ Every `.html` file is automatically a component. No need to register or import a
 > File names are limited to alpha-numerics, hyphens and underscores.
 > Read more about resolving [naming collisions](https://todo) below.
 
-### Attributes
+### Naming Collisions
+
+HTML has a spirit of being forgiving, therefore naming collisions must not result in an error. Since two files can have the same name if located in different directories precedence is determined as follows:
+
+1. Prefer the file that is in the same directory as the referencing component.
+2. Prefer any files that are in a descendant directories over any files located in ancestor paths (i.e. great-great-grandchildren before cousins).
+3. Next, prefer the file with a shorter directory depth
+4. Finally, prefer the file whose path sorts alphanumerically first.
+
+To explicitly reference components with naming collisions:
+
+- Use `/` notation + the names of directories. (Capitalization matters.)
+- Use `//` as shorthand notation to skip any number of directories
+- There is an implied `//` at the beginning of every component unless an explicit `/` is used.
+
+```xml
+File structure:
+- my-project/
+  - ui/
+    - music/
+      - components/
+        - score.html
+     - index.html
+    - sports/
+      - components
+        - score.html
+        - music/
+          - score.html
+
+index.html with full namespacing: `/`
+<html>
+  <body>
+    </my-project/ui/music/components/score />
+    </my-project/ui/sports/components/score />
+    </my-project/ui/sports/components/music/score />
+  </body>
+</html>
+
+index.html with shorthand notation: `//`
+<html>
+  <body>
+    <music//score />
+    <sports//score />
+    <sports//music/score />
+  </body>
+</html>
+```
+
+<br />
+<br />
+
+## Attributes
+
+### Inputs
 
 HTML attributes are an easy way to pass inputs into a component thus boosting reusability.
 
@@ -83,10 +139,10 @@ You'll notice the use of the `{{ }}` escape sequence in the component file. You'
 <table>
 <tr>
 <td>
-<code>index.html</code>
+<nobr><code>index.html</code></nobr>
 </td>
 <td>
-<code>my-button.html</code>                                
+<nobr><code>my-button.html</code></nobr>                                
 </td>
 </tr>
 <tr>
@@ -141,13 +197,13 @@ Sibling files can also make use of hole punches `{{ }}`.
 <table>
 <tr>
 <td>
-<code>File Structure</code>
+<nobr><code>File Structure</code></nobr>
 </td>
 <td>
-<code>index.html</code>                                
+<nobr><code>index.html</code></nobr>                                
 </td>
 <td>
-<code>Output</code>                                                                
+<nobr><code>Output</code></nobr>                                                                
 </td>
 </tr>
 <tr>
@@ -212,10 +268,10 @@ To simplify composability, any child-tags to a component can be accessed using `
 <table>
 <tr>
 <td>
-<code>index.html</code>
+<nobr><code>index.html</code></nobr>
 </td>
 <td>
-<code>my-button.html</code>                                
+<nobr><code>my-button.html</code></nobr>                                
 </td>
 </tr>
 <tr>
@@ -253,10 +309,10 @@ Any tags without a `slot` attribute must default to the reserved slot `content`.
 <table>
 <tr>
 <td>
-<code>index.html</code>
+<nobr><code>index.html</code></nobr>
 </td>
 <td>
-<code>my-button.html</code>                                
+<nobr><code>my-button.html</code></nobr>                                
 </td>
 </tr>
 <tr>
@@ -377,10 +433,10 @@ Component-level styles must be scoped to its component. It is not required to us
 <table>
 <tr>
 <td>
-<code>my-button.css</code>
+<nobr><code>my-button.css</code></nobr>
 </td>
 <td>
-<code>Output</code>                                
+<nobr><code>Output</code></nobr>                                
 </td>
 </tr>
 <tr>
@@ -500,10 +556,10 @@ The sibling file approach works great for other languages. Any file in the same 
 <table>
 <tr>
 <td>
-<code>my-button.html</code>                                                                
+<nobr><code>my-button.html</code></nobr>                                                                
 </td>
 <td>
-<code>my-button.any</code>                                                                
+<nobr><code>my-button.any</code></nobr>                                                                
 </td>
 </tr>
 <tr>
@@ -539,7 +595,7 @@ The advantages to this approach are outside the scope of this spec but can be ex
 1. **Simplicity** - state changes don't require scope tracking
 1. **Derived data** - compositions compare the inline expression values, not the state itself
 1. **Portability** - works equally well in WASM as server-side since it does not depend on a DOM tree to re-compose
-1. **Event Handling** - DOM events are naturally fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
+1. **Event Handling** - DOM events are natural fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
 1. **Precision** - can modify the values of individual DOM nodes instead of only brute-forcing large HTML fragments at a time
 1. **Speed** - no virtual DOM necessary
 1. **Memory** - no server-side node tree construction necessary
@@ -555,6 +611,24 @@ Zero.js follows a [Unidirectional data flow](https://developer.android.com/jetpa
 Thankfully the DOM's event-handling model encapsulates events as objects. This makes them a natural fit for [marshalling](<https://en.wikipedia.org/wiki/Marshalling_(computer_science)>)
 back and forth to your language of choice running remotely on the server or running locally as WebAssembly. Additionally, if your transport supports bi-directional communication (e.g. WebSockets), the server can naturally react to state changes initiated from sources other than the browser (an inherent limitation of HTTP's request-response model).
 
+### APIs are discouraged
+
+There's nothing negative about using an API. It's just not necessary with the Zero.js programming model. To compare, classical SPAs might handle a DOM event in the browser by fetching data from the server and updating the DOM accordingly. With Zero.js frameworks, the event itself is already handled server-side and DOM mutations are handled by your chosen transport transparently. This saves a great deal of effort.
+
+### Transports
+
+Zero.js can function across a number of different transports, each with their own benefits and tradeoffs.
+
+| Transport        | Pros | Cons |
+| ---------------- | ---- | ---- |
+| HTTP(s)          |      |      |
+| SSE              |      |      |
+| WebSockets       |      |      |
+| Streaming??????? |      |      |
+
+> [!NOTE]
+> This only applies to server-side runtimes. WebAssembly runtimes will likely still prefer using an API.
+
 <br />
 <br />
 
@@ -569,7 +643,7 @@ Zero.js is intentionally non-prescriptive when it comes to state management beyo
 
 ### XYZ-Flavored Zero
 
-In the same manner as [GitHub flavored Markdown](https://github.github.com/gfm/), it is encouraged that guest languages bring their own embellishments that take advantage of their syntax's unique features. For example: "Acme flavored Zero."
+In the same manner as [GitHub flavored Markdown](https://github.github.com/gfm/), it is encouraged that guest languages bring their own embellishments that take advantage of their syntax's unique features. These deviations can borrow the "flavor" terminology in the same way, for example, "Acme flavored Zero."
 
 ### Known Implementations
 
@@ -584,3 +658,8 @@ Below is a running list of known guest languages and the various features they s
 | WebSockets                      |     ✅      |
 | SSE (server-side events)        | coming soon |
 | Event-POSTing                   | coming soon |
+| Local caching                   | coming soon |
+| Optimistic writes               | coming soon |
+| Animations                      | coming soon |
+| Global & session state          | coming soon |
+| Branch preview                  | coming soon |
