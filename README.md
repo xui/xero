@@ -2,6 +2,9 @@
 
 Build for the web using zero JavaScript.
 
+<br />
+<br />
+
 Basically, Zero.js is just vanilla HTML with a few small additions. Its purpose is to reduce the web's dependency on JavaScript by opening the door for other languages to compete.
 
 Making JavaScript interchangeable is unrealistic unless other languages can both _generate HTML_ **AND** _manipulate the DOM_ using one common approach. The idea is to use an HTML-first strategy. Instead of putting HTML inside your logic, Zero.js puts your logic inside your HTML.
@@ -83,37 +86,27 @@ To explicitly reference components with naming collisions:
 
 - Use `/` notation + the names of directories. (Capitalization matters.)
 - Use `//` as shorthand notation to skip any number of directories
-- There is an implied `//` at the beginning of every component unless an explicit `/` is used.
+- There is an implied `//` at the beginning of every component
 
 ```xml
-File structure:
-- my-project/
-  - ui/
-    - music/
-      - components/
-        - score.html
-     - index.html
-    - sports/
-      - components
-        - score.html
-        - music/
-          - score.html
+📦 my-project
+└─ 📂 ui
+   ├─ 📜 index.html
+   ├─ 📂 music
+   │  └─ 📂 components
+   │     └─ 📜 score.html  1️⃣
+   └─ 📂 sports
+      ├─ 📂 components
+      │  └─ 📜 score.html  2️⃣
+      └─ 📂 music
+         └─ 📜 score.html  3️⃣
 
-index.html with full namespacing: `/`
+index.html
 <html>
   <body>
-    </my-project/ui/music/components/score />
-    </my-project/ui/sports/components/score />
-    </my-project/ui/sports/components/music/score />
-  </body>
-</html>
-
-index.html with shorthand notation: `//`
-<html>
-  <body>
-    <music//score />
-    <sports//score />
-    <sports//music/score />
+1️⃣   <score />
+2️⃣   <sports//score />
+3️⃣   <music/score />
   </body>
 </html>
 ```
@@ -132,17 +125,17 @@ You'll notice the use of the `{{ }}` escape sequence in the component file. You'
 <table>
 <tr>
 <td>
-<code>index.html</code>
+index.html
 </td>
 <td>
-<code>my-button.html</code>                                
+my-button.html
 </td>
 </tr>
 <tr>
 <td>
 
 ```xml
-<html>
+<html>                         
   <body>
     <my-button name="Rylan" />
   </body>
@@ -153,7 +146,7 @@ You'll notice the use of the `{{ }}` escape sequence in the component file. You'
 <td>
 
 ```xml
-<button>
+<button>                
   Hello {{name}}
 </button>
 ```
@@ -190,13 +183,13 @@ Sibling files can also make use of hole punches `{{ }}`.
 <table>
 <tr>
 <td>
-<code>File Structure</code>
+File Structure
 </td>
 <td>
-<code>index.html</code>                                
+index.html
 </td>
 <td>
-<code>Output</code>                                                                
+Output
 </td>
 </tr>
 <tr>
@@ -211,7 +204,7 @@ Sibling files can also make use of hole punches `{{ }}`.
 <td>
 
 ```xml
-<html>
+<html>               
   <body>
     <component />
     <component />
@@ -224,7 +217,7 @@ Sibling files can also make use of hole punches `{{ }}`.
 <td>
 
 ```xml
-<html>
+<html>                             
   <body>
     <style>
       ...CSS content...
