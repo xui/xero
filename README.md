@@ -600,18 +600,11 @@ across the boundary where your language of choice is running whether that be rem
 
 Additionally, if your transport supports bi-directional communication, like WebSockets or even WASM-marshalling, this opens up your web app for realtime functionality - specifically, DOM updates that aren't user-initiated.
 
-### APIs are discouraged
-
-There's nothing negative about using an API. It's just not necessary with the Zero.js programming model. To compare, classical SPAs might respond to a DOM event in the browser by fetching data from an API and updating the DOM accordingly. With Zero.js frameworks, since the event is automatically sent to the server for handling, there's no need to call a separate API since the data can be accessed directly.
-
-> [!NOTE]
-> This only applies to server-side runtimes. WebAssembly runtimes will likely still prefer using an API.
-
 ### Transports
 
-Zero.js can function across a number of different transports, each with their own benefits and tradeoffs.
+Since Zero.js calls for DOM events to be serialized, they can easily be transported to other runtimes for handling whether that be over WebAssembly interop, or through the network to the server. It can function across a number of different transports, each with their own benefits and tradeoffs.
 
-| Transport          | Browser events                | DOM mutation instructions |
+| Transport          | Browser event fired           | DOM mutation instructions |
 | ------------------ | ----------------------------- | ------------------------- |
 | HTTP(s)            | Event POSTed to server        | Included in POST response |
 | Server-sent events | Event POSTed to server        | Pushed via SSE            |
@@ -619,8 +612,14 @@ Zero.js can function across a number of different transports, each with their ow
 | WebAssembly        | Event marshalled over interop | Marshalled over interop   |
 
 > [!Important]
->
-> All transports except HTTP(s) support realtime features through bi-directional communication.
+> All transports support realtime features through bi-directional communication except for HTTP(s).
+
+### APIs are discouraged
+
+There's nothing negative about using an API. It's just not necessary with the Zero.js programming model. To compare, classical SPAs might respond to a DOM event in the browser by fetching data from an API and updating the DOM accordingly. With Zero.js frameworks, since the event is automatically sent to the server for handling, there's no need to call a separate API since the data can be accessed directly.
+
+> [!NOTE]
+> This only applies to server-side runtimes. WebAssembly runtimes will likely still prefer using an API.
 
 <br />
 <br />
