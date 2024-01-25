@@ -472,13 +472,35 @@ em {
 
 Zero.js uses file-based routing as a language-agnostic way to define your URL routing patterns. Zero.js does encourage any "flavor" to embellish additional features in their own native language syntax.
 
-### Directories
-
 ### Files
 
-### Query String
+The only files publicly accessible by an HTTP route are `index.html` files. This allows you to organize your components in any location without the concern for them being accessed directly.
 
-### `POST`ing
+### Directories
+
+The name of each directory represents a route segment for the URL. For example, if there were an `index.html` file located at `myproject/blog/about/index.html` it could be accessed at `https://example.com/blog/about`. (Trailing slashes are intentionally excluded.)
+
+If a directory does not contain an `index.html` file, its corresponding HTTP route results in a 404.
+
+### Dynamic Routes
+
+A dynamic route segment can be used by wrapping the directory name in square brackets. Accessing the values of the dynamic routes will vary by language.
+
+| File System               | HTTP                          |
+| ------------------------- | ----------------------------- |
+| `myproject/blog/[slug]`   | `example.com/blog/first-post` |
+| `myproject/products/[id]` | `example.com/products/1234`   |
+
+> [!Note]
+> Directory-based routing is intentionally designed to only handle very basic use cases. It's encouraged that each guest language support more sophisticated routing in their own unique ways that cater to their each of their strengths.
+>
+> For example query string parameters could be accessed from from a request object like `{{req.slug}}` or like `{{request.Routes["slug"]}}`, whatever fits most naturally in to the language.
+>
+> The same non-prescriptive stance applies for supporting HTTP methods beyond simple `GET`s such as `POST`.
+
+### Errors
+
+Displaying errors can be handled with a file by the name of the HTTP status code. For example the output of `404.html` would be used for any not-found routes. Use `*` after the first digit as a wildcard. For example, `5**.html` would cover all server errors, negating the need to create a unique file for each error code. Using both `404.html` and `4**.html` is valid and the most specific pattern should be used.
 
 <br />
 <br />
@@ -577,7 +599,9 @@ void handleClick(event) {
 
 The "hole punch" pattern `{{ }}` is familiar since it appears like a regular [string interpolation](https://en.wikipedia.org/wiki/String_interpolation). However, in order to excel at both HTML-generation and DOM-manipulation there is one important distinction. Instead of simply returning a final string, it returns a "composition object" which simply just hangs onto the inputs for later use. Once a composition is built, it becomes trivial to either lazily generate the HTML in full or to compare its input values with an older composition's input values for anything that might have changed so that it may generate instructions needed for updating the DOM.
 
-The advantages to this approach are outside the scope of this spec but can be explored in-depth in [this article](https://rylan.io/blog/zero-virtual-dom) (coming soon). To summarize:
+Contents inside the hole punch must be [expressions](<https://en.wikipedia.org/wiki/Expression_(computer_science)>), not [statements](<https://en.wikipedia.org/wiki/Statement_(computer_science)>).
+
+The advantages of this approach are many:
 
 1. **Simplicity** - state changes don't require scope tracking
 1. **Derived data** - compositions compare the inline expression values, not the state itself
