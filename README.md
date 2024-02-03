@@ -1,2 +1,2 @@
-Zero.net
+xUI Server
 ===
