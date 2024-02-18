@@ -1,2 +1,2 @@
-xUI Server
+Xero
 ===
