@@ -1,4 +1,5 @@
 global using Xero;
+global using Xui.Web.ZeroScript;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddXero();

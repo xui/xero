@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Xero
+namespace Xui.Web.ZeroScript
 {
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     public sealed class LiveAttribute : Attribute
