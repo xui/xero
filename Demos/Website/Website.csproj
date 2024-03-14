@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Xui\Web\Tags\Tags.csproj" />
+    <ProjectReference Include="..\..\Xui\Web\HttpX\HttpX.csproj" />
     <!-- TODO: Why do I have to reference ...Generators.csproj AGAIN when .csproj (above) already does that. -->
     <ProjectReference 
       Include="..\..\Xui\Web\ZeroScript\ZeroScript.csproj" 
