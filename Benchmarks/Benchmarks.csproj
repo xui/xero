@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Xero\Tags.csproj" />
+    <ProjectReference Include="..\Xui\Web\Tags\Tags.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 public abstract partial class UI<T> where T : IViewModel
 {

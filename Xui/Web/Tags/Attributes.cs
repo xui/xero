@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class XeroPageAttribute : Attribute

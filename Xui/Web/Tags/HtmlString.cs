@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 [InterpolatedStringHandler]
 public struct HtmlString

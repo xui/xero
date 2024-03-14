@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 internal struct Chunk
 {

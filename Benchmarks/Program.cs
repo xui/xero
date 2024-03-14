@@ -1,4 +1,5 @@
-﻿global using Xero;
+﻿global using Xui.Web.Tags;
+global using Xui.Web.ZeroScript;
 using BenchmarkDotNet;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;

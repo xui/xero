@@ -1,4 +1,4 @@
-namespace Xero;
+namespace Xui.Web.Tags;
 
 internal class Composition
 {

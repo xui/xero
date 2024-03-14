@@ -1,6 +1,6 @@
 #if !DEBUG
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 public static class HotReload
 {
@@ -11,9 +11,9 @@ public static class HotReload
 
 using System.Reflection.Metadata;
 
-[assembly: MetadataUpdateHandler(typeof(Xero.HotReload))]
+[assembly: MetadataUpdateHandler(typeof(Xui.Web.Tags.HotReload))]
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 public static class HotReload
 {

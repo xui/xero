@@ -1,4 +1,4 @@
-namespace Xero;
+namespace Xui.Web.Tags;
 
 public class Event
 {

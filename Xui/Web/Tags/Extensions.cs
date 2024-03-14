@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.WebSockets;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 
-namespace Xero;
+namespace Xui.Web.Tags;
 
 public static class Extensions
 {
