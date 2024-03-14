@@ -2,7 +2,7 @@ global using Xui.Web.Tags;
 global using Xui.Web.ZeroScript;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddXero();
+builder.Services.AddXui();
 builder.Services.AddLogging(c => c.ClearProviders()); // TODO: Remove
 
 var app = builder.Build();

@@ -24,13 +24,13 @@ public abstract partial class UI<T> where T : IViewModel
 
         public static Context Get(HttpContext httpContext, UI<T> ui)
         {
-            var sessionId = httpContext.GetXeroSessionId();
-            if (cache.Get(sessionId) is not Context xeroContext)
+            var sessionId = httpContext.GetHttpXSessionId();
+            if (cache.Get(sessionId) is not Context context)
             {
-                xeroContext = new Context(ui);
-                Set(sessionId, xeroContext);
+                context = new Context(ui);
+                Set(sessionId, context);
             }
-            return xeroContext;
+            return context;
         }
 
         private static void Set(string id, Context context)

@@ -9,12 +9,17 @@ namespace Xui.Web.Tags;
 
 public static class Extensions
 {
-    public static void AddXero(this IServiceCollection services)
+    public static void AddXui(this IServiceCollection services)
     {
         services.AddWebSockets(options =>
         {
         });
     }
+
+    // TODO: Figure out later, the clearest way to configure all the things.
+    // This will include things like static site generation too, I believe.
+    public static void AddXuiTags(this IServiceCollection services) => services.AddXui();
+    public static void AddZeroScript(this IServiceCollection services) => services.AddXui();
 
     public static WebApplication MapUI<T>(
         this WebApplication app,
@@ -38,24 +43,24 @@ public static class Extensions
     {
         group.MapGet(pattern, async httpContext =>
         {
-            var xeroContext = UI<T>.Context.Get(httpContext, ui);
+            var context = UI<T>.Context.Get(httpContext, ui);
 
             // Here is the request for a websocket connection.  
             // Switch protocols and await the event loop inside which reads from the stream.
             if (httpContext.WebSockets.IsWebSocketRequest)
             {
-                await xeroContext.AssignWebSocket(httpContext.WebSockets);
+                await context.AssignWebSocket(httpContext.WebSockets);
             }
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
             // Just respond with an old fashioned 200 response.
-            else if (!xeroContext.IsWebSocketOpen)
+            else if (!context.IsWebSocketOpen)
             {
-                using (xeroContext.ViewModel.Batch())
+                using (context.ViewModel.Batch())
                 {
-                    mutateState(xeroContext);
+                    mutateState(context);
                 }
-                await xeroContext.WriteResponseAsync(httpContext);
+                await context.WriteResponseAsync(httpContext);
             }
 
             // Looks like the browser already has the page AND a websocket.
@@ -66,10 +71,10 @@ public static class Extensions
             {
                 httpContext.Response.StatusCode = 204; // No Content
                 await httpContext.Response.CompleteAsync();
-                await xeroContext.PushHistoryState(httpContext.Request.Path);
-                using (xeroContext.ViewModel.Batch())
+                await context.PushHistoryState(httpContext.Request.Path);
+                using (context.ViewModel.Batch())
                 {
-                    mutateState(xeroContext);
+                    mutateState(context);
                 }
             }
         });
@@ -83,18 +88,18 @@ public static class Extensions
     {
         group.MapGet(pattern, async httpContext =>
         {
-            var xeroContext = UI<T>.Context.Get(httpContext, ui);
+            var context = UI<T>.Context.Get(httpContext, ui);
 
             // Here is the request for a websocket connection.  
             // Switch protocols and await the event loop inside which reads from the stream.
             if (httpContext.WebSockets.IsWebSocketRequest)
             {
-                await xeroContext.AssignWebSocket(httpContext.WebSockets);
+                await context.AssignWebSocket(httpContext.WebSockets);
             }
 
             // Here is a "normal" request.  There is no websocket yet so we cannot push mutations.
             // Just respond with an old fashioned 200 response.
-            else if (!xeroContext.IsWebSocketOpen)
+            else if (!context.IsWebSocketOpen)
             {
                 // Page routes are a common place to fetch async data that this "page" might need.
                 // FOR MACHINES: They'd prefer to wait until that async data is fully resolved 
@@ -102,11 +107,11 @@ public static class Extensions
                 // FOR HUMANS: The best UX is to start by immediately sending a 200 GET with 
                 // zero blocking and then push DOM mutations caused by any subsequent state changes.
                 if (httpContext.IsHuman())
-                    _ = mutateStateAsync(xeroContext);
+                    _ = mutateStateAsync(context);
                 else
-                    await mutateStateAsync(xeroContext);
+                    await mutateStateAsync(context);
 
-                await xeroContext.WriteResponseAsync(httpContext);
+                await context.WriteResponseAsync(httpContext);
             }
 
             // Looks like the browser already has the page AND a websocket.
@@ -117,8 +122,8 @@ public static class Extensions
             {
                 httpContext.Response.StatusCode = 204; // No Content
                 await httpContext.Response.CompleteAsync();
-                await xeroContext.PushHistoryState(httpContext.Request.Path);
-                _ = mutateStateAsync(xeroContext);
+                await context.PushHistoryState(httpContext.Request.Path);
+                _ = mutateStateAsync(context);
             }
         });
     }
@@ -136,9 +141,9 @@ public static class Extensions
         return true;
     }
 
-    internal static string GetXeroSessionId(this HttpContext httpContext)
+    internal static string GetHttpXSessionId(this HttpContext httpContext)
     {
-        const string SESSION_KEY = "xero_session";
+        const string SESSION_KEY = "httpx_session";
 
         var sessionId = httpContext.Request.Cookies[SESSION_KEY];
         if (sessionId == null)
