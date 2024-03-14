@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero", "Xero\Xero.csproj", "{D0187E65-9F57-46FE-8712-EDF294198535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xero", "Xui\Web\Xero.csproj", "{D0187E65-9F57-46FE-8712-EDF294198535}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{AF6D735F-A73E-4CDE-8583-C35C1CA07C83}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Syntax", "Demos\Syntax\Synt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Demos\Website\Website.csproj", "{6049CED7-E2EE-413F-A84F-5D2E520DE533}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XeroSourceGenerators", "XeroSourceGenerators\XeroSourceGenerators.csproj", "{CA981E3D-309A-4567-977B-B9D541EEB789}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroScript", "Xui\Web\ZeroScript\ZeroScript.csproj", "{CA981E3D-309A-4567-977B-B9D541EEB789}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

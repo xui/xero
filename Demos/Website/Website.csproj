@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Xero\Xero.csproj" />
+    <ProjectReference Include="..\..\Xui\Web\Tags\Xero.csproj" />
     <!-- TODO: Why do I have to reference ...Generators.csproj AGAIN when Xero.csproj (above) already does that. -->
     <ProjectReference 
-      Include="..\..\XeroSourceGenerators\XeroSourceGenerators.csproj" 
+      Include="..\..\Xui\Web\ZeroScript\ZeroScript.csproj" 
       OutputItemType="Analyzer" 
     />
   </ItemGroup>

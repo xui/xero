@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference 
-      Include="..\XeroSourceGenerators\XeroSourceGenerators.csproj" 
+      Include="..\ZeroScript\ZeroScript.csproj" 
       OutputItemType="Analyzer" 
       ReferenceOutputAssembly="true" 
     />
