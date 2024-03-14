@@ -13,9 +13,9 @@ readonly record struct Hydration() : IView
                     <strong>Zero</strong> hydration => interactive streaming
                 </h1>
                 <p>
-                    Xero is a return to good old-fashioned server-side rendering.  
+                    xUI is a return to good old-fashioned server-side rendering.  
                     Nothing fancy by default.  In fact, if you don't use any 
-                    of Xero's "live" features the the technology works the same 
+                    of xUI's "live" features the the technology works the same 
                     as it did in the 90s - just plain old HTML sent over HTTP.
                 </p>
                 <p>
@@ -27,7 +27,7 @@ readonly record struct Hydration() : IView
                     This is a large improvement from React-based frameworks since TTFI isn't 
                     blocked while the async content loads.  To put that in other words, if 
                     you have async content you'd like to stream in but might take several 
-                    seconds, Xero's users can fully interact with the page while they wait 
+                    seconds, xUI's users can fully interact with the page while they wait 
                     while React-based users can look but cannot touch until the last content 
                     streams in.
                 </p>

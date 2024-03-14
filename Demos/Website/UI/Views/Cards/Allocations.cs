@@ -22,7 +22,7 @@ readonly record struct Allocations() : IView
                 </h1>
                 <p>
                     Taking much inspiration from Lit's usage of tagged template literals 
-                    Xero uses the similar but value...
+                    xUI uses the similar but value...
                 </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

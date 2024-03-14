@@ -15,7 +15,7 @@ readonly record struct Syntax() : IView
                 <p>
                     It's just regular HTML with regular C# expressions sprinkled inside 
                     regular <code>$" "</code> string interpolations.  
-                    If you already know C# then you already know Xero.  
+                    If you already know C# then you already know ZeroScript.  
                     If you know TypeScript then you're already 90% there.
                 </p>
                 <p>

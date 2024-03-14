@@ -13,7 +13,7 @@ readonly record struct VirtualDom() : IView
                     <strong>Zero</strong> virtual DOM
                 </h1>
                 <p>
-                    Xero takes an approach to rendering that borrows concepts from Google's 
+                    xUI takes an approach to rendering that borrows concepts from Google's 
                     Lit, Apple's SwiftUI and Android's Compose...
                 </p>
                 <p>

@@ -48,9 +48,9 @@ partial class UI
 
                 <h3>Links & 204s</h3>
                 <ul>
-                    <li><a href="some-page">https://xero.wtf/some-page</a></li>
-                    <li><a href="other-page">https://xero.wtf/other-page</a></li>
-                    <li><a href="last-page">https://xero.wtf/last-page</a></li>
+                    <li><a href="some-page">https://xui.ai/some-page</a></li>
+                    <li><a href="other-page">https://xui.ai/other-page</a></li>
+                    <li><a href="last-page">https://xui.ai/last-page</a></li>
                 </ul>
 
                 <h3>switch with</h3>

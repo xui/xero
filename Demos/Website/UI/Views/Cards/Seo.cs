@@ -4,7 +4,7 @@ readonly record struct Seo() : IView
         <section>
             <div>
                 <button onclick="{FetchHtml}">
-                    curl https://xero.wtf/seo
+                    curl https://xui.ai/seo
                 </button>
             </div>
             <article>
@@ -16,7 +16,7 @@ readonly record struct Seo() : IView
                 </h1>
                 <p>
                     SEO complicates your web app.  SSR, SSG, ISG and CSF are all complexity 
-                    multipliers on your codebase.  Xero returns back to the basics...
+                    multipliers on your codebase.  xUI returns back to the basics...
                 </p>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

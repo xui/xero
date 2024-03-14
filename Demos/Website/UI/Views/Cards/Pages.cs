@@ -3,7 +3,7 @@ readonly record struct Pages() : IView
     public HtmlString Render() => $"""
         <section id="zero-pages">
             <div>
-                <a href="zero-pages">xero.wtf/zero-pages</a>
+                <a href="zero-pages">xui.ai/zero-pages</a>
                 <img src="img/zero_pages.svg" />
             </div>
             <article>

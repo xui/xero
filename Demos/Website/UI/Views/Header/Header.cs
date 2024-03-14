@@ -3,7 +3,7 @@ readonly record struct Header() : IView
     public HtmlString Render() => $"""
         <section id="header" class="hstack">
 
-            <img src="img/xero_logo.svg" />
+            <img src="img/xui_logo.svg" />
             
             <div>
                 <h1>

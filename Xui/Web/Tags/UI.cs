@@ -41,7 +41,7 @@ public abstract partial class UI<T> where T : IViewModel
 
                 var l = location;
                 const ws = new WebSocket(`ws://${l.host}${l.pathname}`);
-                debugSocket("xero", ws);
+                debugSocket("xui", ws);
                 ws.onmessage = (event) => {
                     console.debug("onmessage: ", event);
                     eval(event.data);
