@@ -1,4 +1,4 @@
-namespace Xui.Web.Tags;
+namespace Xui.Web.Html;
 
 public interface IView
 {

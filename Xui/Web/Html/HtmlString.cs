@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Xui.Web.Tags;
+namespace Xui.Web.Html;
 
 [InterpolatedStringHandler]
 public struct HtmlString

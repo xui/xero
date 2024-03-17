@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Xui.Web.Tags;
+namespace Xui.Web.Html;
 
 internal struct Chunk
 {
