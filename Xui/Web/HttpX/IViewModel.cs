@@ -1,4 +1,4 @@
-namespace Xui.Web.Tags;
+namespace Xui.Web.HttpX;
 
 public interface IViewModel
 {

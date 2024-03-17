@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Diagnostics.CodeAnalysis;
+using Xui.Web.Html;
 
-namespace Xui.Web.Tags;
+namespace Xui.Web.HttpX;
 
 public abstract partial class UI<T> where T : IViewModel
 {

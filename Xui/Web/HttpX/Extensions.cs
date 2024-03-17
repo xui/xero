@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.WebSockets;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http;
 
-namespace Xui.Web.Tags;
+namespace Xui.Web.HttpX;
 
 public static class Extensions
 {

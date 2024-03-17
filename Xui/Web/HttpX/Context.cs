@@ -3,8 +3,9 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
+using Xui.Web.Html;
 
-namespace Xui.Web.Tags;
+namespace Xui.Web.HttpX;
 
 public abstract partial class UI<T> where T : IViewModel
 {
