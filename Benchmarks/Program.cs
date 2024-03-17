@@ -1,5 +1,5 @@
-﻿global using Xui.Web.Tags;
-global using Xui.Web.ZeroScript;
+﻿global using Xui.Web.Html;
+global using Xui.Web.HttpX;
 using BenchmarkDotNet;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
