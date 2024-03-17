@@ -10,11 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference 
-      Include="..\ZeroScript\ZeroScript.csproj" 
-      OutputItemType="Analyzer" 
-      ReferenceOutputAssembly="true" 
-    />
+    <ProjectReference Include="..\Html\Html.csproj" />
+    <ProjectReference Include="..\HttpX\HttpX.csproj" />
+    <ProjectReference Include="..\ZeroScript\ZeroScript.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
   </ItemGroup>
   
   <PropertyGroup>
