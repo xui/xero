@@ -1,4 +1,4 @@
-global using Xui.Web.Tags;
+global using Xui.Web.Html;
 global using Xui.Web.ZeroScript;
 global using Xui.Web.HttpX;
 
