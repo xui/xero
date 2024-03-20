@@ -55,16 +55,19 @@ public abstract partial class UI<T> where T : IViewModel
             ViewModel = (T)T.New();
         }
 
-        public HtmlString Compose()
+        public void Compose()
         {
-            return HtmlString.Create(composition, $"{ui.MainLayout(ViewModel)}");
+            htmlString = HtmlString.Create(composition, $"{ui.MainLayout(ViewModel)}");
         }
 
         internal async Task WriteResponseAsync(HttpContext httpContext)
         {
             // TODO: Optimize.  No need to convert to a single string when we 
             // have streams and pipes.
-            await httpContext.Response.WriteAsync(Compose().ToStringWithExtras());
+            Compose();
+            if (htmlString is not null) {
+                await httpContext.Response.WriteAsync(htmlString.Value.ToStringWithExtras());
+            }
         }
 
         internal async Task AssignWebSocket(WebSocketManager webSocketManager)
