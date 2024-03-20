@@ -17,9 +17,9 @@ public class UI : UI<ViewModel>
 
     [Benchmark]
     [IterationCount(10)]
-    public HtmlString Test1()
+    public void Test1()
     {
-        return ctx.Compose();
+        ctx.Compose();
     }
 
     protected override HtmlString MainLayout(ViewModel vm)

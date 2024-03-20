@@ -56,9 +56,9 @@ void Threads(int threadCount, bool placebo = false)
             {
                 var ui = new UI();
                 var ctx = new UI<ViewModel>.Context(ui);
-                var warmup = ctx.Compose();
+                ctx.Compose();
                 Console.WriteLine("Warmup:");
-                Console.WriteLine(warmup.ToString());
+                Console.WriteLine(ctx.ToString());
 
                 while (true)
                 {
