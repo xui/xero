@@ -218,6 +218,36 @@ public struct HtmlString
         MoveNext();
     }
 
+    public void HandleEvent(int slotId, Event? domEvent)
+    {
+        // TODO: These should not block the Context.Receive event loop.
+        // So none of these will be awaiting.  But that could cause some 
+        // tricky overlapping.  I bet the user is expecting them to execute
+        // in order?  Do I need a queue?  But this queue should belong to the Context?
+
+        // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
+        var chunk = composition.chunks.First(c => c.Id == slotId);
+        switch (chunk.Type)
+        {
+            case FormatType.Action:
+                chunk.Action();
+                break;
+            case FormatType.ActionEvent:
+                chunk.ActionEvent(domEvent ?? Event.Empty);
+                break;
+            case FormatType.ActionAsync:
+                // Do not batch.  Mutations should go immediately.
+                // Do not await. That'd block this event loop.
+                _ = chunk.ActionAsync();
+                break;
+            case FormatType.ActionEventAsync:
+                // Do not batch.  Mutations should go immediately.
+                // Do not await. That'd block this event loop.
+                _ = chunk.ActionEventAsync(domEvent ?? Event.Empty);
+                break;
+        }
+    }
+
     public override string ToString()
     {
         var builder = new StringBuilder();
