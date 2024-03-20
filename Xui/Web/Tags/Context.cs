@@ -14,6 +14,7 @@ public abstract partial class UI<T> where T : IViewModel
         private readonly UI<T> ui;
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
+        private HtmlString? htmlString;
         private Composition composition;
         private Composition compositionCompare;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
