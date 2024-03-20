@@ -229,13 +229,7 @@ public abstract partial class UI<T> where T : IViewModel
                 if (htmlString is null)
                     continue;
 
-                // TODO: Optimize.  We only need to JSON-parse an event for 2 of 4 FormatType.Action*.
-                // Make ParseEvent return nullable Event? 
-                // Or make ParseSlotId return a 3rd tuple item: Event?
-                // IOW, definitely do not be calling UTF8.GetString and JsonSerializer.Deserialize every Receive.
-                // Plus this'll hopefully eventually be a SignalR thing anyway.
                 var (slotId, domEvent) = ParseEvent(receiveBuffer, receiveResult.Count);
-
                 using (this.ViewModel.Batch())
                 {
                     htmlString.Value.HandleEvent(slotId, domEvent);
