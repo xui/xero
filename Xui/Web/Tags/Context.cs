@@ -234,8 +234,7 @@ public abstract partial class UI<T> where T : IViewModel
                 // Or make ParseSlotId return a 3rd tuple item: Event?
                 // IOW, definitely do not be calling UTF8.GetString and JsonSerializer.Deserialize every Receive.
                 // Plus this'll hopefully eventually be a SignalR thing anyway.
-                var (slotId, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
-                var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
+                var (slotId, domEvent) = ParseEvent(receiveBuffer, receiveResult.Count);
 
                 using (this.ViewModel.Batch())
                 {
@@ -255,27 +254,27 @@ public abstract partial class UI<T> where T : IViewModel
             Console.WriteLine("Connection closed.");
         }
 
-        private (int, int) ParseSlotId(byte[] buffer, int length)
+        private (int, Event?) ParseEvent(byte[] buffer, int length)
         {
             int i = 0, slot = 0;
             while (true)
             {
+                // Convert from ASCII to int, digit by digit.
                 int d = buffer[i] - 48;
-                if (d >= 0 && d <= 9)
+                if (d >= 0 && d <= 9) {
                     slot = slot * 10 + d;
-                else
-                    return (slot, i);
+                    ++i;
+                    continue;
+                }
 
-                if (++i >= length)
-                    return (slot, i);
+                if (i >= length - 1)
+                    return (slot, null);
+                
+                // TODO: Optimize (or hopefully move to SignalR).
+                var message = Encoding.UTF8.GetString(buffer, i, length - i);
+                var @event = JsonSerializer.Deserialize<Event>(message);
+                return (slot, @event);
             }
-        }
-
-        private Event ParseEvent(byte[] buffer, int index, int length)
-        {
-            var message = Encoding.UTF8.GetString(buffer, index, length);
-            var ev = JsonSerializer.Deserialize<Event>(message);
-            return ev ?? new Event();
         }
 
         public override string ToString()

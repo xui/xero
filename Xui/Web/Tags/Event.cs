@@ -2,6 +2,8 @@ namespace Xui.Web.Html;
 
 public class Event
 {
+    public static readonly Event Empty = new();
+
     public bool? altKey { get; set; }
     public int? button { get; set; }
     public int? buttons { get; set; }
