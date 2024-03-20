@@ -226,36 +226,20 @@ public abstract partial class UI<T> where T : IViewModel
                 if (receiveResult.Count == 0)
                     continue;
 
-                var (slot, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
+                if (htmlString is null)
+                    continue;
 
-                // TODO: Optimize.  Bypass the O(n).  Lazy Dict gets reset on each compose?
-                var chunk = composition.chunks.First(c => c.Id == slot);
-                switch (chunk.Type)
+                // TODO: Optimize.  We only need to JSON-parse an event for 2 of 4 FormatType.Action*.
+                // Make ParseEvent return nullable Event? 
+                // Or make ParseSlotId return a 3rd tuple item: Event?
+                // IOW, definitely do not be calling UTF8.GetString and JsonSerializer.Deserialize every Receive.
+                // Plus this'll hopefully eventually be a SignalR thing anyway.
+                var (slotId, index) = ParseSlotId(receiveBuffer, receiveResult.Count);
+                var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
+
+                using (this.ViewModel.Batch())
                 {
-                    case FormatType.Action:
-                        using (this.ViewModel.Batch())
-                        {
-                            chunk.Action();
-                        }
-                        break;
-                    case FormatType.ActionEvent:
-                        var domEvent = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
-                        using (this.ViewModel.Batch())
-                        {
-                            chunk.ActionEvent(domEvent);
-                        }
-                        break;
-                    case FormatType.ActionAsync:
-                        // Do not batch.  Mutations should go immediately.
-                        // Do not await. That'd block this event loop.
-                        _ = chunk.ActionAsync();
-                        break;
-                    case FormatType.ActionEventAsync:
-                        // Do not batch.  Mutations should go immediately.
-                        // Do not await. That'd block this event loop.
-                        var domEventAsync = ParseEvent(receiveBuffer, index, receiveResult.Count - index);
-                        _ = chunk.ActionEventAsync(domEventAsync);
-                        break;
+                    htmlString.Value.HandleEvent(slotId, domEvent);
                 }
             }
             while (!receiveResult.CloseStatus.HasValue);
