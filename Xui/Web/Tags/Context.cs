@@ -15,6 +15,7 @@ public abstract partial class UI<T> where T : IViewModel
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
         private HtmlString? htmlString;
+        private HtmlString? htmlStringCompare;
         private Composition composition;
         private Composition compositionCompare;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
@@ -71,116 +72,49 @@ public abstract partial class UI<T> where T : IViewModel
             }
         }
 
-        internal async Task AssignWebSocket(WebSocketManager webSocketManager)
-        {
-            // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
-            // Rework this once you figure out the various ViewModel state levels.
-            ViewModel.OnChanged = async () => await Recompose();
-
-#if DEBUG
-            using (new HotReloadContext<T>(this))
-#endif
-            using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
-            {
-                this.webSocket = webSocket;
-                await Receive(webSocket);
-            }
-        }
-
         internal async Task Recompose()
         {
-            var htmlString = HtmlString.Create(this.compositionCompare, $"{ui.MainLayout(ViewModel)}");
-            var deltas = GetDeltas(composition, this.compositionCompare, htmlString.end);
-            var ranges = CalculateSlotRanges(deltas);
-            if (ranges.Count == 0)
-                return;
-
-            await PushMutations(ranges);
+            htmlStringCompare = HtmlString.Create(compositionCompare, $"{ui.MainLayout(ViewModel)}");
+            var deltas = htmlString.Value.Recompose(htmlStringCompare.Value);
+            await PushMutations(deltas);
         }
 
-        internal IEnumerable<Chunk> GetDeltas(Composition composition, Composition compare, int end)
-        {
-            for (int i = 0; i < end; i++)
-            {
-                if (composition.chunks[i] != compare.chunks[i])
-                {
-                    yield return compare.chunks[i];
-                }
-            }
-        }
-
-        private List<Range> CalculateSlotRanges(IEnumerable<Chunk> deltas)
-        {
-            List<Range>? ranges = null;
-            foreach (var chunk in deltas)
-            {
-                ranges ??= new();
-
-                if (chunk.Type != FormatType.StringLiteral)
-                {
-                    ranges.Add(new Range(chunk.Id, chunk.Id));
-                }
-                else
-                {
-                    var htmlStringStart = compositionCompare.chunks[chunk.Integer!.Value];
-                    ranges.Add(new Range(chunk.Integer.Value, htmlStringStart.Integer!.Value));
-                }
-            }
-
-            if (ranges == null)
-                return Enumerable.Empty<Range>().ToList();
-
-            ranges.Sort((a, b) => a.Start.Value - b.Start.Value);
-            int i = 0, max = -1;
-            while (i < ranges.Count)
-            {
-                var range = ranges[i];
-                if (max >= range.Start.Value)
-                    ranges.RemoveAt(i);
-                else
-                    i++;
-                max = range.End.Value;
-            }
-
-            return ranges;
-        }
-
-        internal async Task PushMutations(List<Range>? ranges)
+        internal async Task PushMutations(IEnumerable<Delta> deltas)
         {
             if (!IsWebSocketOpen)
                 return;
 
             StringBuilder? output = null;
-            foreach (var range in ranges)
+            foreach (var delta in deltas)
             {
-                var delta = compositionCompare.chunks[range.End.Value];
-                if (range.Start.Value != range.End.Value)
-                {
-                    // TODO: Optimize.  Any way to cleaning and efficiently trim and escape without calling ToString first?
-                    var sb = new StringBuilder();
-                    HtmlString.OutputRangeWithExtras(compositionCompare, range.Start.Value, range.End.Value - 1, sb);
-                    var content = sb.ToString().Trim();
+                output ??= new();
 
-                    output ??= new();
-                    output.Append("replaceNode(slot");
-                    output.Append(delta.Id);
-                    output.Append(",`");
-                    output.Append(content);
-                    output.Append("`);");
-                }
-                else
+                switch (delta.Type)
                 {
-                    output ??= new();
-                    output.Append("slot");
-                    output.Append(delta.Id);
-                    output.Append(".nodeValue='");
-                    delta.Append(output);
-                    output.Append("';");
+                    case DeltaType.NodeValue:
+                        // TODO: Eventually these "eval commands" will already be a part of the DOM.
+                        output.Append("slot");
+                        output.Append(delta.Id);
+                        output.Append(".nodeValue='");
+                        output.Append(delta.ValueAsString);
+                        output.Append("';");
+                        break;
+                    case DeltaType.NodeAttribute:
+                        // TODO: Support this.
+                        break;
+                    case DeltaType.HtmlPartial:
+                        output.Append("replaceNode(slot");
+                        output.Append(delta.Id);
+                        output.Append(",`");
+                        output.Append(delta.ValueAsString);
+                        output.Append("`);");
+                        break;
                 }
             }
 
             // Swap buffers.
             (compositionCompare, composition) = (composition, compositionCompare);
+            (htmlStringCompare, htmlString) = (htmlString, htmlStringCompare);
 
             if (output is not null)
             {
@@ -211,6 +145,22 @@ public abstract partial class UI<T> where T : IViewModel
                 true,
                 CancellationToken.None
             );
+        }
+
+        internal async Task AssignWebSocket(WebSocketManager webSocketManager)
+        {
+            // TODO: This is almost correct.  Works across multiple browsers but multiple tabs gets its Action stolen.
+            // Rework this once you figure out the various ViewModel state levels.
+            ViewModel.OnChanged = async () => await Recompose();
+
+#if DEBUG
+            using (new HotReloadContext<T>(this))
+#endif
+            using (var webSocket = await webSocketManager.AcceptWebSocketAsync())
+            {
+                this.webSocket = webSocket;
+                await Receive(webSocket);
+            }
         }
 
         private async Task Receive(WebSocket webSocket)
