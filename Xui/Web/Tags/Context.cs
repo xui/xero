@@ -289,5 +289,10 @@ public abstract partial class UI<T> where T : IViewModel
             var ev = JsonSerializer.Deserialize<Event>(message);
             return ev ?? new Event();
         }
+
+        public override string ToString()
+        {
+            return htmlString?.ToString() ?? "(null)";
+        }
     }
 }
