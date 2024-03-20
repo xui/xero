@@ -143,7 +143,7 @@ public abstract partial class UI<T> where T : IViewModel
 
         internal async Task PushMutations(List<Range>? ranges)
         {
-            if (IsWebSocketOpen)
+            if (!IsWebSocketOpen)
                 return;
 
             StringBuilder? output = null;
@@ -192,7 +192,7 @@ public abstract partial class UI<T> where T : IViewModel
 
         private async Task Push(string eval)
         {
-            if (IsWebSocketOpen)
+            if (!IsWebSocketOpen)
                 return;
 
             // eval = eval
