@@ -41,6 +41,11 @@ public partial struct HtmlString
         chunk.Integer = start;
         chunk.Type = FormatType.HtmlString;
         end++;
+
+        if (literalLength == 0 && formattedCount == 0)
+        {
+            Clear();
+        }
     }
 
     internal HtmlString(int literalLength, int formattedCount, Composition composition)
