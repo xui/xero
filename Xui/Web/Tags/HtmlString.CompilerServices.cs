@@ -17,16 +17,9 @@ public partial struct HtmlString
     int progressLiteral;
     int progressFormatted;
 
-    internal static HtmlString Create(Composition composition, [InterpolatedStringHandlerArgument("composition")] HtmlString htmlString)
-    {
-        return htmlString;
-    }
-
     public HtmlString(int literalLength, int formattedCount)
     {
-        if (root is null)
-            throw new ArgumentException("Root chunk not allowed without supplied composition.");
-        // root ??= new();
+        root ??= new();
         composition = root;
 
         composition.depth++;
@@ -46,19 +39,6 @@ public partial struct HtmlString
         {
             Clear();
         }
-    }
-
-    internal HtmlString(int literalLength, int formattedCount, Composition composition)
-    {
-        root = composition;
-        this.composition = composition;
-
-        composition.depth++;
-        start = composition.cursor;
-        end = start;
-
-        goalLiteral = literalLength;
-        goalFormatted = formattedCount;
     }
 
     private void MoveNext()
@@ -220,5 +200,23 @@ public partial struct HtmlString
 
         progressFormatted++;
         MoveNext();
+    }
+
+    public readonly IDisposable ReuseBuffer()
+    {
+        return new Reuseable(composition);
+    }
+
+    private class Reuseable : IDisposable
+    {
+        public Reuseable(Composition composition)
+        {
+            root = composition;
+        }
+
+        public void Dispose()
+        {
+            root = null;
+        }
     }
 }

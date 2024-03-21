@@ -14,10 +14,8 @@ public abstract partial class UI<T> where T : IViewModel
         private readonly UI<T> ui;
         public T ViewModel { get; init; }
         private WebSocket? webSocket;
-        private HtmlString? htmlString;
-        private HtmlString? htmlStringCompare;
-        private Composition composition;
-        private Composition compositionCompare;
+        private HtmlString htmlString;
+        private HtmlString htmlStringCompare;
         private readonly byte[] receiveBuffer = new byte[1024 * 4];
         private readonly byte[] sendBuffer = new byte[1024 * 4];
 
@@ -50,8 +48,8 @@ public abstract partial class UI<T> where T : IViewModel
         {
             this.ui = ui;
 
-            composition = new();
-            compositionCompare = new();
+            htmlString = $"";
+            htmlStringCompare = $"";
 
             // TODO: Need to be more clever about how a new ViewModel is created.
             ViewModel = (T)T.New();
@@ -59,7 +57,10 @@ public abstract partial class UI<T> where T : IViewModel
 
         public void Compose()
         {
-            htmlString = HtmlString.Create(composition, $"{ui.MainLayout(ViewModel)}");
+            using (htmlString.ReuseBuffer())
+            {
+                htmlString = ui.MainLayout(ViewModel);
+            }
         }
 
         internal async Task WriteResponseAsync(HttpContext httpContext)
@@ -67,15 +68,18 @@ public abstract partial class UI<T> where T : IViewModel
             // TODO: Optimize.  No need to convert to a single string when we 
             // have streams and pipes.
             Compose();
-            if (htmlString is not null) {
-                await httpContext.Response.WriteAsync(htmlString.Value.ToStringWithExtras());
-            }
+
+            await httpContext.Response.WriteAsync(htmlString.ToStringWithExtras());
         }
 
         internal async Task Recompose()
         {
-            htmlStringCompare = HtmlString.Create(compositionCompare, $"{ui.MainLayout(ViewModel)}");
-            var deltas = htmlString.Value.Recompose(htmlStringCompare.Value);
+            using (htmlStringCompare.ReuseBuffer())
+            {
+                htmlStringCompare = ui.MainLayout(ViewModel);
+            }
+
+            var deltas = htmlString.Recompose(htmlStringCompare);
             await PushMutations(deltas);
         }
 
@@ -113,7 +117,6 @@ public abstract partial class UI<T> where T : IViewModel
             }
 
             // Swap buffers.
-            (compositionCompare, composition) = (composition, compositionCompare);
             (htmlStringCompare, htmlString) = (htmlString, htmlStringCompare);
 
             if (output is not null)
@@ -176,13 +179,10 @@ public abstract partial class UI<T> where T : IViewModel
                 if (receiveResult.Count == 0)
                     continue;
 
-                if (htmlString is null)
-                    continue;
-
                 var (slotId, domEvent) = ParseEvent(receiveBuffer, receiveResult.Count);
                 using (this.ViewModel.Batch())
                 {
-                    htmlString.Value.HandleEvent(slotId, domEvent);
+                    htmlString.HandleEvent(slotId, domEvent);
                 }
             }
             while (!receiveResult.CloseStatus.HasValue);
@@ -223,7 +223,7 @@ public abstract partial class UI<T> where T : IViewModel
 
         public override string ToString()
         {
-            return htmlString?.ToString() ?? "(null)";
+            return htmlString.ToString();
         }
     }
 }
