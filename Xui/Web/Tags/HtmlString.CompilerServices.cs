@@ -10,7 +10,7 @@ public partial struct HtmlString
     [ThreadStatic] static Composition? root;
 
     readonly int start;
-    internal int end;
+    int end;
 
     readonly int goalLiteral;
     readonly int goalFormatted;
