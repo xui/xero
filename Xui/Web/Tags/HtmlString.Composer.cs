@@ -6,7 +6,7 @@ public partial struct HtmlString
 {
     readonly Composition composition;
 
-    public IEnumerable<Delta> Recompose(HtmlString compare)
+    public IEnumerable<Delta> GetDeltas(HtmlString compare)
     {
         List<Range>? ranges = null;
         for (int index = 0; index < end; index++)

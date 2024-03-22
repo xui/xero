@@ -79,7 +79,7 @@ public abstract partial class UI<T> where T : IViewModel
                 htmlStringCompare = ui.MainLayout(ViewModel);
             }
 
-            var deltas = htmlString.Recompose(htmlStringCompare);
+            var deltas = htmlString.GetDeltas(htmlStringCompare);
             await PushMutations(deltas);
         }
 
